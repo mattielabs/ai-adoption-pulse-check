@@ -1,0 +1,4442 @@
+{
+  "$comment": "Synthetic demo data. No real people and no real employer. Regenerate with `npm run fixture:generate`.",
+  "seed": 20260818,
+  "surveyVersion": "1.1.0",
+  "cohorts": [
+    {
+      "key": "builders",
+      "count": 5,
+      "description": "Level 4 Builder/Champion. Drives the champion signal and R09."
+    },
+    {
+      "key": "workflow_users",
+      "count": 10,
+      "description": "Level 3 Workflow User. Repeatable-process behaviour with corroboration."
+    },
+    {
+      "key": "heavy_users_weak_safety",
+      "count": 18,
+      "description": "High adoption with weak verification, weak review and low data-handling confidence. Drives Safety down and feeds R01/R03/R10."
+    },
+    {
+      "key": "regular_users",
+      "count": 18,
+      "description": "Level 2 Regular User. Task-by-task AI use, moderate everything."
+    },
+    {
+      "key": "interested_non_adopters",
+      "count": 10,
+      "description": "High interest, very low adoption, weak enablement. Drives R04 and suppresses R07."
+    },
+    {
+      "key": "explorers",
+      "count": 8,
+      "description": "Level 1 Explorer. Occasional experimentation only."
+    },
+    {
+      "key": "non_users",
+      "count": 4,
+      "description": "Level 0 Non-user with low interest. Exercises the R08 direction and Not Assessed paths."
+    },
+    {
+      "key": "partial_responses",
+      "count": 2,
+      "description": "Deliberately incomplete responses. Exercises the 60% validity threshold and typed Not Assessed results."
+    }
+  ],
+  "responseCount": 75,
+  "responses": [
+    {
+      "id": "fixture-001",
+      "submittedOn": "2026-06-01",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "it_technology",
+        "q2": "individual_contributor",
+        "q3": "documents_information_data",
+        "q4": "multiple_times_day",
+        "q5": "most_workdays",
+        "q6": [
+          "ai_coding_tools",
+          "built_in_ai_features",
+          "chatgpt",
+          "claude"
+        ],
+        "q7": [
+          "coding_technical",
+          "email_communication",
+          "meetings_followup",
+          "planning_project_management",
+          "research_information",
+          "reviewing_summarizing",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q8": "extremely_confident",
+        "q9": "very_confident",
+        "q10": "very_confident",
+        "q11": "very_confident",
+        "q12": "built_workflows_tools",
+        "q13": "almost_always",
+        "q14": "recurring_workflows",
+        "q15": [
+          "automated_workflow",
+          "custom_gpt_project",
+          "documentation_training"
+        ],
+        "q16": "usually",
+        "q17": "always",
+        "q18": "very_confident",
+        "q19": "general_idea",
+        "q19b": "sometimes",
+        "q20": "neither",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern",
+          "dont_know_where_useful"
+        ],
+        "q24": [
+          "org_tools",
+          "reusable_workflows"
+        ],
+        "q25": [
+          "live_workshops",
+          "role_specific_examples"
+        ],
+        "q26": [
+          "none_of_these"
+        ],
+        "q27": "Turning long project threads into a short weekly status summary.",
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-002",
+      "submittedOn": "2026-06-02",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "it_technology",
+        "q2": "individual_contributor",
+        "q3": "documents_information_data",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "ai_coding_tools",
+          "built_in_ai_features",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "building_workflows_tools",
+          "creating_content",
+          "customer_support",
+          "data_entry_cleanup",
+          "meetings_followup",
+          "research_information",
+          "scheduling_coordination",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q8": "extremely_confident",
+        "q9": "extremely_confident",
+        "q10": "very_confident",
+        "q11": "very_confident",
+        "q12": "built_workflows_tools",
+        "q13": "almost_always",
+        "q14": "recurring_workflows",
+        "q15": [
+          "ai_agent",
+          "custom_gpt_project",
+          "documentation_training",
+          "helped_coworkers"
+        ],
+        "q16": "usually",
+        "q17": "always",
+        "q18": "very_confident",
+        "q19": "general_idea",
+        "q19b": "sometimes",
+        "q20": "neither",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern",
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "ai_basics",
+          "privacy_security_responsible"
+        ],
+        "q25": [
+          "short_tutorials"
+        ],
+        "q26": [
+          "email_communication"
+        ],
+        "q27": "Turning long project threads into a short weekly status summary.",
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-003",
+      "submittedOn": "2026-06-03",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "marketing_communications",
+        "q2": "individual_contributor",
+        "q3": "people_customers",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "claude",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "building_workflows_tools",
+          "coding_technical",
+          "email_communication",
+          "meetings_followup",
+          "planning_project_management",
+          "research_information",
+          "writing_documents"
+        ],
+        "q8": "extremely_confident",
+        "q9": "extremely_confident",
+        "q10": "very_confident",
+        "q11": "very_confident",
+        "q12": "built_workflows_tools",
+        "q13": "almost_always",
+        "q14": "several_processes",
+        "q15": [
+          "automated_workflow",
+          "custom_gpt_project",
+          "helped_coworkers",
+          "reusable_prompt_template",
+          "shared_prompt_library"
+        ],
+        "q16": "usually",
+        "q17": "always",
+        "q18": "very_confident",
+        "q19": "general_idea",
+        "q19b": "often",
+        "q20": "disagree",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern",
+          "dont_know_where_useful",
+          "policies_unclear"
+        ],
+        "q24": [
+          "reusable_workflows"
+        ],
+        "q25": [
+          "live_workshops"
+        ],
+        "q26": [
+          "customer_support",
+          "data_entry_cleanup",
+          "meetings_followup",
+          "research_information",
+          "reviewing_summarizing",
+          "training_onboarding",
+          "writing_documents"
+        ],
+        "q27": "Turning long project threads into a short weekly status summary.",
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-004",
+      "submittedOn": "2026-06-04",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "marketing_communications",
+        "q2": "individual_contributor",
+        "q3": "content_communications",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "claude",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "coding_technical",
+          "customer_support",
+          "email_communication",
+          "meetings_followup",
+          "research_information",
+          "reviewing_summarizing",
+          "writing_documents"
+        ],
+        "q8": "extremely_confident",
+        "q9": "extremely_confident",
+        "q10": "very_confident",
+        "q11": "very_confident",
+        "q12": "built_workflows_tools",
+        "q13": "almost_always",
+        "q14": "several_processes",
+        "q15": [
+          "ai_agent",
+          "automated_workflow",
+          "documentation_training",
+          "reusable_prompt_template"
+        ],
+        "q16": "usually",
+        "q17": "always",
+        "q18": "very_confident",
+        "q19": "general_idea",
+        "q19b": "sometimes",
+        "q20": "disagree",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_how_to_use",
+          "no_access_to_tools"
+        ],
+        "q24": [
+          "ai_basics",
+          "automation",
+          "role_specific"
+        ],
+        "q25": [
+          "live_workshops"
+        ],
+        "q26": [
+          "email_communication"
+        ],
+        "q27": "Turning long project threads into a short weekly status summary.",
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-005",
+      "submittedOn": "2026-06-05",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "customer_service",
+        "q2": "team_lead",
+        "q3": "planning_management_decision",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "ai_coding_tools",
+          "built_in_ai_features",
+          "chatgpt",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "building_workflows_tools",
+          "customer_support",
+          "email_communication",
+          "presentations",
+          "research_information",
+          "writing_documents"
+        ],
+        "q8": "extremely_confident",
+        "q9": "extremely_confident",
+        "q10": "very_confident",
+        "q11": "very_confident",
+        "q12": "built_workflows_tools",
+        "q13": "almost_always",
+        "q14": "recurring_workflows",
+        "q15": [
+          "ai_agent",
+          "helped_coworkers",
+          "reusable_prompt_template",
+          "shared_prompt_library"
+        ],
+        "q16": "usually",
+        "q17": "always",
+        "q18": "very_confident",
+        "q19": "general_idea",
+        "q19b": "often",
+        "q20": "disagree",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_how_to_use"
+        ],
+        "q24": [
+          "org_tools",
+          "reusable_workflows"
+        ],
+        "q25": [
+          "written_guides"
+        ],
+        "q26": [
+          "customer_support"
+        ],
+        "q27": "Turning long project threads into a short weekly status summary.",
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-006",
+      "submittedOn": "2026-06-08",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "finance_accounting",
+        "q2": "manager",
+        "q3": "technical_systems",
+        "q4": "most_workdays",
+        "q5": "most_workdays",
+        "q6": [
+          "chatgpt",
+          "perplexity"
+        ],
+        "q7": [
+          "customer_support",
+          "meetings_followup",
+          "research_information",
+          "reviewing_summarizing",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "very_confident",
+        "q10": "very_confident",
+        "q11": "somewhat_confident",
+        "q12": "repeatable_processes",
+        "q13": "often",
+        "q14": "one_small_process",
+        "q15": [
+          "helped_coworkers",
+          "reusable_prompt_template",
+          "shared_prompt_library"
+        ],
+        "q16": "usually",
+        "q17": "always",
+        "q18": "somewhat_confident",
+        "q19": "unsure",
+        "q19b": "rarely",
+        "q20": "disagree",
+        "q21": "neither",
+        "q22": "strongly_disagree",
+        "q23": [
+          "dont_know_where_useful",
+          "no_access_to_tools"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "org_tools",
+          "role_specific"
+        ],
+        "q25": [
+          "live_workshops"
+        ],
+        "q26": [
+          "meetings_followup",
+          "presentations",
+          "research_information"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-007",
+      "submittedOn": "2026-06-09",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "administration_operations",
+        "q2": "senior_manager",
+        "q3": "documents_information_data",
+        "q4": "multiple_times_day",
+        "q5": "most_workdays",
+        "q6": [
+          "built_in_ai_features",
+          "claude",
+          "microsoft_copilot",
+          "perplexity"
+        ],
+        "q7": [
+          "email_communication",
+          "meetings_followup",
+          "planning_project_management",
+          "research_information",
+          "reviewing_summarizing",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "very_confident",
+        "q10": "very_confident",
+        "q11": "somewhat_confident",
+        "q12": "repeatable_processes",
+        "q13": "often",
+        "q14": "several_processes",
+        "q15": [
+          "custom_gpt_project",
+          "helped_coworkers",
+          "reusable_prompt_template"
+        ],
+        "q16": "sometimes",
+        "q17": "usually",
+        "q18": "somewhat_confident",
+        "q19": "general_idea",
+        "q19b": "sometimes",
+        "q20": "neither",
+        "q21": "neither",
+        "q22": "strongly_disagree",
+        "q23": [
+          "accuracy_concern",
+          "dont_know_how_to_use",
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "automation",
+          "better_prompts"
+        ],
+        "q25": [
+          "internal_champions"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "email_communication",
+          "training_onboarding",
+          "writing_documents"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-008",
+      "submittedOn": "2026-06-10",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "administration_operations",
+        "q2": "individual_contributor",
+        "q3": "documents_information_data",
+        "q4": "most_workdays",
+        "q5": "most_workdays",
+        "q6": [
+          "built_in_ai_features",
+          "claude",
+          "microsoft_copilot",
+          "perplexity"
+        ],
+        "q7": [
+          "creating_content",
+          "email_communication",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "very_confident",
+        "q10": "very_confident",
+        "q11": "somewhat_confident",
+        "q12": "repeatable_processes",
+        "q13": "often",
+        "q14": "one_small_process",
+        "q15": [
+          "shared_prompt_library"
+        ],
+        "q16": "usually",
+        "q17": "always",
+        "q18": "very_confident",
+        "q19": "general_idea",
+        "q19b": "rarely",
+        "q20": "disagree",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "policies_unclear"
+        ],
+        "q24": [
+          "ai_basics",
+          "automation",
+          "role_specific"
+        ],
+        "q25": [
+          "short_tutorials",
+          "written_guides"
+        ],
+        "q26": [
+          "email_communication",
+          "research_information",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-009",
+      "submittedOn": "2026-06-11",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "human_resources",
+        "q2": "individual_contributor",
+        "q3": "people_customers",
+        "q4": "most_workdays",
+        "q5": "multiple_times_day",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "microsoft_copilot",
+          "perplexity"
+        ],
+        "q7": [
+          "email_communication",
+          "meetings_followup",
+          "presentations",
+          "research_information",
+          "reviewing_summarizing",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "very_confident",
+        "q10": "very_confident",
+        "q11": "somewhat_confident",
+        "q12": "repeatable_processes",
+        "q13": "often",
+        "q14": "several_processes",
+        "q15": [
+          "helped_coworkers",
+          "reusable_prompt_template",
+          "shared_prompt_library"
+        ],
+        "q16": "usually",
+        "q17": "always",
+        "q18": "somewhat_confident",
+        "q19": "unsure",
+        "q19b": "sometimes",
+        "q20": "disagree",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "not_enough_time",
+          "policies_unclear"
+        ],
+        "q24": [
+          "ai_basics",
+          "better_prompts"
+        ],
+        "q25": [
+          "internal_champions"
+        ],
+        "q26": [
+          "planning_project_management",
+          "scheduling_coordination",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-010",
+      "submittedOn": "2026-06-12",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "sales_business_development",
+        "q2": "individual_contributor",
+        "q3": "content_communications",
+        "q4": "most_workdays",
+        "q5": "most_workdays",
+        "q6": [
+          "chatgpt",
+          "claude",
+          "perplexity"
+        ],
+        "q7": [
+          "creating_content",
+          "customer_support",
+          "email_communication",
+          "reviewing_summarizing",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "very_confident",
+        "q10": "somewhat_confident",
+        "q11": "somewhat_confident",
+        "q12": "repeatable_processes",
+        "q13": "often",
+        "q14": "several_processes",
+        "q15": [
+          "custom_gpt_project",
+          "helped_coworkers",
+          "shared_prompt_library"
+        ],
+        "q16": "usually",
+        "q17": "usually",
+        "q18": "very_confident",
+        "q19": "unsure",
+        "q19b": "often",
+        "q20": "neither",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "reusable_workflows"
+        ],
+        "q25": [
+          "learning_by_building",
+          "live_workshops"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "spreadsheets_analysis"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-011",
+      "submittedOn": "2026-06-01",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "product_design",
+        "q2": "individual_contributor",
+        "q3": "planning_management_decision",
+        "q4": "multiple_times_day",
+        "q5": "most_workdays",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "claude",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "email_communication",
+          "meetings_followup",
+          "planning_project_management",
+          "research_information",
+          "reviewing_summarizing",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "very_confident",
+        "q10": "very_confident",
+        "q11": "somewhat_confident",
+        "q12": "repeatable_processes",
+        "q13": "almost_always",
+        "q14": "several_processes",
+        "q15": [
+          "helped_coworkers",
+          "reusable_prompt_template",
+          "shared_prompt_library"
+        ],
+        "q16": "usually",
+        "q17": "usually",
+        "q18": "somewhat_confident",
+        "q19": "unsure",
+        "q19b": "sometimes",
+        "q20": "disagree",
+        "q21": "agree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "dont_know_how_to_use"
+        ],
+        "q24": [
+          "automation"
+        ],
+        "q25": [
+          "internal_champions"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "presentations"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-012",
+      "submittedOn": "2026-06-02",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "it_technology",
+        "q2": "team_lead",
+        "q3": "technical_systems",
+        "q4": "multiple_times_day",
+        "q5": "most_workdays",
+        "q6": [
+          "chatgpt",
+          "microsoft_copilot",
+          "perplexity"
+        ],
+        "q7": [
+          "email_communication",
+          "meetings_followup",
+          "research_information",
+          "reviewing_summarizing"
+        ],
+        "q8": "very_confident",
+        "q9": "very_confident",
+        "q10": "very_confident",
+        "q11": "somewhat_confident",
+        "q12": "repeatable_processes",
+        "q13": "almost_always",
+        "q14": "several_processes",
+        "q15": [
+          "custom_gpt_project"
+        ],
+        "q16": "usually",
+        "q17": "usually",
+        "q18": "somewhat_confident",
+        "q19": "general_idea",
+        "q19b": "sometimes",
+        "q20": "neither",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_where_useful",
+          "policies_unclear"
+        ],
+        "q24": [
+          "privacy_security_responsible"
+        ],
+        "q25": [
+          "internal_champions",
+          "learning_by_building"
+        ],
+        "q26": [
+          "email_communication",
+          "reviewing_summarizing"
+        ],
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-013",
+      "submittedOn": "2026-06-03",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "it_technology",
+        "q2": "manager",
+        "q3": "documents_information_data",
+        "q4": "multiple_times_day",
+        "q5": "most_workdays",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "meetings_followup",
+          "presentations",
+          "research_information",
+          "reviewing_summarizing",
+          "spreadsheets_analysis"
+        ],
+        "q8": "very_confident",
+        "q9": "very_confident",
+        "q10": "very_confident",
+        "q11": "somewhat_confident",
+        "q12": "repeatable_processes",
+        "q13": "often",
+        "q14": "several_processes",
+        "q15": [
+          "shared_prompt_library"
+        ],
+        "q16": "sometimes",
+        "q17": "always",
+        "q18": "somewhat_confident",
+        "q19": "general_idea",
+        "q19b": "sometimes",
+        "q20": "disagree",
+        "q21": "agree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "accuracy_concern"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "automation",
+          "better_prompts"
+        ],
+        "q25": [
+          "live_workshops",
+          "role_specific_examples"
+        ],
+        "q26": [
+          "email_communication"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-014",
+      "submittedOn": "2026-06-04",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "marketing_communications",
+        "q2": "senior_manager",
+        "q3": "documents_information_data",
+        "q4": "multiple_times_day",
+        "q5": "most_workdays",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "claude",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "customer_support",
+          "email_communication",
+          "research_information",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "very_confident",
+        "q10": "very_confident",
+        "q11": "somewhat_confident",
+        "q12": "repeatable_processes",
+        "q13": "almost_always",
+        "q14": "unsure",
+        "q15": [
+          "reusable_prompt_template",
+          "shared_prompt_library"
+        ],
+        "q16": "sometimes",
+        "q17": "always",
+        "q18": "very_confident",
+        "q19": "general_idea",
+        "q19b": "rarely",
+        "q20": "disagree",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "not_enough_time"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "role_specific"
+        ],
+        "q25": [
+          "learning_by_building",
+          "live_workshops"
+        ],
+        "q26": [
+          "customer_support"
+        ],
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-015",
+      "submittedOn": "2026-06-05",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "customer_service",
+        "q2": "individual_contributor",
+        "q3": "people_customers",
+        "q4": "multiple_times_day",
+        "q5": "most_workdays",
+        "q6": [
+          "built_in_ai_features",
+          "claude",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "creating_content",
+          "customer_support",
+          "reviewing_summarizing",
+          "scheduling_coordination",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "very_confident",
+        "q10": "very_confident",
+        "q11": "somewhat_confident",
+        "q12": "repeatable_processes",
+        "q13": "often",
+        "q14": "unsure",
+        "q15": [
+          "shared_prompt_library"
+        ],
+        "q16": "usually",
+        "q17": "always",
+        "q18": "very_confident",
+        "q19": "unsure",
+        "q19b": "often",
+        "q20": "neither",
+        "q21": "agree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "accuracy_concern",
+          "policies_unclear",
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "ai_basics",
+          "org_tools",
+          "reusable_workflows"
+        ],
+        "q25": [
+          "internal_champions"
+        ],
+        "q26": [
+          "customer_support",
+          "data_entry_cleanup",
+          "research_information"
+        ],
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-016",
+      "submittedOn": "2026-06-08",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "customer_service",
+        "q2": "individual_contributor",
+        "q3": "content_communications",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "ai_media_tools",
+          "google_gemini"
+        ],
+        "q7": [
+          "customer_support",
+          "meetings_followup",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "very_confident",
+        "q10": "somewhat_confident",
+        "q11": "somewhat_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "rarely",
+        "q14": "no",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "rarely",
+        "q17": "sometimes",
+        "q18": "slightly_confident",
+        "q19": "general_idea",
+        "q19b": "often",
+        "q20": "disagree",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_where_useful",
+          "no_access_to_tools"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "better_prompts"
+        ],
+        "q25": [
+          "live_workshops"
+        ],
+        "q26": [
+          "customer_support",
+          "meetings_followup",
+          "presentations",
+          "research_information",
+          "writing_documents"
+        ],
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-017",
+      "submittedOn": "2026-06-09",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "finance_accounting",
+        "q2": "individual_contributor",
+        "q3": "planning_management_decision",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "built_in_ai_features",
+          "google_gemini",
+          "perplexity"
+        ],
+        "q7": [
+          "creating_content",
+          "creating_media",
+          "customer_support",
+          "data_entry_cleanup",
+          "email_communication",
+          "reviewing_summarizing",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "very_confident",
+        "q10": "slightly_confident",
+        "q11": "slightly_confident",
+        "q12": "reuse_prompts_approaches",
+        "q13": "rarely",
+        "q14": "see_opportunities",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "sometimes",
+        "q17": "rarely",
+        "q18": "unsure",
+        "q19": "not_defined",
+        "q19b": "often",
+        "q20": "strongly_disagree",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_how_to_use",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "ai_basics"
+        ],
+        "q25": [
+          "written_guides"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "meetings_followup",
+          "repetitive_system_updates",
+          "scheduling_coordination"
+        ],
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-018",
+      "submittedOn": "2026-06-10",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "administration_operations",
+        "q2": "individual_contributor",
+        "q3": "even_mix",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "google_gemini",
+          "perplexity"
+        ],
+        "q7": [
+          "creating_content",
+          "data_entry_cleanup",
+          "email_communication",
+          "meetings_followup",
+          "presentations",
+          "research_information",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "rarely",
+        "q14": "unsure",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "rarely",
+        "q17": "rarely",
+        "q18": "unsure",
+        "q19": "unsure",
+        "q19b": "sometimes",
+        "q20": "disagree",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_where_useful",
+          "no_access_to_tools",
+          "policies_unclear"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "better_prompts"
+        ],
+        "q25": [
+          "learning_by_building"
+        ],
+        "q26": [
+          "customer_support",
+          "data_entry_cleanup",
+          "email_communication",
+          "research_information"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-019",
+      "submittedOn": "2026-06-11",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "human_resources",
+        "q2": "team_lead",
+        "q3": "documents_information_data",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "google_gemini"
+        ],
+        "q7": [
+          "creating_content",
+          "customer_support",
+          "email_communication",
+          "presentations",
+          "research_information",
+          "reviewing_summarizing",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "somewhat_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "see_opportunities",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "rarely",
+        "q17": "rarely",
+        "q18": "not_confident",
+        "q19": "general_idea",
+        "q19b": "often",
+        "q20": "disagree",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_how_to_use",
+          "policies_unclear",
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "automation",
+          "better_prompts",
+          "privacy_security_responsible"
+        ],
+        "q25": [
+          "written_guides"
+        ],
+        "q26": [
+          "email_communication",
+          "meetings_followup",
+          "scheduling_coordination"
+        ],
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-020",
+      "submittedOn": "2026-06-12",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "human_resources",
+        "q2": "manager",
+        "q3": "people_customers",
+        "q4": "multiple_times_day",
+        "q5": "most_workdays",
+        "q6": [
+          "chatgpt",
+          "claude",
+          "google_gemini",
+          "perplexity"
+        ],
+        "q7": [
+          "creating_media",
+          "email_communication",
+          "presentations",
+          "research_information",
+          "reviewing_summarizing",
+          "spreadsheets_analysis"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "no",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "rarely",
+        "q17": "rarely",
+        "q18": "not_confident",
+        "q19": "not_defined",
+        "q19b": "sometimes",
+        "q20": "strongly_disagree",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_where_useful",
+          "policies_unclear",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "org_tools"
+        ],
+        "q25": [
+          "live_workshops",
+          "role_specific_examples"
+        ],
+        "q26": [
+          "customer_support",
+          "data_entry_cleanup",
+          "meetings_followup",
+          "planning_project_management",
+          "presentations",
+          "research_information"
+        ],
+        "q27": "Drafting first-pass replies to routine customer questions.",
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-021",
+      "submittedOn": "2026-06-01",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "sales_business_development",
+        "q2": "executive_owner",
+        "q3": "people_customers",
+        "q4": "multiple_times_day",
+        "q5": "most_workdays",
+        "q6": [
+          "built_in_ai_features",
+          "google_gemini",
+          "perplexity"
+        ],
+        "q7": [
+          "creating_content",
+          "creating_media",
+          "data_entry_cleanup",
+          "email_communication",
+          "meetings_followup",
+          "reviewing_summarizing"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "very_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "no",
+        "q15": [
+          "not_sure_meaning"
+        ],
+        "q16": "rarely",
+        "q17": "never",
+        "q18": "unsure",
+        "q19": "no",
+        "q19b": "rarely",
+        "q20": "unsure",
+        "q21": "disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "dont_know_where_useful",
+          "policies_unclear"
+        ],
+        "q24": [
+          "org_tools"
+        ],
+        "q25": [
+          "role_specific_examples",
+          "written_guides"
+        ],
+        "q26": [
+          "reviewing_summarizing"
+        ],
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-022",
+      "submittedOn": "2026-06-02",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "prefer_not_to_say",
+        "q2": "individual_contributor",
+        "q3": "content_communications",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "perplexity"
+        ],
+        "q7": [
+          "creating_media",
+          "data_entry_cleanup",
+          "email_communication",
+          "meetings_followup",
+          "research_information",
+          "reviewing_summarizing",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "no",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "rarely",
+        "q17": "rarely",
+        "q18": "not_confident",
+        "q19": "general_idea",
+        "q19b": "often",
+        "q20": "disagree",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern",
+          "policies_unclear",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "better_prompts",
+          "org_tools"
+        ],
+        "q25": [
+          "learning_by_building",
+          "written_guides"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "research_information",
+          "reviewing_summarizing",
+          "scheduling_coordination",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-023",
+      "submittedOn": "2026-06-03",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "it_technology",
+        "q2": "individual_contributor",
+        "q3": "technical_systems",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "ai_media_tools",
+          "chatgpt"
+        ],
+        "q7": [
+          "research_information",
+          "reviewing_summarizing",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "very_confident",
+        "q10": "slightly_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "rarely",
+        "q14": "unsure",
+        "q15": [
+          "not_sure_meaning"
+        ],
+        "q16": "rarely",
+        "q17": "sometimes",
+        "q18": "slightly_confident",
+        "q19": "unsure",
+        "q19b": "often",
+        "q20": "strongly_disagree",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_how_to_use",
+          "not_enough_time"
+        ],
+        "q24": [
+          "automation"
+        ],
+        "q25": [
+          "short_tutorials"
+        ],
+        "q26": [
+          "customer_support",
+          "data_entry_cleanup",
+          "email_communication",
+          "presentations",
+          "reviewing_summarizing",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-024",
+      "submittedOn": "2026-06-04",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "it_technology",
+        "q2": "individual_contributor",
+        "q3": "prefer_not_to_say",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "ai_media_tools",
+          "chatgpt",
+          "perplexity"
+        ],
+        "q7": [
+          "email_communication",
+          "research_information",
+          "reviewing_summarizing",
+          "spreadsheets_analysis"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "rarely",
+        "q14": "no",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "never",
+        "q17": "sometimes",
+        "q18": "not_confident",
+        "q19": "no",
+        "q19b": "often",
+        "q20": "disagree",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_where_useful"
+        ],
+        "q24": [
+          "automation",
+          "better_prompts"
+        ],
+        "q25": [
+          "learning_by_building"
+        ],
+        "q26": [
+          "customer_support",
+          "meetings_followup",
+          "planning_project_management",
+          "training_onboarding",
+          "writing_documents"
+        ],
+        "q27": "Drafting first-pass replies to routine customer questions.",
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-025",
+      "submittedOn": "2026-06-05",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "marketing_communications",
+        "q2": "individual_contributor",
+        "q3": "documents_information_data",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "google_gemini",
+          "perplexity"
+        ],
+        "q7": [
+          "creating_media",
+          "data_entry_cleanup",
+          "meetings_followup",
+          "presentations",
+          "research_information",
+          "reviewing_summarizing",
+          "scheduling_coordination"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "reuse_prompts_approaches",
+        "q13": "rarely",
+        "q14": "see_opportunities",
+        "q15": [
+          "not_sure_meaning"
+        ],
+        "q16": "sometimes",
+        "q17": "never",
+        "q18": "slightly_confident",
+        "q19": "not_defined",
+        "q19b": "often",
+        "q20": "strongly_disagree",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern",
+          "not_enough_time",
+          "policies_unclear"
+        ],
+        "q24": [
+          "ai_basics"
+        ],
+        "q25": [
+          "short_tutorials"
+        ],
+        "q26": [
+          "planning_project_management",
+          "writing_documents"
+        ],
+        "q27": "Drafting first-pass replies to routine customer questions.",
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-026",
+      "submittedOn": "2026-06-08",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "customer_service",
+        "q2": "team_lead",
+        "q3": "people_customers",
+        "q4": "multiple_times_day",
+        "q5": "most_workdays",
+        "q6": [
+          "claude",
+          "perplexity"
+        ],
+        "q7": [
+          "creating_content",
+          "customer_support",
+          "email_communication",
+          "meetings_followup",
+          "research_information",
+          "reviewing_summarizing",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "very_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "rarely",
+        "q17": "never",
+        "q18": "unsure",
+        "q19": "no",
+        "q19b": "often",
+        "q20": "strongly_disagree",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "not_enough_time",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "privacy_security_responsible",
+          "role_specific"
+        ],
+        "q25": [
+          "learning_by_building",
+          "role_specific_examples"
+        ],
+        "q26": [
+          "customer_support",
+          "email_communication",
+          "research_information",
+          "writing_documents"
+        ],
+        "q27": "Drafting first-pass replies to routine customer questions.",
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-027",
+      "submittedOn": "2026-06-09",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "customer_service",
+        "q2": "manager",
+        "q3": "content_communications",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "claude"
+        ],
+        "q7": [
+          "creating_content",
+          "creating_media",
+          "email_communication",
+          "planning_project_management",
+          "research_information"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "somewhat_confident",
+        "q12": "reuse_prompts_approaches",
+        "q13": "sometimes",
+        "q14": "see_opportunities",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "rarely",
+        "q17": "rarely",
+        "q18": "slightly_confident",
+        "q19": "no",
+        "q19b": "often",
+        "q20": "disagree",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "no_access_to_tools"
+        ],
+        "q24": [
+          "privacy_security_responsible",
+          "role_specific"
+        ],
+        "q25": [
+          "learning_by_building",
+          "written_guides"
+        ],
+        "q26": [
+          "customer_support",
+          "email_communication",
+          "presentations"
+        ],
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-028",
+      "submittedOn": "2026-06-10",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "finance_accounting",
+        "q2": "executive_owner",
+        "q3": "planning_management_decision",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "google_gemini"
+        ],
+        "q7": [
+          "creating_content",
+          "creating_media",
+          "data_entry_cleanup",
+          "meetings_followup",
+          "research_information",
+          "reviewing_summarizing",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "somewhat_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "sometimes",
+        "q17": "rarely",
+        "q18": "unsure",
+        "q19": "unsure",
+        "q19b": "often",
+        "q20": "disagree",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern",
+          "no_access_to_tools",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "role_specific"
+        ],
+        "q25": [
+          "internal_champions",
+          "written_guides"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "planning_project_management",
+          "research_information",
+          "reviewing_summarizing"
+        ],
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-029",
+      "submittedOn": "2026-06-11",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "administration_operations",
+        "q2": "individual_contributor",
+        "q3": "technical_systems",
+        "q4": "multiple_times_day",
+        "q5": "most_workdays",
+        "q6": [
+          "ai_media_tools",
+          "claude",
+          "google_gemini",
+          "perplexity"
+        ],
+        "q7": [
+          "creating_content",
+          "customer_support",
+          "data_entry_cleanup",
+          "email_communication",
+          "scheduling_coordination",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "slightly_confident",
+        "q11": "somewhat_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "no",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "sometimes",
+        "q17": "rarely",
+        "q18": "not_confident",
+        "q19": "no",
+        "q19b": "often",
+        "q20": "unsure",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "no_access_to_tools",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "role_specific"
+        ],
+        "q25": [
+          "role_specific_examples"
+        ],
+        "q26": [
+          "customer_support",
+          "meetings_followup",
+          "planning_project_management",
+          "repetitive_system_updates",
+          "reviewing_summarizing",
+          "spreadsheets_analysis"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-030",
+      "submittedOn": "2026-06-12",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "human_resources",
+        "q2": "individual_contributor",
+        "q3": "documents_information_data",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "claude",
+          "perplexity"
+        ],
+        "q7": [
+          "creating_media",
+          "email_communication",
+          "meetings_followup",
+          "research_information",
+          "reviewing_summarizing",
+          "scheduling_coordination",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "rarely",
+        "q14": "see_opportunities",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "sometimes",
+        "q17": "never",
+        "q18": "slightly_confident",
+        "q19": "unsure",
+        "q19b": "prefer_not_to_say",
+        "q20": "disagree",
+        "q21": "disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "accuracy_concern",
+          "dont_know_where_useful",
+          "not_enough_time"
+        ],
+        "q24": [
+          "automation",
+          "org_tools"
+        ],
+        "q25": [
+          "internal_champions"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "email_communication",
+          "meetings_followup",
+          "writing_documents"
+        ],
+        "q27": "Drafting first-pass replies to routine customer questions.",
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-031",
+      "submittedOn": "2026-06-01",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "sales_business_development",
+        "q2": "individual_contributor",
+        "q3": "documents_information_data",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "ai_media_tools",
+          "built_in_ai_features",
+          "claude",
+          "perplexity"
+        ],
+        "q7": [
+          "creating_media",
+          "email_communication",
+          "research_information",
+          "reviewing_summarizing",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "no",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "rarely",
+        "q17": "sometimes",
+        "q18": "not_confident",
+        "q19": "not_defined",
+        "q19b": "often",
+        "q20": "strongly_disagree",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "automation",
+          "reusable_workflows"
+        ],
+        "q25": [
+          "internal_champions"
+        ],
+        "q26": [
+          "email_communication",
+          "research_information",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-032",
+      "submittedOn": "2026-06-02",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "legal_compliance",
+        "q2": "team_lead",
+        "q3": "people_customers",
+        "q4": "multiple_times_day",
+        "q5": "most_workdays",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "claude",
+          "google_gemini"
+        ],
+        "q7": [
+          "creating_media",
+          "meetings_followup",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "no",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "rarely",
+        "q17": "never",
+        "q18": "unsure",
+        "q19": "not_defined",
+        "q19b": "often",
+        "q20": "disagree",
+        "q21": "disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "dont_know_where_useful"
+        ],
+        "q24": [
+          "better_prompts",
+          "org_tools"
+        ],
+        "q25": [
+          "live_workshops"
+        ],
+        "q26": [
+          "research_information",
+          "reviewing_summarizing",
+          "writing_documents"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-033",
+      "submittedOn": "2026-06-03",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "prefer_not_to_say",
+        "q2": "team_lead",
+        "q3": "content_communications",
+        "q4": "multiple_times_day",
+        "q5": "multiple_times_day",
+        "q6": [
+          "ai_media_tools",
+          "built_in_ai_features",
+          "chatgpt",
+          "perplexity"
+        ],
+        "q7": [
+          "creating_content",
+          "creating_media",
+          "email_communication",
+          "research_information"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "very_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "see_opportunities",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "rarely",
+        "q17": "usually",
+        "q18": "slightly_confident",
+        "q19": "general_idea",
+        "q19b": "prefer_not_to_say",
+        "q20": "unsure",
+        "q21": "agree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "not_enough_time",
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "privacy_security_responsible",
+          "role_specific"
+        ],
+        "q25": [
+          "live_workshops"
+        ],
+        "q26": [
+          "customer_support",
+          "data_entry_cleanup",
+          "email_communication",
+          "repetitive_system_updates",
+          "reviewing_summarizing",
+          "scheduling_coordination",
+          "spreadsheets_analysis"
+        ],
+        "q27": "Drafting first-pass replies to routine customer questions.",
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-034",
+      "submittedOn": "2026-06-04",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "it_technology",
+        "q2": "manager",
+        "q3": "planning_management_decision",
+        "q4": "few_times_week",
+        "q5": "most_workdays",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "research_information",
+          "writing_documents"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "somewhat_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "see_opportunities",
+        "q15": [
+          "not_sure_meaning"
+        ],
+        "q16": "sometimes",
+        "q17": "sometimes",
+        "q18": "slightly_confident",
+        "q19": "general_idea",
+        "q19b": "rarely",
+        "q20": "disagree",
+        "q21": "disagree",
+        "q22": "neither",
+        "q23": [
+          "dont_know_where_useful",
+          "policies_unclear",
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "better_prompts",
+          "reusable_workflows",
+          "role_specific"
+        ],
+        "q25": [
+          "live_workshops"
+        ],
+        "q26": [
+          "creating_content",
+          "email_communication",
+          "presentations",
+          "research_information",
+          "writing_documents"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-035",
+      "submittedOn": "2026-06-05",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "marketing_communications",
+        "q2": "prefer_not_to_say",
+        "q3": "technical_systems",
+        "q4": "few_times_week",
+        "q5": "few_times_week",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "customer_support",
+          "planning_project_management",
+          "research_information",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "slightly_confident",
+        "q10": "somewhat_confident",
+        "q11": "somewhat_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "no",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "rarely",
+        "q17": "sometimes",
+        "q18": "unsure",
+        "q19": "not_defined",
+        "q19b": "rarely",
+        "q20": "neither",
+        "q21": "disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "dont_know_how_to_use",
+          "policies_unclear",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "better_prompts",
+          "privacy_security_responsible"
+        ],
+        "q25": [
+          "internal_champions",
+          "role_specific_examples"
+        ],
+        "q26": [
+          "email_communication",
+          "research_information"
+        ],
+        "q27": "Pulling numbers out of several spreadsheets into one monthly view.",
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-036",
+      "submittedOn": "2026-06-08",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "marketing_communications",
+        "q2": "individual_contributor",
+        "q3": "documents_information_data",
+        "q4": "most_workdays",
+        "q5": "few_times_week",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "creating_content",
+          "research_information",
+          "writing_documents"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "slightly_confident",
+        "q10": "slightly_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "see_opportunities",
+        "q15": [
+          "not_sure_meaning"
+        ],
+        "q16": "rarely",
+        "q17": "sometimes",
+        "q18": "somewhat_confident",
+        "q19": "mostly",
+        "q19b": "sometimes",
+        "q20": "disagree",
+        "q21": "agree",
+        "q22": "neither",
+        "q23": [
+          "accuracy_concern",
+          "not_enough_time"
+        ],
+        "q24": [
+          "automation",
+          "better_prompts"
+        ],
+        "q25": [
+          "role_specific_examples",
+          "short_tutorials"
+        ],
+        "q26": [
+          "meetings_followup",
+          "research_information",
+          "scheduling_coordination",
+          "writing_documents"
+        ],
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-037",
+      "submittedOn": "2026-06-09",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "customer_service",
+        "q2": "individual_contributor",
+        "q3": "documents_information_data",
+        "q4": "most_workdays",
+        "q5": "few_times_month",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "creating_content",
+          "email_communication",
+          "meetings_followup",
+          "writing_documents"
+        ],
+        "q8": "very_confident",
+        "q9": "slightly_confident",
+        "q10": "somewhat_confident",
+        "q11": "not_done_this",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "no",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "sometimes",
+        "q17": "always",
+        "q18": "somewhat_confident",
+        "q19": "mostly",
+        "q19b": "rarely",
+        "q20": "disagree",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern",
+          "dont_know_how_to_use"
+        ],
+        "q24": [
+          "ai_basics"
+        ],
+        "q25": [
+          "written_guides"
+        ],
+        "q26": [
+          "customer_support",
+          "email_communication"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-038",
+      "submittedOn": "2026-06-10",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "finance_accounting",
+        "q2": "individual_contributor",
+        "q3": "people_customers",
+        "q4": "few_times_week",
+        "q5": "most_workdays",
+        "q6": [
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "customer_support",
+          "research_information"
+        ],
+        "q8": "very_confident",
+        "q9": "slightly_confident",
+        "q10": "somewhat_confident",
+        "q11": "somewhat_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "rarely",
+        "q14": "see_opportunities",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "sometimes",
+        "q17": "always",
+        "q18": "somewhat_confident",
+        "q19": "general_idea",
+        "q19b": "rarely",
+        "q20": "neither",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern",
+          "dont_know_where_useful"
+        ],
+        "q24": [
+          "role_specific"
+        ],
+        "q25": [
+          "internal_champions"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "email_communication",
+          "meetings_followup",
+          "research_information",
+          "reviewing_summarizing",
+          "scheduling_coordination",
+          "writing_documents"
+        ],
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-039",
+      "submittedOn": "2026-06-11",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "finance_accounting",
+        "q2": "team_lead",
+        "q3": "content_communications",
+        "q4": "few_times_week",
+        "q5": "most_workdays",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "research_information",
+          "writing_documents"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "somewhat_confident",
+        "q10": "slightly_confident",
+        "q11": "somewhat_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "see_opportunities",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "sometimes",
+        "q17": "always",
+        "q18": "somewhat_confident",
+        "q19": "unsure",
+        "q19b": "never",
+        "q20": "neither",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern",
+          "no_access_to_tools"
+        ],
+        "q24": [
+          "better_prompts"
+        ],
+        "q25": [
+          "written_guides"
+        ],
+        "q26": [
+          "creating_content",
+          "data_entry_cleanup",
+          "planning_project_management",
+          "scheduling_coordination"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-040",
+      "submittedOn": "2026-06-12",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "administration_operations",
+        "q2": "manager",
+        "q3": "planning_management_decision",
+        "q4": "most_workdays",
+        "q5": "most_workdays",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt"
+        ],
+        "q7": [
+          "email_communication",
+          "research_information"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "not_done_this",
+        "q12": "regular_individual_tasks",
+        "q13": "rarely",
+        "q14": "unsure",
+        "q15": [
+          "not_sure_meaning"
+        ],
+        "q16": "rarely",
+        "q17": "sometimes",
+        "q18": "slightly_confident",
+        "q19": "general_idea",
+        "q19b": "sometimes",
+        "q20": "neither",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_how_to_use",
+          "not_enough_time",
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "ai_basics"
+        ],
+        "q25": [
+          "written_guides"
+        ],
+        "q26": [
+          "customer_support",
+          "writing_documents"
+        ],
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-041",
+      "submittedOn": "2026-06-01",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "human_resources",
+        "q2": "senior_manager",
+        "q3": "even_mix",
+        "q4": "few_times_week",
+        "q5": "most_workdays",
+        "q6": [
+          "chatgpt"
+        ],
+        "q7": [
+          "customer_support",
+          "email_communication",
+          "reviewing_summarizing"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "slightly_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "see_opportunities",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "usually",
+        "q17": "always",
+        "q18": "slightly_confident",
+        "q19": "unsure",
+        "q19b": "sometimes",
+        "q20": "neither",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_where_useful",
+          "policies_unclear"
+        ],
+        "q24": [
+          "better_prompts",
+          "privacy_security_responsible",
+          "reusable_workflows"
+        ],
+        "q25": [
+          "internal_champions",
+          "role_specific_examples"
+        ],
+        "q26": [
+          "meetings_followup",
+          "reviewing_summarizing",
+          "scheduling_coordination",
+          "writing_documents"
+        ],
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-042",
+      "submittedOn": "2026-06-02",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "sales_business_development",
+        "q2": "individual_contributor",
+        "q3": "documents_information_data",
+        "q4": "few_times_week",
+        "q5": "most_workdays",
+        "q6": [
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "meetings_followup"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "one_small_process",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "usually",
+        "q17": "always",
+        "q18": "slightly_confident",
+        "q19": "not_defined",
+        "q19b": "never",
+        "q20": "neither",
+        "q21": "agree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "dont_know_how_to_use",
+          "no_access_to_tools",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "role_specific"
+        ],
+        "q25": [
+          "live_workshops"
+        ],
+        "q26": [
+          "email_communication",
+          "presentations",
+          "scheduling_coordination"
+        ],
+        "q27": "Pulling numbers out of several spreadsheets into one monthly view.",
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-043",
+      "submittedOn": "2026-06-03",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "product_design",
+        "q2": "individual_contributor",
+        "q3": "people_customers",
+        "q4": "few_times_week",
+        "q5": "most_workdays",
+        "q6": [
+          "chatgpt"
+        ],
+        "q7": [
+          "creating_content",
+          "email_communication",
+          "reviewing_summarizing"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "not_done_this",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "usually",
+        "q17": "usually",
+        "q18": "unsure",
+        "q19": "not_defined",
+        "q19b": "rarely",
+        "q20": "neither",
+        "q21": "neither",
+        "q22": "strongly_disagree",
+        "q23": [
+          "policies_unclear"
+        ],
+        "q24": [
+          "org_tools",
+          "privacy_security_responsible"
+        ],
+        "q25": [
+          "role_specific_examples"
+        ],
+        "q26": [
+          "customer_support",
+          "data_entry_cleanup"
+        ],
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-044",
+      "submittedOn": "2026-06-04",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "it_technology",
+        "q2": "individual_contributor",
+        "q3": "people_customers",
+        "q4": "most_workdays",
+        "q5": "most_workdays",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt"
+        ],
+        "q7": [
+          "data_entry_cleanup",
+          "email_communication",
+          "reviewing_summarizing",
+          "writing_documents"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "somewhat_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "sometimes",
+        "q17": "sometimes",
+        "q18": "unsure",
+        "q19": "general_idea",
+        "q19b": "rarely",
+        "q20": "neither",
+        "q21": "agree",
+        "q22": "neither",
+        "q23": [
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "better_prompts"
+        ],
+        "q25": [
+          "short_tutorials",
+          "written_guides"
+        ],
+        "q26": [
+          "customer_support",
+          "data_entry_cleanup",
+          "scheduling_coordination",
+          "training_onboarding"
+        ],
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-045",
+      "submittedOn": "2026-06-05",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "it_technology",
+        "q2": "individual_contributor",
+        "q3": "content_communications",
+        "q4": "most_workdays",
+        "q5": "most_workdays",
+        "q6": [
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "email_communication",
+          "meetings_followup",
+          "planning_project_management",
+          "research_information",
+          "reviewing_summarizing",
+          "scheduling_coordination",
+          "writing_documents"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "slightly_confident",
+        "q10": "slightly_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "rarely",
+        "q14": "see_opportunities",
+        "q15": [
+          "not_sure_meaning"
+        ],
+        "q16": "sometimes",
+        "q17": "usually",
+        "q18": "somewhat_confident",
+        "q19": "general_idea",
+        "q19b": "never",
+        "q20": "disagree",
+        "q21": "neither",
+        "q22": "strongly_disagree",
+        "q23": [
+          "accuracy_concern",
+          "no_access_to_tools"
+        ],
+        "q24": [
+          "better_prompts",
+          "role_specific"
+        ],
+        "q25": [
+          "short_tutorials",
+          "written_guides"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "email_communication",
+          "meetings_followup",
+          "planning_project_management",
+          "reviewing_summarizing",
+          "spreadsheets_analysis",
+          "training_onboarding"
+        ],
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-046",
+      "submittedOn": "2026-06-08",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "marketing_communications",
+        "q2": "team_lead",
+        "q3": "technical_systems",
+        "q4": "most_workdays",
+        "q5": "few_times_week",
+        "q6": [
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "meetings_followup"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "not_done_this",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "rarely",
+        "q17": "sometimes",
+        "q18": "somewhat_confident",
+        "q19": "not_defined",
+        "q19b": "sometimes",
+        "q20": "disagree",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_how_to_use",
+          "dont_know_where_useful",
+          "not_enough_time"
+        ],
+        "q24": [
+          "ai_basics",
+          "better_prompts",
+          "org_tools"
+        ],
+        "q25": [
+          "short_tutorials"
+        ],
+        "q26": [
+          "creating_content",
+          "email_communication",
+          "meetings_followup",
+          "repetitive_system_updates"
+        ],
+        "q27": "Pulling numbers out of several spreadsheets into one monthly view.",
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-047",
+      "submittedOn": "2026-06-09",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "marketing_communications",
+        "q2": "manager",
+        "q3": "prefer_not_to_say",
+        "q4": "few_times_week",
+        "q5": "few_times_week",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "research_information"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "somewhat_confident",
+        "q10": "very_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "rarely",
+        "q14": "no",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "usually",
+        "q17": "sometimes",
+        "q18": "somewhat_confident",
+        "q19": "not_defined",
+        "q19b": "sometimes",
+        "q20": "unsure",
+        "q21": "agree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "accuracy_concern",
+          "policies_unclear",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "privacy_security_responsible",
+          "role_specific"
+        ],
+        "q25": [
+          "role_specific_examples",
+          "written_guides"
+        ],
+        "q26": [
+          "scheduling_coordination",
+          "writing_documents"
+        ],
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-048",
+      "submittedOn": "2026-06-10",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "customer_service",
+        "q2": "senior_manager",
+        "q3": "documents_information_data",
+        "q4": "most_workdays",
+        "q5": "few_times_week",
+        "q6": [
+          "chatgpt",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "email_communication",
+          "meetings_followup",
+          "research_information",
+          "spreadsheets_analysis"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "often",
+        "q14": "see_opportunities",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "usually",
+        "q17": "always",
+        "q18": "slightly_confident",
+        "q19": "general_idea",
+        "q19b": "prefer_not_to_say",
+        "q20": "disagree",
+        "q21": "agree",
+        "q22": "neither",
+        "q23": [
+          "accuracy_concern",
+          "no_access_to_tools",
+          "not_enough_time"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "better_prompts",
+          "role_specific"
+        ],
+        "q25": [
+          "written_guides"
+        ],
+        "q26": [
+          "email_communication",
+          "meetings_followup",
+          "reviewing_summarizing",
+          "scheduling_coordination"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-049",
+      "submittedOn": "2026-06-11",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "finance_accounting",
+        "q2": "individual_contributor",
+        "q3": "people_customers",
+        "q4": "most_workdays",
+        "q5": "few_times_week",
+        "q6": [
+          "chatgpt",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "creating_content",
+          "customer_support",
+          "data_entry_cleanup",
+          "email_communication",
+          "meetings_followup"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "one_small_process",
+        "q15": [
+          "reusable_prompt_template"
+        ],
+        "q16": "usually",
+        "q17": "sometimes",
+        "q18": "unsure",
+        "q19": "unsure",
+        "q19b": "never",
+        "q20": "neither",
+        "q21": "agree",
+        "q22": "disagree",
+        "q23": [
+          "not_enough_time",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "ai_basics",
+          "better_prompts"
+        ],
+        "q25": [
+          "role_specific_examples",
+          "written_guides"
+        ],
+        "q26": [
+          "presentations",
+          "spreadsheets_analysis"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-050",
+      "submittedOn": "2026-06-12",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "administration_operations",
+        "q2": "individual_contributor",
+        "q3": "content_communications",
+        "q4": "most_workdays",
+        "q5": "most_workdays",
+        "q6": [
+          "chatgpt",
+          "microsoft_copilot"
+        ],
+        "q7": [
+          "planning_project_management",
+          "research_information",
+          "reviewing_summarizing"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "slightly_confident",
+        "q10": "very_confident",
+        "q11": "slightly_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "unsure",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "sometimes",
+        "q17": "sometimes",
+        "q18": "slightly_confident",
+        "q19": "general_idea",
+        "q19b": "never",
+        "q20": "neither",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_where_useful",
+          "not_enough_time"
+        ],
+        "q24": [
+          "accuracy_quality"
+        ],
+        "q25": [
+          "internal_champions",
+          "written_guides"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "email_communication",
+          "scheduling_coordination",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-051",
+      "submittedOn": "2026-06-01",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "administration_operations",
+        "q2": "individual_contributor",
+        "q3": "planning_management_decision",
+        "q4": "few_times_week",
+        "q5": "few_times_week",
+        "q6": [
+          "built_in_ai_features"
+        ],
+        "q7": [
+          "customer_support",
+          "scheduling_coordination"
+        ],
+        "q8": "very_confident",
+        "q9": "somewhat_confident",
+        "q10": "somewhat_confident",
+        "q11": "somewhat_confident",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "one_small_process",
+        "q15": [
+          "not_sure_meaning"
+        ],
+        "q16": "sometimes",
+        "q17": "usually",
+        "q18": "somewhat_confident",
+        "q19": "not_defined",
+        "q19b": "never",
+        "q20": "neither",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "not_enough_time",
+          "policies_unclear",
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "ai_basics",
+          "role_specific"
+        ],
+        "q25": [
+          "learning_by_building",
+          "written_guides"
+        ],
+        "q26": [
+          "planning_project_management",
+          "research_information",
+          "scheduling_coordination",
+          "writing_documents"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-052",
+      "submittedOn": "2026-06-02",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "human_resources",
+        "q2": "individual_contributor",
+        "q3": "technical_systems",
+        "q4": "tried_rarely",
+        "q5": "few_times_month",
+        "q6": [
+          "chatgpt"
+        ],
+        "q7": [
+          "research_information"
+        ],
+        "q8": "not_confident",
+        "q9": "not_confident",
+        "q10": "not_done_this",
+        "q11": "slightly_confident",
+        "q12": "no_work_ai_use",
+        "q13": "no_ai_use",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "not_applicable",
+        "q17": "usually",
+        "q18": "slightly_confident",
+        "q19": "no",
+        "q19b": "never",
+        "q20": "strongly_disagree",
+        "q21": "strongly_disagree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_where_useful",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "automation"
+        ],
+        "q25": [
+          "written_guides"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "planning_project_management",
+          "spreadsheets_analysis"
+        ],
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-053",
+      "submittedOn": "2026-06-03",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "sales_business_development",
+        "q2": "team_lead",
+        "q3": "documents_information_data",
+        "q4": "tried_rarely",
+        "q5": "less_than_monthly",
+        "q6": [
+          "no_work_ai_use"
+        ],
+        "q7": [
+          "research_information"
+        ],
+        "q8": "slightly_confident",
+        "q9": "not_done_this",
+        "q10": "not_done_this",
+        "q11": "not_confident",
+        "q12": "occasional_experiments",
+        "q13": "rarely",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "sometimes",
+        "q17": "usually",
+        "q18": "slightly_confident",
+        "q19": "unsure",
+        "q19b": "no_org_provided_access",
+        "q20": "unsure",
+        "q21": "strongly_disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "accuracy_concern",
+          "dont_know_where_useful"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "better_prompts"
+        ],
+        "q25": [
+          "written_guides"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "meetings_followup",
+          "scheduling_coordination",
+          "writing_documents"
+        ],
+        "q27": "Cleaning up data that arrives in a different format every month.",
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-054",
+      "submittedOn": "2026-06-04",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "product_design",
+        "q2": "manager",
+        "q3": "documents_information_data",
+        "q4": "tried_rarely",
+        "q5": "never",
+        "q6": [
+          "unsure_which_count"
+        ],
+        "q7": [
+          "research_information"
+        ],
+        "q8": "not_confident",
+        "q9": "not_done_this",
+        "q10": "slightly_confident",
+        "q11": "not_confident",
+        "q12": "occasional_experiments",
+        "q13": "no_ai_use",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "not_applicable",
+        "q17": "usually",
+        "q18": "unsure",
+        "q19": "not_defined",
+        "q19b": "never",
+        "q20": "unsure",
+        "q21": "disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "accuracy_concern",
+          "dont_know_where_useful"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "org_tools",
+          "role_specific"
+        ],
+        "q25": [
+          "role_specific_examples",
+          "short_tutorials"
+        ],
+        "q26": [
+          "planning_project_management",
+          "repetitive_system_updates",
+          "spreadsheets_analysis"
+        ],
+        "q27": "Cleaning up data that arrives in a different format every month.",
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-055",
+      "submittedOn": "2026-06-05",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "it_technology",
+        "q2": "senior_manager",
+        "q3": "people_customers",
+        "q4": "few_times_month",
+        "q5": "less_than_monthly",
+        "q6": [
+          "no_work_ai_use"
+        ],
+        "q7": [
+          "research_information"
+        ],
+        "q8": "slightly_confident",
+        "q9": "not_confident",
+        "q10": "slightly_confident",
+        "q11": "slightly_confident",
+        "q12": "occasional_experiments",
+        "q13": "never",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "sometimes",
+        "q17": "usually",
+        "q18": "slightly_confident",
+        "q19": "no",
+        "q19b": "never",
+        "q20": "disagree",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "policies_unclear",
+          "privacy_security_concern",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "automation",
+          "reusable_workflows",
+          "role_specific"
+        ],
+        "q25": [
+          "written_guides"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "email_communication",
+          "spreadsheets_analysis",
+          "training_onboarding"
+        ],
+        "q27": "Cleaning up data that arrives in a different format every month.",
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-056",
+      "submittedOn": "2026-06-08",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "it_technology",
+        "q2": "individual_contributor",
+        "q3": "content_communications",
+        "q4": "few_times_month",
+        "q5": "less_than_monthly",
+        "q6": [
+          "chatgpt"
+        ],
+        "q7": [
+          "research_information"
+        ],
+        "q8": "slightly_confident",
+        "q9": "not_done_this",
+        "q10": "not_done_this",
+        "q11": "not_confident",
+        "q12": "no_work_ai_use",
+        "q13": "rarely",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "sometimes",
+        "q17": "usually",
+        "q18": "unsure",
+        "q19": "not_defined",
+        "q19b": "never",
+        "q20": "disagree",
+        "q21": "disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "ai_basics",
+          "automation"
+        ],
+        "q25": [
+          "internal_champions"
+        ],
+        "q26": [
+          "email_communication"
+        ],
+        "q27": "Cleaning up data that arrives in a different format every month.",
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-057",
+      "submittedOn": "2026-06-09",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "marketing_communications",
+        "q2": "individual_contributor",
+        "q3": "planning_management_decision",
+        "q4": "few_times_month",
+        "q5": "less_than_monthly",
+        "q6": [
+          "unsure_which_count"
+        ],
+        "q7": [
+          "research_information"
+        ],
+        "q8": "slightly_confident",
+        "q9": "not_confident",
+        "q10": "slightly_confident",
+        "q11": "not_confident",
+        "q12": "no_work_ai_use",
+        "q13": "never",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "not_applicable",
+        "q17": "usually",
+        "q18": "unsure",
+        "q19": "unsure",
+        "q19b": "no_org_provided_access",
+        "q20": "disagree",
+        "q21": "strongly_disagree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_where_useful"
+        ],
+        "q24": [
+          "org_tools",
+          "privacy_security_responsible"
+        ],
+        "q25": [
+          "role_specific_examples",
+          "written_guides"
+        ],
+        "q26": [
+          "repetitive_system_updates",
+          "research_information",
+          "writing_documents"
+        ],
+        "q27": "Cleaning up data that arrives in a different format every month.",
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-058",
+      "submittedOn": "2026-06-10",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "customer_service",
+        "q2": "individual_contributor",
+        "q3": "technical_systems",
+        "q4": "few_times_month",
+        "q5": "less_than_monthly",
+        "q6": [
+          "unsure_which_count"
+        ],
+        "q7": [
+          "research_information"
+        ],
+        "q8": "slightly_confident",
+        "q9": "not_confident",
+        "q10": "not_done_this",
+        "q11": "slightly_confident",
+        "q12": "no_work_ai_use",
+        "q13": "never",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "not_applicable",
+        "q17": "usually",
+        "q18": "unsure",
+        "q19": "not_defined",
+        "q19b": "no_org_provided_access",
+        "q20": "strongly_disagree",
+        "q21": "strongly_disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "better_prompts"
+        ],
+        "q25": [
+          "role_specific_examples"
+        ],
+        "q26": [
+          "creating_content",
+          "email_communication",
+          "meetings_followup",
+          "presentations",
+          "repetitive_system_updates",
+          "research_information",
+          "reviewing_summarizing",
+          "scheduling_coordination",
+          "writing_documents"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-059",
+      "submittedOn": "2026-06-11",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "customer_service",
+        "q2": "individual_contributor",
+        "q3": "documents_information_data",
+        "q4": "tried_rarely",
+        "q5": "never",
+        "q6": [
+          "unsure_which_count"
+        ],
+        "q7": [
+          "research_information"
+        ],
+        "q8": "slightly_confident",
+        "q9": "not_done_this",
+        "q10": "not_done_this",
+        "q11": "not_confident",
+        "q12": "occasional_experiments",
+        "q13": "never",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "sometimes",
+        "q17": "usually",
+        "q18": "slightly_confident",
+        "q19": "unsure",
+        "q19b": "rarely",
+        "q20": "disagree",
+        "q21": "strongly_disagree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_where_useful",
+          "not_enough_time",
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "better_prompts"
+        ],
+        "q25": [
+          "short_tutorials"
+        ],
+        "q26": [
+          "creating_content",
+          "data_entry_cleanup",
+          "email_communication",
+          "planning_project_management",
+          "research_information",
+          "reviewing_summarizing",
+          "training_onboarding"
+        ],
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-060",
+      "submittedOn": "2026-06-12",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "finance_accounting",
+        "q2": "team_lead",
+        "q3": "documents_information_data",
+        "q4": "never",
+        "q5": "never",
+        "q6": [
+          "no_work_ai_use"
+        ],
+        "q7": [
+          "research_information"
+        ],
+        "q8": "slightly_confident",
+        "q9": "not_done_this",
+        "q10": "slightly_confident",
+        "q11": "not_confident",
+        "q12": "occasional_experiments",
+        "q13": "rarely",
+        "q14": "no",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "not_applicable",
+        "q17": "usually",
+        "q18": "unsure",
+        "q19": "no",
+        "q19b": "no_org_provided_access",
+        "q20": "disagree",
+        "q21": "strongly_disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "dont_know_how_to_use",
+          "dont_know_where_useful",
+          "not_enough_time"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "org_tools",
+          "reusable_workflows"
+        ],
+        "q25": [
+          "short_tutorials"
+        ],
+        "q26": [
+          "writing_documents"
+        ],
+        "q27": "Cleaning up data that arrives in a different format every month.",
+        "q28": "extremely_interested"
+      }
+    },
+    {
+      "id": "fixture-061",
+      "submittedOn": "2026-06-01",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "administration_operations",
+        "q2": "manager",
+        "q3": "people_customers",
+        "q4": "few_times_month",
+        "q5": "never",
+        "q6": [
+          "chatgpt"
+        ],
+        "q7": [
+          "research_information"
+        ],
+        "q8": "slightly_confident",
+        "q9": "not_confident",
+        "q10": "slightly_confident",
+        "q11": "not_confident",
+        "q12": "occasional_experiments",
+        "q13": "no_ai_use",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "not_applicable",
+        "q17": "not_applicable",
+        "q18": "slightly_confident",
+        "q19": "not_defined",
+        "q19b": "never",
+        "q20": "strongly_disagree",
+        "q21": "strongly_disagree",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern"
+        ],
+        "q24": [
+          "ai_basics",
+          "reusable_workflows",
+          "role_specific"
+        ],
+        "q25": [
+          "written_guides"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "email_communication",
+          "meetings_followup",
+          "scheduling_coordination",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-062",
+      "submittedOn": "2026-06-02",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "human_resources",
+        "q2": "executive_owner",
+        "q3": "content_communications",
+        "q4": "tried_rarely",
+        "q5": "few_times_month",
+        "q6": [
+          "chatgpt"
+        ],
+        "q7": [
+          "meetings_followup"
+        ],
+        "q8": "slightly_confident",
+        "q9": "not_done_this",
+        "q10": "somewhat_confident",
+        "q11": "not_confident",
+        "q12": "occasional_experiments",
+        "q13": "never",
+        "q14": "see_opportunities",
+        "q15": [
+          "not_sure_meaning"
+        ],
+        "q16": "not_applicable",
+        "q17": "usually",
+        "q18": "slightly_confident",
+        "q19": "general_idea",
+        "q19b": "never",
+        "q20": "unsure",
+        "q21": "disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "policies_unclear"
+        ],
+        "q24": [
+          "ai_basics"
+        ],
+        "q25": [
+          "live_workshops"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "email_communication",
+          "presentations",
+          "reviewing_summarizing"
+        ],
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-063",
+      "submittedOn": "2026-06-03",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "sales_business_development",
+        "q2": "individual_contributor",
+        "q3": "planning_management_decision",
+        "q4": "tried_rarely",
+        "q5": "few_times_month",
+        "q6": [
+          "unsure_which_count"
+        ],
+        "q7": [
+          "email_communication"
+        ],
+        "q8": "slightly_confident",
+        "q9": "not_done_this",
+        "q10": "slightly_confident",
+        "q11": "slightly_confident",
+        "q12": "occasional_experiments",
+        "q13": "rarely",
+        "q14": "no",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "usually",
+        "q17": "usually",
+        "q18": "unsure",
+        "q19": "unsure",
+        "q19b": "never",
+        "q20": "unsure",
+        "q21": "disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "dont_know_how_to_use",
+          "no_access_to_tools",
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "better_prompts",
+          "privacy_security_responsible"
+        ],
+        "q25": [
+          "learning_by_building",
+          "role_specific_examples"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "meetings_followup",
+          "planning_project_management"
+        ],
+        "q28": "very_interested"
+      }
+    },
+    {
+      "id": "fixture-064",
+      "submittedOn": "2026-06-04",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "legal_compliance",
+        "q2": "individual_contributor",
+        "q3": "even_mix",
+        "q4": "tried_rarely",
+        "q5": "less_than_monthly",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt"
+        ],
+        "q7": [
+          "scheduling_coordination"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "slightly_confident",
+        "q10": "slightly_confident",
+        "q11": "slightly_confident",
+        "q12": "occasional_experiments",
+        "q13": "never",
+        "q14": "see_opportunities",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "sometimes",
+        "q17": "always",
+        "q18": "slightly_confident",
+        "q19": "general_idea",
+        "q19b": "never",
+        "q20": "disagree",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_where_useful",
+          "no_access_to_tools",
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "reusable_workflows"
+        ],
+        "q25": [
+          "live_workshops",
+          "role_specific_examples"
+        ],
+        "q26": [
+          "customer_support",
+          "data_entry_cleanup",
+          "scheduling_coordination",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-065",
+      "submittedOn": "2026-06-05",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "prefer_not_to_say",
+        "q2": "individual_contributor",
+        "q3": "documents_information_data",
+        "q4": "few_times_month",
+        "q5": "few_times_month",
+        "q6": [
+          "chatgpt"
+        ],
+        "q7": [
+          "email_communication",
+          "meetings_followup",
+          "research_information"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "not_done_this",
+        "q10": "slightly_confident",
+        "q11": "slightly_confident",
+        "q12": "occasional_experiments",
+        "q13": "rarely",
+        "q14": "no",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "sometimes",
+        "q17": "usually",
+        "q18": "unsure",
+        "q19": "not_defined",
+        "q19b": "never",
+        "q20": "unsure",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "policies_unclear",
+          "privacy_security_concern",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "reusable_workflows"
+        ],
+        "q25": [
+          "role_specific_examples",
+          "short_tutorials"
+        ],
+        "q26": [
+          "meetings_followup",
+          "reviewing_summarizing",
+          "scheduling_coordination",
+          "spreadsheets_analysis"
+        ],
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-066",
+      "submittedOn": "2026-06-08",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "it_technology",
+        "q2": "individual_contributor",
+        "q3": "people_customers",
+        "q4": "few_times_month",
+        "q5": "less_than_monthly",
+        "q6": [
+          "built_in_ai_features",
+          "unsure_which_count"
+        ],
+        "q7": [
+          "research_information"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "not_done_this",
+        "q10": "somewhat_confident",
+        "q11": "not_confident",
+        "q12": "occasional_experiments",
+        "q13": "rarely",
+        "q14": "see_opportunities",
+        "q15": [
+          "not_sure_meaning"
+        ],
+        "q16": "not_applicable",
+        "q17": "usually",
+        "q18": "slightly_confident",
+        "q19": "general_idea",
+        "q19b": "never",
+        "q20": "unsure",
+        "q21": "disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "accuracy_concern",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "reusable_workflows"
+        ],
+        "q25": [
+          "written_guides"
+        ],
+        "q26": [
+          "customer_support",
+          "data_entry_cleanup",
+          "meetings_followup",
+          "reviewing_summarizing",
+          "scheduling_coordination"
+        ],
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-067",
+      "submittedOn": "2026-06-09",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "marketing_communications",
+        "q2": "team_lead",
+        "q3": "people_customers",
+        "q4": "tried_rarely",
+        "q5": "less_than_monthly",
+        "q6": [
+          "chatgpt"
+        ],
+        "q7": [
+          "creating_content"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "not_done_this",
+        "q10": "somewhat_confident",
+        "q11": "slightly_confident",
+        "q12": "occasional_experiments",
+        "q13": "rarely",
+        "q14": "see_opportunities",
+        "q15": [
+          "not_sure_meaning"
+        ],
+        "q16": "usually",
+        "q17": "sometimes",
+        "q18": "unsure",
+        "q19": "unsure",
+        "q19b": "never",
+        "q20": "disagree",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern",
+          "dont_know_how_to_use",
+          "privacy_security_concern"
+        ],
+        "q24": [
+          "accuracy_quality",
+          "org_tools",
+          "role_specific"
+        ],
+        "q25": [
+          "internal_champions",
+          "live_workshops"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "meetings_followup"
+        ],
+        "q28": "slightly_interested"
+      }
+    },
+    {
+      "id": "fixture-068",
+      "submittedOn": "2026-06-10",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "marketing_communications",
+        "q2": "manager",
+        "q3": "content_communications",
+        "q4": "tried_rarely",
+        "q5": "few_times_month",
+        "q6": [
+          "chatgpt",
+          "unsure_which_count"
+        ],
+        "q7": [
+          "research_information"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "not_done_this",
+        "q10": "somewhat_confident",
+        "q11": "not_confident",
+        "q12": "occasional_experiments",
+        "q13": "rarely",
+        "q14": "no",
+        "q15": [
+          "not_sure_meaning"
+        ],
+        "q16": "sometimes",
+        "q17": "usually",
+        "q18": "unsure",
+        "q19": "general_idea",
+        "q19b": "never",
+        "q20": "unsure",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern",
+          "dont_know_how_to_use"
+        ],
+        "q24": [
+          "automation",
+          "reusable_workflows",
+          "role_specific"
+        ],
+        "q25": [
+          "live_workshops"
+        ],
+        "q26": [
+          "email_communication",
+          "research_information",
+          "writing_documents"
+        ],
+        "q28": "moderately_interested"
+      }
+    },
+    {
+      "id": "fixture-069",
+      "submittedOn": "2026-06-11",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "customer_service",
+        "q2": "prefer_not_to_say",
+        "q3": "planning_management_decision",
+        "q4": "tried_rarely",
+        "q5": "few_times_month",
+        "q6": [
+          "built_in_ai_features",
+          "chatgpt"
+        ],
+        "q7": [
+          "scheduling_coordination"
+        ],
+        "q8": "slightly_confident",
+        "q9": "slightly_confident",
+        "q10": "somewhat_confident",
+        "q11": "not_confident",
+        "q12": "occasional_experiments",
+        "q13": "rarely",
+        "q14": "see_opportunities",
+        "q15": [
+          "not_sure_meaning"
+        ],
+        "q16": "usually",
+        "q17": "usually",
+        "q18": "slightly_confident",
+        "q19": "general_idea",
+        "q19b": "never",
+        "q20": "unsure",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "dont_know_how_to_use",
+          "not_enough_time"
+        ],
+        "q24": [
+          "ai_basics",
+          "org_tools",
+          "role_specific"
+        ],
+        "q25": [
+          "live_workshops",
+          "short_tutorials"
+        ],
+        "q26": [
+          "research_information",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q28": "slightly_interested"
+      }
+    },
+    {
+      "id": "fixture-070",
+      "submittedOn": "2026-06-12",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "finance_accounting",
+        "q2": "individual_contributor",
+        "q3": "even_mix",
+        "q4": "tried_rarely",
+        "q5": "never",
+        "q6": [
+          "no_work_ai_use"
+        ],
+        "q7": [
+          "no_work_ai_use"
+        ],
+        "q8": "not_done_this",
+        "q9": "not_done_this",
+        "q10": "not_done_this",
+        "q11": "not_confident",
+        "q12": "no_work_ai_use",
+        "q13": "no_ai_use",
+        "q14": "no",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "not_applicable",
+        "q17": "not_applicable",
+        "q18": "unsure",
+        "q19": "not_defined",
+        "q19b": "never",
+        "q20": "unsure",
+        "q21": "disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "accuracy_concern",
+          "not_enough_time",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "ai_basics",
+          "org_tools",
+          "role_specific"
+        ],
+        "q25": [
+          "internal_champions"
+        ],
+        "q26": [
+          "data_entry_cleanup",
+          "repetitive_system_updates",
+          "scheduling_coordination"
+        ],
+        "q28": "slightly_interested"
+      }
+    },
+    {
+      "id": "fixture-071",
+      "submittedOn": "2026-06-01",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "finance_accounting",
+        "q2": "individual_contributor",
+        "q3": "documents_information_data",
+        "q4": "never",
+        "q5": "never",
+        "q6": [
+          "no_work_ai_use"
+        ],
+        "q7": [
+          "no_work_ai_use"
+        ],
+        "q8": "not_done_this",
+        "q9": "not_done_this",
+        "q10": "not_confident",
+        "q11": "not_done_this",
+        "q12": "no_work_ai_use",
+        "q13": "no_ai_use",
+        "q14": "no",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "not_applicable",
+        "q17": "not_applicable",
+        "q18": "unsure",
+        "q19": "not_defined",
+        "q19b": "never",
+        "q20": "disagree",
+        "q21": "disagree",
+        "q22": "strongly_disagree",
+        "q23": [
+          "dont_know_where_useful",
+          "no_access_to_tools"
+        ],
+        "q24": [
+          "ai_basics",
+          "better_prompts"
+        ],
+        "q25": [
+          "live_workshops",
+          "short_tutorials"
+        ],
+        "q26": [
+          "email_communication",
+          "reviewing_summarizing",
+          "spreadsheets_analysis"
+        ],
+        "q28": "slightly_interested"
+      }
+    },
+    {
+      "id": "fixture-072",
+      "submittedOn": "2026-06-02",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "administration_operations",
+        "q2": "individual_contributor",
+        "q3": "people_customers",
+        "q4": "tried_rarely",
+        "q5": "never",
+        "q6": [
+          "no_work_ai_use"
+        ],
+        "q7": [
+          "no_work_ai_use"
+        ],
+        "q8": "not_done_this",
+        "q9": "not_done_this",
+        "q10": "not_confident",
+        "q11": "not_confident",
+        "q12": "no_work_ai_use",
+        "q13": "no_ai_use",
+        "q14": "no",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "not_applicable",
+        "q17": "not_applicable",
+        "q18": "unsure",
+        "q19": "unsure",
+        "q19b": "never",
+        "q20": "unsure",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "policies_unclear",
+          "unsure_which_approved"
+        ],
+        "q24": [
+          "better_prompts",
+          "role_specific"
+        ],
+        "q25": [
+          "internal_champions",
+          "role_specific_examples"
+        ],
+        "q26": [
+          "customer_support",
+          "data_entry_cleanup",
+          "email_communication",
+          "planning_project_management"
+        ],
+        "q28": "slightly_interested"
+      }
+    },
+    {
+      "id": "fixture-073",
+      "submittedOn": "2026-06-03",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "human_resources",
+        "q2": "team_lead",
+        "q3": "content_communications",
+        "q4": "never",
+        "q5": "never",
+        "q6": [
+          "no_work_ai_use"
+        ],
+        "q7": [
+          "no_work_ai_use"
+        ],
+        "q8": "not_done_this",
+        "q9": "not_done_this",
+        "q10": "not_confident",
+        "q11": "not_done_this",
+        "q12": "no_work_ai_use",
+        "q13": "no_ai_use",
+        "q14": "no",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "not_applicable",
+        "q17": "not_applicable",
+        "q18": "somewhat_confident",
+        "q19": "not_defined",
+        "q19b": "never",
+        "q20": "disagree",
+        "q21": "disagree",
+        "q22": "disagree",
+        "q23": [
+          "accuracy_concern"
+        ],
+        "q24": [
+          "ai_basics",
+          "privacy_security_responsible",
+          "reusable_workflows"
+        ],
+        "q25": [
+          "internal_champions",
+          "role_specific_examples"
+        ],
+        "q26": [
+          "research_information",
+          "writing_documents"
+        ],
+        "q28": "not_interested"
+      }
+    },
+    {
+      "id": "fixture-074",
+      "submittedOn": "2026-06-04",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "sales_business_development",
+        "q2": "manager",
+        "q3": "planning_management_decision",
+        "q4": "few_times_week",
+        "q5": "few_times_week",
+        "q7": [
+          "email_communication",
+          "presentations"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "not_done_this",
+        "q10": "not_done_this",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "unsure",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "not_applicable",
+        "q17": "not_applicable",
+        "q18": "unsure",
+        "q19": "unsure",
+        "q19b": "prefer_not_to_say",
+        "q20": "unsure",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "not_enough_time"
+        ],
+        "q24": [
+          "ai_basics"
+        ],
+        "q25": [
+          "short_tutorials"
+        ],
+        "q26": [
+          "research_information"
+        ],
+        "q28": "unsure"
+      }
+    },
+    {
+      "id": "fixture-075",
+      "submittedOn": "2026-06-05",
+      "surveyVersion": "1.1.0",
+      "answers": {
+        "q1": "legal_compliance",
+        "q2": "senior_manager",
+        "q3": "technical_systems",
+        "q4": "few_times_week",
+        "q5": "few_times_week",
+        "q7": [
+          "creating_content",
+          "email_communication",
+          "meetings_followup",
+          "writing_documents"
+        ],
+        "q8": "somewhat_confident",
+        "q9": "not_done_this",
+        "q10": "not_done_this",
+        "q12": "regular_individual_tasks",
+        "q13": "sometimes",
+        "q14": "unsure",
+        "q15": [
+          "none_of_these"
+        ],
+        "q16": "not_applicable",
+        "q17": "not_applicable",
+        "q18": "unsure",
+        "q19": "unsure",
+        "q19b": "prefer_not_to_say",
+        "q20": "unsure",
+        "q21": "neither",
+        "q22": "disagree",
+        "q23": [
+          "not_enough_time"
+        ],
+        "q24": [
+          "ai_basics"
+        ],
+        "q25": [
+          "short_tutorials"
+        ],
+        "q26": [
+          "customer_support",
+          "research_information",
+          "reviewing_summarizing",
+          "spreadsheets_analysis",
+          "writing_documents"
+        ],
+        "q28": "unsure"
+      }
+    }
+  ]
+}

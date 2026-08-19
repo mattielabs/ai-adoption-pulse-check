@@ -1,0 +1,18 @@
+# Local development secrets for `wrangler dev`.
+# Copy to `.dev.vars` and fill in real values. `.dev.vars` is gitignored and must never be committed.
+#
+# In production these are set with:
+#   wrangler secret put ADMIN_PASSCODE_HASH
+#   wrangler secret put SESSION_SECRET
+#
+# Secrets are NEVER stored in D1, in source, or in logs.
+
+# PBKDF2-HMAC-SHA256 salted hash of the deployment admin passcode.
+# Format: pbkdf2$sha256$<iterations>$<base64 salt>$<base64 derived key>
+# Consumed in Phase 2 (admin authentication). Present here so the environment
+# contract exists from Phase 0 onward.
+ADMIN_PASSCODE_HASH=""
+
+# HMAC key used to sign short-lived admin session cookies.
+# Generate with: node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+SESSION_SECRET=""

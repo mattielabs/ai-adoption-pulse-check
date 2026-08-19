@@ -1,0 +1,29 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.wrangler/
+
+# local secrets — never commit
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.env
+.env.*
+
+# test output
+coverage/
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+
+# typescript
+*.tsbuildinfo
+
+# editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
