@@ -88,6 +88,16 @@ export interface UnmanagedToolAggregate {
 }
 
 export interface DiagnosticAggregates {
+  /**
+   * Option frequencies for the SCORED single-select questions.
+   *
+   * Additive and purely descriptive: no score, weight, threshold or mapping
+   * reads these. They exist because a dimension mean answers "how high" while
+   * the detail views need "made of what" - a Confidence of 50 built from
+   * everyone answering "somewhat" is a different organization from one split
+   * between "not confident" and "very confident".
+   */
+  readonly scoredQuestions: Readonly<Record<string, OptionDistribution>>;
   readonly generalAiFrequency: OptionDistribution;
   readonly workAiFrequency: OptionDistribution;
   readonly tools: OptionDistribution;
@@ -323,6 +333,12 @@ export function aggregateResponses(responses: readonly SurveyResponse[]): Organi
     classification: { counts, rates, classifiedCount, unclassifiedCount },
     championSignal: summarizeChampionSignal(championCount),
     diagnostics: {
+      scoredQuestions: Object.fromEntries(
+        SCORED_QUESTION_IDS.filter((id) => id !== 'q7').map((id) => [
+          id,
+          singleSelectDistribution(responses, id),
+        ]),
+      ),
       generalAiFrequency: singleSelectDistribution(responses, 'q4'),
       workAiFrequency: singleSelectDistribution(responses, 'q5'),
       tools: multiSelectDistribution(responses, 'q6'),

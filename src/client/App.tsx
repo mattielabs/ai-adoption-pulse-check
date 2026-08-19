@@ -24,6 +24,11 @@ import { OrganizationPage } from './admin/OrganizationPage.js';
 import { PulseListPage } from './admin/PulseListPage.js';
 import { PulseNewPage } from './admin/PulseNewPage.js';
 import { PulseDetailPage } from './admin/PulseDetailPage.js';
+import { ResultsLayout } from './admin/results/ResultsLayout.js';
+import { OverviewTab } from './admin/results/OverviewTab.js';
+import { DimensionTab } from './admin/results/DimensionTab.js';
+import { OpportunitiesTab } from './admin/results/OpportunitiesTab.js';
+import { ResponsesTab } from './admin/results/ResponsesTab.js';
 
 export function App() {
   return (
@@ -39,6 +44,21 @@ export function App() {
         <Route path="pulses" element={<PulseListPage />} />
         <Route path="pulses/new" element={<PulseNewPage />} />
         <Route path="pulses/:id" element={<PulseDetailPage />} />
+
+        {/*
+          One layout fetches the analysis once and hosts every view, so
+          switching tabs does not re-run the analysis.
+        */}
+        <Route path="pulses/:id/results" element={<ResultsLayout />}>
+          <Route index element={<OverviewTab />} />
+          <Route path="adoption" element={<DimensionTab dimension="adoption" />} />
+          <Route path="confidence" element={<DimensionTab dimension="confidence" />} />
+          <Route path="workflow" element={<DimensionTab dimension="workflow" />} />
+          <Route path="safety" element={<DimensionTab dimension="safety" />} />
+          <Route path="enablement" element={<DimensionTab dimension="enablement" />} />
+          <Route path="opportunities" element={<OpportunitiesTab />} />
+          <Route path="responses" element={<ResponsesTab />} />
+        </Route>
       </Route>
 
       <Route path="/status" element={<SystemStatus />} />

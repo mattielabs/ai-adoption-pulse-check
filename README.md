@@ -8,40 +8,38 @@ It is deliberately *not* a maturity certification, a compliance audit, a test of
 
 ---
 
-## Status: Phase 2 — employee survey and admin control plane
+## Status: Phase 3 — survey, admin control plane, and results dashboard
 
-The deterministic core engine (Phase 0), the complete employee survey
-experience (Phase 1), and the administrative control plane (Phase 2) are built
-and validated. What is **not** built yet is the interpretation layer: the
-organization results dashboard, Opportunity Map UI, filtering and exports all
-arrive in Phase 3.
+The deterministic core engine (Phase 0), the employee survey (Phase 1), the
+administrative control plane (Phase 2), and the organization results dashboard
+(Phase 3) are built and validated. What remains is packaging: exports, the
+public synthetic demo, and open-source release.
 
 | Built | Not built yet |
 |---|---|
-| Versioned survey schema (Q1-Q28 + Q19b) | Organization results dashboard |
-| Five-dimension scoring engine | Dimension score / `Unsure` rate UI |
-| Respondent classification ladder | Recommendation cards |
-| Organization aggregation | Opportunity Map UI |
-| 10-rule recommendation engine | Demographic filtering UI |
-| Opportunity Map analysis | Free-text review view |
-| Privacy suppression + export shaping | Export download UI |
-| D1 schema and migrations | Public synthetic demo site |
-| Public Pulse API (fetch + submit) | |
-| Employee survey (8 sections + custom, drafts, review) | |
-| Local personal result + focus recommendation | |
-| Admin passcode authentication + signed session | |
-| First-run organization setup and settings | |
-| Pulse create / edit / close / duplicate / delete | |
-| Cryptographically random public survey links | |
-| Post-response configuration locking | |
-| 603 unit tests + 38 E2E tests | |
+| Versioned survey schema (Q1-Q28 + Q19b) | CSV response export UI |
+| Five-dimension scoring engine | Free-text export UI |
+| Respondent classification ladder | Aggregate JSON download |
+| Organization aggregation | Public synthetic demo site |
+| 10-rule recommendation engine | Longitudinal / benchmark comparison |
+| Opportunity Map analysis | PDF reports |
+| Privacy suppression + export shaping | |
+| Employee survey + local personal result | |
+| Admin authentication, organization setup, Pulse lifecycle | |
+| Results dashboard: dimensions, recommendations, classifications | |
+| Barriers, training demand, learning preferences | |
+| Opportunity Map + Guardrail banner | |
+| Privacy-safe single-dimension segmentation | |
+| Isolated Q27 written-response viewer | |
+| 662 unit tests + 61 E2E tests | |
 
-See [docs/phase-0.md](docs/phase-0.md), [docs/phase-1.md](docs/phase-1.md) and
-[docs/phase-2.md](docs/phase-2.md) for the precise scope boundaries.
+See [docs/phase-0.md](docs/phase-0.md), [docs/phase-1.md](docs/phase-1.md),
+[docs/phase-2.md](docs/phase-2.md) and [docs/phase-3.md](docs/phase-3.md) for
+the precise scope boundaries.
 
-The admin surface reports **a response count and nothing else** about collected
-data. No scores, no recommendations, no free text. Interpreting responses is
-Phase 3, and the boundary is enforced by tests.
+The dashboard is a presentation layer over the validated engine. React computes
+no score, threshold, ranking or suppression decision — it formats what the
+server produced, and a test asserts the rendered numbers equal the engine's.
 
 ---
 
@@ -239,17 +237,20 @@ Every response records the survey version it was collected under, and every anal
 
 ## Current limitations
 
-- **No results dashboard yet.** The admin surface manages collection; scores,
-  recommendations, the Opportunity Map, filtering and exports arrive in Phase 3.
+- **No export UI yet.** The privacy-limited CSV, free-text and aggregate JSON
+  shaping utilities exist and are tested; the download surface is Phase 4.
+- **No trend or benchmark comparison.** V1 has no longitudinal engine, by design.
 - **One administrator credential**, no recovery flow, no roles, no SSO, no audit
   log. Everyone with the passcode is the same administrator.
-- **Closed Pulses cannot be reopened.** Duplicate instead — deliberate, so a
-  reopened Pulse can never mix two collection periods.
+- **Closed Pulses cannot be reopened.** Duplicate instead.
 - Login throttling fails open if Cloudflare's rate limiter is unreachable, to
   avoid locking the only administrator out permanently.
 - Rotating the passcode does not invalidate sessions already issued (up to 8
   hours); rotating `SESSION_SECRET` does.
-- PBKDF2 at 600,000 iterations costs roughly 0.5 s of Worker CPU per login.
+- Score bands are assigned from the whole-number rounding of a score while the
+  dashboard displays one decimal, so a value within half a point of a band edge
+  can read slightly oddly. Documented in
+  [docs/phase-3.md](docs/phase-3.md); left unchanged because it is methodology.
 - Cloudflare-only. This is a stated V1 limitation, not an oversight.
 - Thresholds (40/50/60/70, the 60% validity rule, the 20% pain rule) are
   specified but **not yet pilot-validated**.

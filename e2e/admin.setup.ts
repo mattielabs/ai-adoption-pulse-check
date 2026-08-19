@@ -16,12 +16,15 @@
  */
 
 import { expect, test } from '@playwright/test';
+import { writeFileSync } from 'node:fs';
 import {
   ADMIN_STORAGE_STATE,
   apiFetch,
   createPulseViaApi,
   E2E_ORGANIZATION,
+  fixtureAnswerSets,
   signIn,
+  submitResponses,
   today,
   writeProvisionedPulses,
 } from './adminHelpers.js';
@@ -99,13 +102,45 @@ test('Flow 1 - first run: sign in, configure the organization, provision fixture
 
   const future = await createPulseViaApi(page, { name: 'Future Pulse', opensOn: '2100-01-01' });
 
+  // --- Pulses carrying real responses, for the results dashboard -----------
+  // Provisioned from the canonical fixture through the real submission
+  // endpoint, so the dashboard analyses rows that arrived the way real ones do.
+  const fixture = fixtureAnswerSets();
+
+  const results = await createPulseViaApi(page, { name: 'Annual Pulse Check', opensOn: today() });
+  await submitResponses(page, results.publicId, fixture);
+
+  const resultsEarly = await createPulseViaApi(page, { name: 'Early Pulse', opensOn: today() });
+  await submitResponses(page, resultsEarly.publicId, fixture.slice(0, 7));
+
+  const resultsSmall = await createPulseViaApi(page, { name: 'Barely Started Pulse', opensOn: today() });
+  await submitResponses(page, resultsSmall.publicId, fixture.slice(0, 3));
+
   writeProvisionedPulses({
     active: active.publicId,
     plain: plain.publicId,
     noResult: noResult.publicId,
     closed: closed.publicId,
     future: future.publicId,
+    results: results.publicId,
+    resultsSmall: resultsSmall.publicId,
+    resultsEarly: resultsEarly.publicId,
   });
+
+  // Internal ids are what the admin results route addresses.
+  writeFileSync(
+    'e2e/.pulse-admin-ids.json',
+    JSON.stringify(
+      {
+        results: results.id,
+        resultsSmall: resultsSmall.id,
+        resultsEarly: resultsEarly.id,
+      },
+      null,
+      2,
+    ),
+    'utf8',
+  );
 
   await page.context().storageState({ path: ADMIN_STORAGE_STATE });
 });

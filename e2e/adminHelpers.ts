@@ -8,6 +8,11 @@
 
 import { expect, type Page } from '@playwright/test';
 import { readFileSync, writeFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import type { SurveyAnswers } from '../src/core/survey/answers.js';
+import { validateAnswers } from '../src/core/survey/validation.js';
+import { SURVEY_VERSION } from '../src/core/versions.js';
 import { E2E_ADMIN_PASSCODE, E2E_PULSE_IDS_FILE, type E2EPulseKey } from './e2eConfig.js';
 
 export interface ApiResponse {
@@ -126,6 +131,63 @@ export async function createPulseViaApi(
   return response.body as { id: number; publicId: string };
 }
 
+/**
+ * Submits responses through the real public endpoint, in small concurrent
+ * batches.
+ *
+ * Deliberately the employee submission path rather than a direct database
+ * write: the dashboard is only meaningful if it analyses rows that arrived the
+ * way real ones do, through validation and the version check.
+ */
+export async function submitResponses(
+  page: Page,
+  publicId: string,
+  answerSets: readonly unknown[],
+): Promise<void> {
+  const accepted = await page.evaluate(
+    async ([id, sets, version]) => {
+      const payloads = sets as unknown[];
+      let ok = 0;
+
+      for (let start = 0; start < payloads.length; start += 8) {
+        const batch = payloads.slice(start, start + 8);
+        const statuses = await Promise.all(
+          batch.map(async (answers) => {
+            const response = await fetch(`/api/pulses/${id as string}/responses`, {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: JSON.stringify({ surveyVersion: version as string, answers }),
+            });
+            return response.status;
+          }),
+        );
+        ok += statuses.filter((status) => status === 201).length;
+      }
+
+      return ok;
+    },
+    [publicId, answerSets, SURVEY_VERSION] as [string, readonly unknown[], string],
+  );
+
+  expect(accepted, 'every fixture response should be accepted').toBe(answerSets.length);
+}
+
+/**
+ * The committed 75-response fixture, minus the two deliberately incomplete
+ * rows the submission endpoint rejects. Analysing this exact set is what the
+ * dashboard assertions compare against, so nothing is invented here.
+ */
+export function fixtureAnswerSets(): readonly SurveyAnswers[] {
+  const path = resolve(dirname(fileURLToPath(import.meta.url)), '../demo/sample-responses.json');
+  const fixture = JSON.parse(readFileSync(path, 'utf8')) as {
+    readonly responses: readonly { readonly answers: SurveyAnswers }[];
+  };
+
+  return fixture.responses
+    .map((response) => response.answers)
+    .filter((answers) => validateAnswers(answers).ok);
+}
+
 export function today(): string {
   return new Date().toISOString().slice(0, 10);
 }
@@ -142,6 +204,21 @@ let cachedIds: Record<string, string> | null = null;
  * Read lazily, inside tests, because Playwright imports every spec file before
  * the setup project has run.
  */
+let cachedAdminIds: Record<string, number> | null = null;
+
+/** The internal Pulse id, which is what the admin results route addresses. */
+export function adminPulseId(key: 'results' | 'resultsSmall' | 'resultsEarly'): number {
+  cachedAdminIds ??= JSON.parse(readFileSync('e2e/.pulse-admin-ids.json', 'utf8')) as Record<
+    string,
+    number
+  >;
+  const id = cachedAdminIds[key];
+  if (id === undefined) {
+    throw new Error(`No provisioned Pulse for "${key}" - the admin setup project must run first.`);
+  }
+  return id;
+}
+
 export function pulseId(key: E2EPulseKey): string {
   cachedIds ??= JSON.parse(readFileSync(E2E_PULSE_IDS_FILE, 'utf8')) as Record<string, string>;
   const id = cachedIds[key];

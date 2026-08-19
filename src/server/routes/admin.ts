@@ -14,6 +14,7 @@ import { adminOriginGuard, requireAdmin } from '../middleware/admin.js';
 import { adminAuthRoutes } from './adminAuth.js';
 import { adminOrganizationRoutes } from './adminOrganization.js';
 import { adminPulseRoutes } from './adminPulses.js';
+import { adminResultsRoutes } from './adminResults.js';
 
 /**
  * The only admin endpoints reachable without a session.
@@ -41,4 +42,7 @@ adminRoutes.use('*', async (c, next) => {
 
 adminRoutes.route('/', adminAuthRoutes);
 adminRoutes.route('/organization', adminOrganizationRoutes);
+// Results first: both routers live under /pulses, and the more specific
+// `/:id/results` paths must not be shadowed by the lifecycle routes.
+adminRoutes.route('/pulses', adminResultsRoutes);
 adminRoutes.route('/pulses', adminPulseRoutes);

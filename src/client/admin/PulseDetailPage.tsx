@@ -280,6 +280,19 @@ export function PulseDetailPage() {
               Actions
             </h2>
             <div className="mt-3 flex flex-wrap gap-3">
+              {/*
+                Always available, even below the reporting threshold: the
+                results page explains what is missing, which is more useful
+                than a disabled button that explains nothing.
+              */}
+              <button
+                type="button"
+                data-testid="view-results"
+                className={BUTTON_STYLES.primary}
+                onClick={() => void navigate(`/admin/pulses/${pulse.id}/results`)}
+              >
+                View results
+              </button>
               <button
                 type="button"
                 data-testid="edit-pulse"

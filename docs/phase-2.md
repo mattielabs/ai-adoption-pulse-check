@@ -428,9 +428,13 @@ These are intentional V1 boundaries, not defects.
 
 ---
 
-## Deliberate Phase 3 exclusions
+## What Phase 2 deliberately excluded
 
-Organization results dashboard, dimension scores, `Unsure` rates,
-recommendation cards, Opportunity Map, barrier and training analysis,
-demographic filtering, the free-text review view, CSV/JSON exports, longitudinal
-comparison, and the public synthetic demo site.
+The organization results dashboard, dimension scores, `Unsure` rates,
+recommendation cards, the Opportunity Map, barrier and training analysis,
+demographic filtering and the free-text review view were all deferred - and
+delivered in [Phase 3](phase-3.md). CSV/JSON exports, longitudinal comparison
+and the public synthetic demo site remain out of scope.
+
+`runAnalysis` was already the single analysis entry point at the end of Phase 2;
+Phase 3 consumed it without changing it.

@@ -161,16 +161,40 @@ Pulse. Details and the full lifecycle are in
 ### Analysis
 
 ```text
-Admin request
-  ↓  authenticate session          (built in Phase 2)
-  ↓  load Pulse responses          (Phase 3)
-  ↓  APPLY PRIVACY SUPPRESSION     ← first, not last
+GET /api/admin/pulses/:id/results
+  ↓  authenticate session
+  ↓  load responses               (Q27 removed by the query itself)
+  ↓  MINIMUM SAMPLE GATE          ← before anything is computed
+  ↓  parse + validate stored answers
+  ↓  APPLY PRIVACY SUPPRESSION    ← first, not last
   ↓  respondent scoring
   ↓  organization aggregation
   ↓  recommendation engine
   ↓  opportunity engine
+  ↓  explicit core -> DTO mapping ← the per-respondent array stops here
 Return safe analysis
 ```
+
+Two gates sit ahead of the engine rather than behind it. Below five responses
+nothing is calculated at all, so there is no aggregate in memory to leak; and a
+suppressed segment never has one computed for it. Neither is a client-side
+hiding of data that arrived anyway.
+
+The mapping into the results DTO is written field by field rather than spread.
+`OrganizationAggregate` carries a `respondents` array of per-person scores and
+row ids, and an explicit mapping is what guarantees a field added to the core
+aggregate later cannot reach a browser by accident. See
+[phase-3.md](phase-3.md).
+
+### Free text is fetched separately, on purpose
+
+Q27 has its own endpoint, its own query and its own type. The analysis query
+removes it with `json_remove` before the row leaves SQLite; the free-text query
+returns nothing but the text, in random order. Nothing in the scoring,
+aggregation, classification, recommendation or opportunity code reads Q27 - a
+test runs the whole pipeline with and without it and requires identical output -
+so the separation costs nothing and removes the join that would make written
+answers matchable to a department.
 
 Suppression running **first** is deliberate. If a segment fails the group-or-complement check, no aggregate is computed for it at all, so there is nothing downstream that could accidentally serialize. `runAnalysis` returns `{ suppressed: true, reason }` and literally nothing else; a test asserts the exact JSON shape.
 
@@ -242,6 +266,17 @@ Added in Phase 2:
   bounded collision retry.
 - **Server-enforced configuration locking** once a Pulse has responses, so
   collected answers stay interpretable against the configuration respondents saw.
+
+Added in Phase 3:
+
+- **The minimum-sample gate runs before analysis**, so sub-threshold Pulses
+  produce no aggregate rather than a hidden one.
+- **An explicit results DTO** keeps per-respondent records server-side; tests
+  assert the exhaustive key set of every results response.
+- **Free text is isolated at the data-access layer**, never segmentable, and
+  returned as plain strings with no id, date or work context.
+- **Suppressed segments carry no aggregate**, and segment availability is
+  exposed as booleans only - never a group size.
 
 There is deliberately no plaintext `ADMIN_PASSCODE` variable anywhere: the
 application cannot read one and will not accept one.

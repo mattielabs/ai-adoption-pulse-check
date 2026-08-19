@@ -55,5 +55,10 @@ export * from './privacy/exports.js';
 
 export * from './analysis/runAnalysis.js';
 
+export * from './recommendations/presentation.js';
+export * from './results/contracts.js';
+export * from './results/methodology.js';
+export * from './results/buildResults.js';
+
 export * from './util/number.js';
 export * from './util/random.js';

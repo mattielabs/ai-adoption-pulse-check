@@ -28,7 +28,7 @@ function optionEnum(question: SurveyQuestion): z.ZodEnum<Record<string, string>>
   return z.enum(ids);
 }
 
-function schemaForQuestion(question: SurveyQuestion): z.ZodTypeAny {
+function schemaForQuestion(question: SurveyQuestion, lenient = false): z.ZodTypeAny {
   switch (question.type) {
     case 'single_select':
       return optionEnum(question);
@@ -47,7 +47,7 @@ function schemaForQuestion(question: SurveyQuestion): z.ZodTypeAny {
       // A required multi-select must carry at least one selection. Every
       // multi-select in the V1.1 survey has an explicit "none" option, so an
       // empty array always means an incomplete answer rather than a real one.
-      return question.required
+      return question.required && !lenient
         ? arr.min(1, { message: 'Select at least one option' })
         : arr;
     }
@@ -75,6 +75,32 @@ function buildAnswersSchema(): z.ZodTypeAny {
 
 /** Validates a complete set of core survey answers. */
 export const answersSchema = buildAnswersSchema();
+
+/**
+ * The schema for answers READ BACK from storage.
+ *
+ * Deliberately more permissive than `answersSchema` about one thing only:
+ * completeness. A stored response may legitimately be missing a required
+ * question - `SurveyAnswers` types every field as optional for exactly this
+ * reason, and the scoring engine has explicit missing-data handling with a 60%
+ * validity rule to deal with it. Re-applying the submission-time completeness
+ * check on read would make a Pulse containing one partial response impossible
+ * to analyse at all.
+ *
+ * Everything else stays strict. An unknown question id, a value of the wrong
+ * type, an option id that does not exist, a selection list over its maximum:
+ * all still fail, because those mean the row was not written by this
+ * application and averaging it would be guesswork.
+ */
+function buildStoredAnswersSchema(): z.ZodTypeAny {
+  const shape: Record<string, z.ZodTypeAny> = {};
+  for (const question of SURVEY_QUESTIONS) {
+    shape[question.id] = schemaForQuestion(question, true).optional();
+  }
+  return z.strictObject(shape);
+}
+
+export const storedAnswersSchema = buildStoredAnswersSchema();
 
 /**
  * Organization-specific questions never affect scoring, so they are validated
@@ -119,6 +145,19 @@ export function validateResponseSubmission(input: unknown): ValidationResult<Res
   const parsed = responseSubmissionSchema.safeParse(input);
   return parsed.success
     ? { ok: true, value: parsed.data }
+    : { ok: false, issues: toIssues(parsed.error) };
+}
+
+/**
+ * Validate answers loaded from storage before they enter the analysis engine.
+ *
+ * Distinguishes "incomplete" (legitimate, the engine handles it) from
+ * "corrupt" (not written by this application - fail loudly).
+ */
+export function validateStoredAnswers(input: unknown): ValidationResult<SurveyAnswers> {
+  const parsed = storedAnswersSchema.safeParse(input);
+  return parsed.success
+    ? { ok: true, value: parsed.data as SurveyAnswers }
     : { ok: false, issues: toIssues(parsed.error) };
 }
 

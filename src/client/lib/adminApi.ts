@@ -18,6 +18,8 @@ import type {
   AdminSessionState,
 } from '../../core/admin/contracts.js';
 import type { CustomQuestionInput } from '../../core/admin/schemas.js';
+import type { FreeTextResponse, ResultsResponse } from '../../core/results/contracts.js';
+import type { SegmentationDimension } from '../../core/privacy/thresholds.js';
 
 export type ApiErrorKind =
   | 'unauthorized'
@@ -171,4 +173,36 @@ export function closePulse(id: string): Promise<ApiResult<{ ok: boolean }>> {
 
 export function deletePulse(id: string): Promise<ApiResult<{ ok: boolean }>> {
   return call(`/api/admin/pulses/${encodeURIComponent(id)}`, { method: 'DELETE' });
+}
+
+// --- results ---------------------------------------------------------------
+
+export interface SegmentSelection {
+  readonly dimension: SegmentationDimension;
+  readonly value: string;
+}
+
+/**
+ * One request serves the whole dashboard: every view is derived from a single
+ * analysis pass over the same responses, so a per-tab endpoint would re-read
+ * and re-analyse the same rows to render one screen.
+ *
+ * At most one segment is expressible here, which mirrors the server rule
+ * rather than merely respecting it by convention.
+ */
+export function fetchResults(
+  id: string,
+  segment: SegmentSelection | null,
+): Promise<ApiResult<ResultsResponse>> {
+  const query =
+    segment === null
+      ? ''
+      : `?dimension=${encodeURIComponent(segment.dimension)}&value=${encodeURIComponent(segment.value)}`;
+
+  return call<ResultsResponse>(`/api/admin/pulses/${encodeURIComponent(id)}/results${query}`);
+}
+
+/** Takes no segment argument, because free text is never segmentable. */
+export function fetchFreeText(id: string): Promise<ApiResult<FreeTextResponse>> {
+  return call<FreeTextResponse>(`/api/admin/pulses/${encodeURIComponent(id)}/results/free-text`);
 }

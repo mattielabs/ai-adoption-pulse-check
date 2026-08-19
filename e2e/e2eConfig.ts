@@ -15,7 +15,22 @@ export const E2E_ADMIN_PASSCODE = 'local-e2e-passcode-not-a-secret';
 /** Where the setup project records the Pulses it provisioned. */
 export const E2E_PULSE_IDS_FILE = 'e2e/.pulse-ids.json';
 
-/** The Pulse states the employee flows need. */
-export const E2E_PULSE_KEYS = ['active', 'plain', 'noResult', 'closed', 'future'] as const;
+/**
+ * The Pulses the suite provisions.
+ *
+ * The three `results*` entries carry real responses so the dashboard can be
+ * exercised at each sample state: below the reporting threshold, in the
+ * early-directional band, and with the full canonical fixture.
+ */
+export const E2E_PULSE_KEYS = [
+  'active',
+  'plain',
+  'noResult',
+  'closed',
+  'future',
+  'results',
+  'resultsSmall',
+  'resultsEarly',
+] as const;
 
 export type E2EPulseKey = (typeof E2E_PULSE_KEYS)[number];
