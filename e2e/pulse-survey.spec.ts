@@ -8,7 +8,7 @@
 
 import { expect, test } from '@playwright/test';
 import {
-  PULSES,
+  pulseId,
   completeCoreSurvey,
   completeCustomSection,
   continueSection,
@@ -21,7 +21,7 @@ import {
 test.describe('Flow 1 - complete a normal survey', () => {
   test('landing -> all sections -> submit -> personal result', async ({ page }) => {
     test.setTimeout(90_000);
-    await page.goto(pulseUrl(PULSES.active));
+    await page.goto(pulseUrl(pulseId('active')));
 
     // Landing: privacy-first copy, no anonymity claim.
     await expect(page.getByRole('heading', { name: 'Q3 AI Adoption Pulse' })).toBeVisible();
@@ -51,14 +51,14 @@ test.describe('Flow 1 - complete a normal survey', () => {
     await expect(page.getByTestId('focus-next-step')).toContainText('Save the prompt or steps');
 
     // Draft removed, submitted marker set.
-    expect(await localStorageItem(page, `pulse-check:draft:${PULSES.active}:1.1.0`)).toBeNull();
-    expect(await localStorageItem(page, `pulse-check:submitted:${PULSES.active}`)).toBe('true');
+    expect(await localStorageItem(page, `pulse-check:draft:${pulseId('active')}:1.1.0`)).toBeNull();
+    expect(await localStorageItem(page, `pulse-check:submitted:${pulseId('active')}`)).toBe('true');
   });
 });
 
 test.describe('Flow 2 - draft restore', () => {
   test('answers and section survive a reload', async ({ page }) => {
-    await page.goto(pulseUrl(PULSES.plain));
+    await page.goto(pulseUrl(pulseId('plain')));
     await page.getByTestId('start-survey').click();
 
     await pickRadio(page, 'q1', 'IT / Technology');
@@ -85,26 +85,26 @@ test.describe('Flow 2 - draft restore', () => {
 
   test('a draft from a different survey version is not applied', async ({ page }) => {
     await page.addInitScript(
-      ([pulseId]) => {
+      ([id]) => {
         window.localStorage.setItem(
-          `pulse-check:draft:${pulseId}:0.9.0`,
+          `pulse-check:draft:${id}:0.9.0`,
           JSON.stringify({ answers: { q5: 'never' }, sectionIndex: 4, updatedOn: '2026-01-01' }),
         );
       },
-      [PULSES.plain],
+      [pulseId('plain')],
     );
-    await page.goto(pulseUrl(PULSES.plain));
+    await page.goto(pulseUrl(pulseId('plain')));
 
     // Incompatible draft is ignored: the landing screen shows, and the stale
     // key is discarded.
     await expect(page.getByTestId('start-survey')).toBeVisible();
-    expect(await localStorageItem(page, `pulse-check:draft:${PULSES.plain}:0.9.0`)).toBeNull();
+    expect(await localStorageItem(page, `pulse-check:draft:${pulseId('plain')}:0.9.0`)).toBeNull();
   });
 });
 
 test.describe('Flow 3 - validation', () => {
   test('required questions block Continue accessibly', async ({ page }) => {
-    await page.goto(pulseUrl(PULSES.plain));
+    await page.goto(pulseUrl(pulseId('plain')));
     await page.getByTestId('start-survey').click();
 
     // Section 1 is fully optional and passes untouched.
@@ -127,7 +127,7 @@ test.describe('Flow 3 - validation', () => {
   });
 
   test('multi-select enforces its maximum', async ({ page }) => {
-    await page.goto(pulseUrl(PULSES.plain));
+    await page.goto(pulseUrl(pulseId('plain')));
     await page.getByTestId('start-survey').click();
     // Walk to section 6 (Q23, select up to three).
     await continueSection(page);
@@ -166,13 +166,13 @@ test.describe('Flow 3 - validation', () => {
 
 test.describe('Flow 4 - unavailable states', () => {
   test('closed pulse shows the closed message and no survey', async ({ page }) => {
-    await page.goto(pulseUrl(PULSES.closed));
+    await page.goto(pulseUrl(pulseId('closed')));
     await expect(page.getByTestId('pulse-closed')).toHaveText('This Pulse Check is no longer accepting responses.');
     await expect(page.getByTestId('start-survey')).toHaveCount(0);
   });
 
   test('future pulse shows not-yet-open', async ({ page }) => {
-    await page.goto(pulseUrl(PULSES.future));
+    await page.goto(pulseUrl(pulseId('future')));
     await expect(page.getByTestId('pulse-not-yet-open')).toContainText('not accepting responses yet');
     await expect(page.getByTestId('start-survey')).toHaveCount(0);
   });
@@ -185,7 +185,7 @@ test.describe('Flow 4 - unavailable states', () => {
 
   test('the server refuses submission even from an already-open page', async ({ page }) => {
     // A stale client that somehow POSTs to a closed pulse is refused.
-    const response = await page.request.post(`/api/pulses/${PULSES.closed}/responses`, {
+    const response = await page.request.post(`/api/pulses/${pulseId('closed')}/responses`, {
       data: { surveyVersion: '1.1.0', answers: {} },
     });
     expect([400, 409]).toContain(response.status());
@@ -195,12 +195,12 @@ test.describe('Flow 4 - unavailable states', () => {
 test.describe('Flow 5 - duplicate-browser warning', () => {
   test('a completed marker shows the honest duplicate notice', async ({ page }) => {
     await page.addInitScript(
-      ([pulseId]) => {
-        window.localStorage.setItem(`pulse-check:submitted:${pulseId}`, 'true');
+      ([id]) => {
+        window.localStorage.setItem(`pulse-check:submitted:${id}`, 'true');
       },
-      [PULSES.plain],
+      [pulseId('plain')],
     );
-    await page.goto(pulseUrl(PULSES.plain));
+    await page.goto(pulseUrl(pulseId('plain')));
 
     await expect(page.getByTestId('duplicate-warning')).toContainText('already completed this Pulse Check on this browser');
     await expect(page.getByText('does not identify you or guarantee one response per employee')).toBeVisible();
@@ -210,10 +210,38 @@ test.describe('Flow 5 - duplicate-browser warning', () => {
   });
 });
 
+test.describe('shared-device result cleanup', () => {
+  test('an employee can clear the locally stored result without affecting their response', async ({
+    page,
+  }) => {
+    test.setTimeout(90_000);
+    await page.goto(pulseUrl(pulseId('plain')));
+    await page.getByTestId('start-survey').click();
+    await completeCoreSurvey(page);
+    await submitAndExpectAccepted(page);
+
+    await expect(page.getByText('This result is stored only on this browser.')).toBeVisible();
+    expect(await localStorageItem(page, `pulse-check:result:${pulseId('plain')}`)).not.toBeNull();
+
+    await page.getByTestId('clear-my-result').click();
+
+    await expect(page.getByTestId('result-cleared')).toBeVisible();
+    await expect(page.getByTestId('score-adoption')).toHaveCount(0);
+    expect(await localStorageItem(page, `pulse-check:result:${pulseId('plain')}`)).toBeNull();
+
+    // The submitted response is untouched, and the survey still cannot be retaken.
+    expect(await localStorageItem(page, `pulse-check:submitted:${pulseId('plain')}`)).toBe('true');
+    await page.reload();
+    await expect(page.getByTestId('duplicate-warning')).toBeVisible();
+    await expect(page.getByTestId('view-my-result')).toHaveCount(0);
+    await expect(page.getByTestId('start-survey')).toHaveCount(0);
+  });
+});
+
 test.describe('Flow 6 - personal result disabled', () => {
   test('submission confirms without any score screen', async ({ page }) => {
     test.setTimeout(90_000);
-    await page.goto(pulseUrl(PULSES.noResult));
+    await page.goto(pulseUrl(pulseId('noResult')));
     await page.getByTestId('start-survey').click();
     await completeCoreSurvey(page);
 
@@ -224,6 +252,6 @@ test.describe('Flow 6 - personal result disabled', () => {
     await expect(page.getByTestId('result-classification')).toHaveCount(0);
     await expect(page.getByTestId('score-adoption')).toHaveCount(0);
     await expect(page.getByTestId('focus-primary')).toHaveCount(0);
-    expect(await localStorageItem(page, `pulse-check:result:${PULSES.noResult}`)).toBeNull();
+    expect(await localStorageItem(page, `pulse-check:result:${pulseId('noResult')}`)).toBeNull();
   });
 });

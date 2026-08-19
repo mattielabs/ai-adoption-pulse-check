@@ -93,6 +93,10 @@ function fakeDb(pulses: readonly PulseSeed[], customs: readonly CustomSeed[] = [
 
       return { bind: (...values: unknown[]) => exec(values), ...exec([]) };
     },
+    // The public routes never batch; admin creation does (see adminApi tests).
+    batch() {
+      throw new Error('batch() is not used by the public API');
+    },
   };
 
   const env = { DB: db, ENVIRONMENT: 'test' } as Env;

@@ -11,6 +11,7 @@
  */
 
 import type { D1DatabaseLike } from './lib/d1.js';
+import type { RateLimitBinding } from './lib/throttle.js';
 
 export interface Env {
   /** D1 binding. All queries are parameterized. */
@@ -26,11 +27,22 @@ export interface Env {
   /** Non-secret configuration. */
   readonly ENVIRONMENT: string;
 
-  // --- Secrets. Consumed in Phase 2 (admin authentication). ---
-  /** PBKDF2-HMAC-SHA256 salted hash of the deployment admin passcode. */
+  // --- Secrets. ---
+  /**
+   * PBKDF2-HMAC-SHA256 salted hash of the deployment admin passcode, in the
+   * single encoded format defined by lib/passcode.ts. There is deliberately no
+   * plaintext `ADMIN_PASSCODE` variable anywhere in the application.
+   */
   readonly ADMIN_PASSCODE_HASH?: string;
   /** HMAC key for signing short-lived admin session cookies. */
   readonly SESSION_SECRET?: string;
+
+  /**
+   * Cloudflare Rate Limiting binding protecting admin login. Optional because
+   * it is a remote-only binding: `wrangler dev --local` cannot service it, so
+   * local development runs without throttling (see lib/throttle.ts).
+   */
+  readonly ADMIN_LOGIN_LIMITER?: RateLimitBinding;
 }
 
 export type AppBindings = { Bindings: Env };

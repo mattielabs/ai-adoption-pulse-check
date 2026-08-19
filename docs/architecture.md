@@ -130,12 +130,40 @@ the small `personal/focus.ts` ruleset). Nothing is POSTed for it and the
 result is never stored server-side - the employee's individual scores exist
 only on their device.
 
+### Admin control plane (Phase 2)
+
+```text
+POST /api/admin/login
+  ↓  same-origin check on every mutating admin request      (403 if cross-origin)
+  ↓  size gate + Zod                                        (schema failure -> generic 401)
+  ↓  throttle: Cloudflare rate limiter, key = SHA-256(client address)
+  ↓  PBKDF2-HMAC-SHA256, 600k iterations, timing-safe compare
+  ↓  HMAC-signed session -> Secure; HttpOnly; SameSite=Strict; Max-Age=8h
+```
+
+```text
+Any other /api/admin/*
+  ↓  requireAdmin: verify signature, then expiry            (401 on any failure)
+  ↓  handler
+```
+
+Protection is the default rather than something each route opts into. The admin
+router applies the origin guard to every mutating request and `requireAdmin` to
+everything except an explicit two-path allowlist (`/login`, `/logout`), so a
+route added later is protected unless somebody deliberately exempts it.
+
+Pulse creation is one `db.batch()` transaction covering the Pulse row and its
+custom questions, with each question resolving its parent through the freshly
+generated public id — so a failure part-way cannot leave a half-configured
+Pulse. Details and the full lifecycle are in
+[phase-2.md](phase-2.md).
+
 ### Analysis
 
 ```text
 Admin request
-  ↓  authenticate session          (Phase 2)
-  ↓  load Pulse responses
+  ↓  authenticate session          (built in Phase 2)
+  ↓  load Pulse responses          (Phase 3)
   ↓  APPLY PRIVACY SUPPRESSION     ← first, not last
   ↓  respondent scoring
   ↓  organization aggregation
@@ -182,7 +210,7 @@ No `users`, `employees`, or `accounts` table. The product collects no direct ide
 
 ---
 
-## Security posture in Phase 0
+## Security posture
 
 Established now, so later phases extend rather than retrofit:
 
@@ -197,7 +225,26 @@ Established now, so later phases extend rather than retrofit:
 - **Baseline response headers**: `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`.
 - **Validation errors echo field paths and messages only**, never the submitted values.
 
-Admin authentication (PBKDF2-HMAC-SHA256, constant-time comparison, HMAC-signed short-lived `Secure; HttpOnly; SameSite=Strict` cookie, server-side login throttling) is Phase 2. The environment contract for it exists from Phase 0 onward so nothing has to be reshaped later.
+Added in Phase 2:
+
+- **PBKDF2-HMAC-SHA256 at 600,000 iterations** for the deployment passcode, in a
+  single encoded format parsed in one place, with **timing-resistant comparison**
+  of the derived bytes (never `===`).
+- **HMAC-signed stateless session** in a `Secure; HttpOnly; SameSite=Strict`
+  cookie with an 8-hour lifetime. No session table; no token in `localStorage`.
+- **Server-side login throttling** through Cloudflare's rate limiter, keyed by a
+  hash of the client address, with failed attempts charged double. No login
+  attempt and no address is written to D1 or to a log line.
+- **Cross-origin mutation rejection** on every state-changing admin request,
+  derived from the request's own host so the local-development relaxation cannot
+  apply to a deployed origin.
+- **Public Pulse ids with 128 bits of CSPRNG entropy**, base64url-encoded, with
+  bounded collision retry.
+- **Server-enforced configuration locking** once a Pulse has responses, so
+  collected answers stay interpretable against the configuration respondents saw.
+
+There is deliberately no plaintext `ADMIN_PASSCODE` variable anywhere: the
+application cannot read one and will not accept one.
 
 ---
 

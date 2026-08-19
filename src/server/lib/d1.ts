@@ -28,4 +28,12 @@ export interface D1PreparedStatementLike extends D1BoundStatement {
 
 export interface D1DatabaseLike {
   prepare(sql: string): D1PreparedStatementLike;
+
+  /**
+   * Runs prepared statements as a single transaction. D1 rolls the whole
+   * sequence back if any statement fails, which is what makes "create a Pulse
+   * and its custom questions" atomic - there is no state where a Pulse exists
+   * with half its configuration.
+   */
+  batch(statements: readonly D1BoundStatement[]): Promise<readonly unknown[]>;
 }

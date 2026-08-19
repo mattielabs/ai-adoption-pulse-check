@@ -27,6 +27,19 @@
     }
   ],
 
+  // Failed-login throttling for /api/admin/login. Serviced by `wrangler dev`
+  // locally as well as in production, so the limit below applies during
+  // development too — and because local requests carry no CF-Connecting-IP,
+  // they all share a single bucket. `namespace_id` is an account-scoped
+  // identifier chosen by the deployment, not a secret.
+  "ratelimits": [
+    {
+      "name": "ADMIN_LOGIN_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 8, "period": 60 }
+    }
+  ],
+
   "observability": { "enabled": true },
 
   // Non-secret configuration only. Secrets live in `.dev.vars` locally and in

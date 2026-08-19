@@ -18,6 +18,9 @@ test-results/
 playwright-report/
 blob-report/
 .playwright/
+# public ids of the Pulses the e2e setup project provisions each run
+e2e/.pulse-ids.json
+e2e/.admin-state.json
 
 # typescript
 *.tsbuildinfo

@@ -9,14 +9,12 @@
 
 import { expect, type Page } from '@playwright/test';
 
-/** Seeded dev Pulse public ids (scripts/dev-seed.sql). Local development only. */
-export const PULSES = {
-  active: 'dev-active-4f8a2c9e1b7d3a5f6e0c8b2d4a9f1e3c',
-  plain: 'dev-plain-8c1d5e9f2a6b4c7d0e3f8a1b5c9d2e6f',
-  noResult: 'dev-noresult-3b7e1f5a9c2d6e0f4a8b1c5d9e2f6a0b',
-  closed: 'dev-closed-6d2a8f4b0c5e9a1d7f3b6c0e4a8d2f5b',
-  future: 'dev-future-9a5c1e7d3f8b2a6c0d4e8f1a5b9c3d7e',
-} as const;
+/**
+ * Public ids come from the Pulses the admin setup project created through the
+ * real admin API, so every employee flow runs against a Pulse with a genuine
+ * 128-bit random link rather than a hand-written fixture id.
+ */
+export { pulseId } from './adminHelpers.js';
 
 export function pulseUrl(publicId: string): string {
   return `/p/${publicId}`;

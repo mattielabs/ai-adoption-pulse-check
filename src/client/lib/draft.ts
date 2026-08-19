@@ -155,6 +155,19 @@ export function saveResultSnapshot(publicId: string, result: PersonalResultData)
   write(resultKey(publicId), JSON.stringify(result));
 }
 
+/**
+ * Removes the locally stored result.
+ *
+ * Shared-device hygiene: the snapshot is the only part of the survey that
+ * lingers in a browser with anything readable in it. Clearing it removes the
+ * local copy ONLY - the submitted response stays with the organization, and
+ * the duplicate-submission marker is deliberately left in place so this cannot
+ * be used to retake the survey.
+ */
+export function clearResultSnapshot(publicId: string): void {
+  remove(resultKey(publicId));
+}
+
 export function loadResultSnapshot(publicId: string): PersonalResultData | null {
   const raw = read(resultKey(publicId));
   if (raw === null) return null;

@@ -81,15 +81,39 @@ export function AlreadySubmittedScreen({
         guarantee one response per employee.
       </p>
       {hasSnapshot && (
-        <button
-          type="button"
-          data-testid="view-my-result"
-          onClick={onViewResult}
-          className="mt-4 min-h-11 rounded-md border border-slate-300 px-4 text-sm font-medium text-slate-700"
-        >
-          View my result
-        </button>
+        <>
+          <button
+            type="button"
+            data-testid="view-my-result"
+            onClick={onViewResult}
+            className="mt-4 min-h-11 rounded-md border border-slate-300 px-4 text-sm font-medium text-slate-700"
+          >
+            View my result
+          </button>
+          <p className="mt-3 text-xs text-slate-500">
+            Your result is stored only on this browser. Open it to clear it if you use a shared device.
+          </p>
+        </>
       )}
+    </Shell>
+  );
+}
+
+/**
+ * Shown after an employee clears their locally stored result. The copy is
+ * careful not to imply that anything was withdrawn from the organization or
+ * that the survey can be taken again.
+ */
+export function ResultClearedScreen() {
+  return (
+    <Shell title="Result cleared from this browser">
+      <p role="status" data-testid="result-cleared">
+        The copy of your result stored on this browser has been removed.
+      </p>
+      <p className="mt-2 text-slate-600">
+        Your submitted response is unchanged and stays with your organization. You have already
+        completed this Pulse Check, so it cannot be taken again on this browser.
+      </p>
     </Shell>
   );
 }

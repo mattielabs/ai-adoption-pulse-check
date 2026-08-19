@@ -1,12 +1,20 @@
--- Development / E2E seed data for the LOCAL D1 database only.
+-- Development seed data for the LOCAL D1 database only.
 --
 --   npm run db:seed:local
 --
 -- Entirely synthetic: no real people, no real employer. The fixed `dev-*`
--- public ids exist so Playwright can address each availability state
--- deterministically. Real Pulses get >=128-bit cryptographically random
--- public ids (Phase 2 creation flow); these fixed ids must never be used
+-- public ids exist so each availability state can be opened deterministically
+-- during development. Real Pulses get >=128-bit cryptographically random
+-- public ids from the admin creation flow; these fixed ids must never be used
 -- outside local development.
+--
+-- OPTIONAL since Phase 2: real Pulses are created through the admin UI at
+-- /admin. This seed exists so the employee survey can be opened without going
+-- through that flow first. Note that it configures an organization, so
+-- first-run setup will already be complete the next time you sign in.
+--
+-- The Playwright suite does NOT use this file: it provisions its fixtures
+-- through the real admin API against its own throwaway database.
 --
 -- Idempotent: every run deletes the dev organization's data and re-creates it.
 -- It touches ONLY rows belonging to the dev organization / dev-* pulses, so

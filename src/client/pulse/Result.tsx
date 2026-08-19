@@ -16,6 +16,8 @@ interface Props {
   readonly result: PersonalResultData;
   /** True when shown directly after submission (vs. a revisit). */
   readonly justSubmitted: boolean;
+  /** Removes the browser-local copy of this result. */
+  readonly onClearResult: () => void;
 }
 
 interface ScoreRowSpec {
@@ -48,7 +50,7 @@ const SCORE_ROWS: readonly ScoreRowSpec[] = [
   },
 ];
 
-export function Result({ result, justSubmitted }: Props) {
+export function Result({ result, justSubmitted, onClearResult }: Props) {
   return (
     <div>
       <header className="mb-5">
@@ -118,6 +120,30 @@ export function Result({ result, justSubmitted }: Props) {
         <h4 className="mt-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Suggested next step</h4>
         <p data-testid="focus-next-step" className="mt-1 text-sm text-slate-700">
           {result.focus.nextStep}
+        </p>
+      </section>
+
+      <section
+        aria-labelledby="storage-heading"
+        className="mt-4 rounded-lg border border-slate-200 bg-white p-4 sm:p-5"
+      >
+        <h3 id="storage-heading" className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+          This device
+        </h3>
+        <p className="mt-1 text-sm text-slate-700">
+          This result is stored only on this browser. Clear it if you use a shared device.
+        </p>
+        <button
+          type="button"
+          data-testid="clear-my-result"
+          onClick={onClearResult}
+          className="mt-3 min-h-11 rounded-md border border-slate-300 px-4 text-sm font-medium text-slate-700"
+        >
+          Clear my result from this browser
+        </button>
+        <p className="mt-2 text-xs text-slate-500">
+          Your submitted response stays with your organization &mdash; clearing this only removes the
+          local copy, and does not let you take the survey again.
         </p>
       </section>
 

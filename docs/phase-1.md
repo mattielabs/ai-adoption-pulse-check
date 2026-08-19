@@ -122,8 +122,9 @@ rows; local database only.
 
 ## Known limitations
 
-1. **No admin surface**: Pulses exist only via seed data until Phase 2.
-2. Only two API endpoints exist; the admin API arrives with its consumers.
+1. ~~No admin surface~~ — Phase 2 added authentication and Pulse management;
+   Pulses no longer depend on seed data. See [phase-2.md](phase-2.md).
+2. ~~Only two API endpoints exist~~ — the admin API arrived in Phase 2.
 3. The landing "not yet open" message shows the raw `YYYY-MM-DD` date.
 4. Draft persistence writes on every answer change (no debounce) — harmless at
    this payload size.
@@ -133,8 +134,14 @@ rows; local database only.
    at midnight UTC, not the organization's local midnight. Documented here and
    in the availability module; revisit only if a real pilot trips on it.
 
-## Deliberate Phase 2 exclusions
+## What Phase 1 deliberately excluded
 
-Admin login/passcode/session, organization setup UI, Pulse creation and
-management, dashboards, charts, Opportunity Map UI, filtering UI, exports UI,
-historical comparison, public demo, PDF, and any LLM functionality.
+Admin login/passcode/session, organization setup UI, and Pulse creation and
+management — all delivered in [Phase 2](phase-2.md). Dashboards, charts,
+Opportunity Map UI, filtering UI, exports UI, historical comparison, the public
+demo, PDF, and any LLM functionality remain out of scope.
+
+One Phase 1 behaviour was extended in Phase 2: the locally stored personal
+result can now be cleared from the result screen, for shared devices. Clearing
+removes only the local snapshot — the submitted response and the duplicate
+marker are untouched.

@@ -20,6 +20,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "validate": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "admin:hash-passcode": "tsx scripts/hash-passcode.ts",
     "fixture:generate": "tsx scripts/generate-fixture.ts",
     "analysis:report": "tsx scripts/run-analysis.ts",
     "db:migrate:local": "wrangler d1 migrations apply pulse_check --local",

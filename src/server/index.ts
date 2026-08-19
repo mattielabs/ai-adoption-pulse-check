@@ -10,6 +10,7 @@ import { Hono } from 'hono';
 import type { AppBindings } from './env.js';
 import { systemRoutes } from './routes/system.js';
 import { pulseRoutes } from './routes/pulses.js';
+import { adminRoutes } from './routes/admin.js';
 
 const app = new Hono<AppBindings>();
 
@@ -29,6 +30,7 @@ app.use('*', async (c, next) => {
 
 app.route('/api', systemRoutes);
 app.route('/api/pulses', pulseRoutes);
+app.route('/api/admin', adminRoutes);
 
 // Unknown API paths must not fall through to the SPA shell.
 app.all('/api/*', (c) => c.json({ error: 'not_found' }, 404));

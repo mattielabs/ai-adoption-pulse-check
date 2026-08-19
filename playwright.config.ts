@@ -1,14 +1,24 @@
 import { defineConfig, devices } from '@playwright/test';
-
-const PORT = 8788;
+import { E2E_PORT } from './e2e/e2eConfig.js';
 
 /**
- * Phase 0 keeps the E2E surface intentionally tiny: it proves the Worker,
- * the built SPA assets, and the API routes integrate. Product screens do not
- * exist yet, so there is nothing else worth asserting.
- *
  * The suite runs against `wrangler dev` serving the real built client from
- * `dist/client`, which is the same arrangement used in production.
+ * `dist/client` - the same arrangement used in production.
+ *
+ * `scripts/e2e-server.ts` starts that Worker with a throwaway admin passcode
+ * hash, a per-run session secret, and its OWN D1 database in
+ * `.wrangler/e2e-state`, recreated empty every run. That matters for two
+ * reasons: the admin first-run flow needs a deployment with no organization
+ * configured, and a developer's local data in `.wrangler/state` must not be
+ * destroyed by running the tests.
+ *
+ * The `setup` project performs first-run setup and then provisions the Pulses
+ * the employee flows use, through the real admin API. Everything downstream
+ * therefore runs against Pulses an administrator actually created.
+ *
+ * `reuseExistingServer` is off precisely because of that empty-database
+ * precondition: reusing a server from a previous run would leave an
+ * organization already configured and quietly weaken Flow 1.
  */
 export default defineConfig({
   testDir: './e2e',
@@ -18,16 +28,27 @@ export default defineConfig({
   workers: 1,
   reporter: process.env.CI ? 'line' : 'list',
   use: {
-    baseURL: `http://127.0.0.1:${PORT}`,
+    baseURL: `http://127.0.0.1:${E2E_PORT}`,
     trace: 'on-first-retry',
   },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  projects: [
+    {
+      name: 'setup',
+      testMatch: /admin\.setup\.ts/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'chromium',
+      // Headless Chromium withholds clipboard access unless it is granted,
+      // which the Copy link flow needs.
+      use: { ...devices['Desktop Chrome'], permissions: ['clipboard-write'] },
+      dependencies: ['setup'],
+    },
+  ],
   webServer: {
-    // Build the real client, migrate and seed the local D1 (idempotent,
-    // dev-only data), then serve everything through the real Worker.
-    command: `npm run build:client && npm run db:migrate:local && npm run db:seed:local && npx wrangler dev --port ${PORT} --local`,
-    url: `http://127.0.0.1:${PORT}/api/health`,
-    reuseExistingServer: !process.env.CI,
+    command: `npm run build:client && npx tsx scripts/e2e-server.ts`,
+    url: `http://127.0.0.1:${E2E_PORT}/api/health`,
+    reuseExistingServer: false,
     timeout: 180_000,
     stdout: 'pipe',
     stderr: 'pipe',

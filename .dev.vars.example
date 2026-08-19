@@ -6,13 +6,22 @@
 #   wrangler secret put SESSION_SECRET
 #
 # Secrets are NEVER stored in D1, in source, or in logs.
+# The values below are obvious placeholders, not working credentials.
 
 # PBKDF2-HMAC-SHA256 salted hash of the deployment admin passcode.
-# Format: pbkdf2$sha256$<iterations>$<base64 salt>$<base64 derived key>
-# Consumed in Phase 2 (admin authentication). Present here so the environment
-# contract exists from Phase 0 onward.
-ADMIN_PASSCODE_HASH=""
+#
+# Format:  pbkdf2-sha256$600000$<base64url salt>$<base64url derived key>
+#
+# Generate it with:
+#   npm run admin:hash-passcode
+#
+# The script prompts for the passcode, prints only the encoded hash, and never
+# writes the passcode anywhere. There is deliberately no plaintext
+# ADMIN_PASSCODE variable: the application cannot read one and will not accept
+# one.
+ADMIN_PASSCODE_HASH="pbkdf2-sha256$600000$REPLACE_WITH_GENERATED_SALT$REPLACE_WITH_GENERATED_KEY"
 
-# HMAC key used to sign short-lived admin session cookies.
+# HMAC key used to sign short-lived (8 hour) admin session cookies.
+# At least 32 characters. Rotating this invalidates every issued session.
 # Generate with: node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
-SESSION_SECRET=""
+SESSION_SECRET="REPLACE_WITH_32_PLUS_RANDOM_CHARACTERS"

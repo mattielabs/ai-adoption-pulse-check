@@ -7,7 +7,7 @@
 
 import { expect, test, type Page } from '@playwright/test';
 import {
-  PULSES,
+  pulseId,
   completeCoreSurvey,
   completeCustomSection,
   pulseUrl,
@@ -26,7 +26,7 @@ async function expectNoHorizontalScroll(page: Page): Promise<void> {
 
 test('phone viewport: complete the survey end to end', async ({ page }) => {
   test.setTimeout(120_000);
-  await page.goto(pulseUrl(PULSES.active));
+  await page.goto(pulseUrl(pulseId('active')));
   await expectNoHorizontalScroll(page);
 
   await page.getByTestId('start-survey').click();

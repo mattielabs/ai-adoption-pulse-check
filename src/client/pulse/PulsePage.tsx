@@ -25,6 +25,7 @@ import {
 } from '../lib/sections.js';
 import {
   clearDraft,
+  clearResultSnapshot,
   discardIncompatibleDrafts,
   hasSubmitted,
   loadDraft,
@@ -45,6 +46,7 @@ import {
   LoadErrorScreen,
   NotFoundScreen,
   NotYetOpenScreen,
+  ResultClearedScreen,
   SubmittedConfirmationScreen,
 } from './StatusScreens.js';
 
@@ -59,6 +61,7 @@ type Phase =
   | 'survey'
   | 'review'
   | 'result'
+  | 'result_cleared'
   | 'confirmation';
 
 const DEFAULT_ACCENT = '#0f172a';
@@ -222,6 +225,13 @@ export function PulsePage() {
     });
   }, [pulse, publicId, answers, submitting]);
 
+  const handleClearResult = useCallback(() => {
+    // Local copy only. The submitted response and the duplicate marker stay.
+    clearResultSnapshot(publicId);
+    setResult(null);
+    setPhase('result_cleared');
+  }, [publicId]);
+
   // --- accent ---------------------------------------------------------------
   const accent = safeAccent(pulse?.organization.accentColor ?? null) ?? DEFAULT_ACCENT;
   const accentVars = {
@@ -293,8 +303,10 @@ export function PulsePage() {
         )}
 
         {phase === 'result' && result !== null && (
-          <Result result={result} justSubmitted={justSubmitted} />
+          <Result result={result} justSubmitted={justSubmitted} onClearResult={handleClearResult} />
         )}
+
+        {phase === 'result_cleared' && <ResultClearedScreen />}
 
         {phase === 'confirmation' && <SubmittedConfirmationScreen />}
       </div>

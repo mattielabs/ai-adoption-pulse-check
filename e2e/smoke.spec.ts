@@ -15,7 +15,9 @@ import { expect, test } from '@playwright/test';
 test('the Worker serves the built SPA', async ({ page }) => {
   await page.goto('/');
   await expect(page).toHaveTitle(/AI Adoption Pulse Check/);
-  await expect(page.getByRole('heading', { name: 'AI Adoption Pulse Check' })).toBeVisible();
+  // The deployment root is the admin control plane; an unauthenticated visitor
+  // is sent to sign-in. The employee survey lives at /p/:publicId instead.
+  await expect(page.getByRole('heading', { name: 'Admin access' })).toBeVisible();
 });
 
 test('SPA fallback routing works for unknown client paths', async ({ page }) => {
