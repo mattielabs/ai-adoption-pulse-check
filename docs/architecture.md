@@ -85,23 +85,50 @@ server  ─┘
 
 ## Data flow
 
-### Submission
+### Public Pulse fetch (Phase 1)
+
+```text
+GET /api/pulses/:publicId
+  ↓  parameterized lookup by public_id (joined to organization)
+  ↓  availability computed server-side from status + day-granular dates (UTC)
+  ↓  draft / unknown ids -> identical generic 404
+  ↓  public shape only: no internal ids, no counts, no admin configuration
+```
+
+The payload contract (`PublicPulse`) lives in `src/core/pulse/publicPulse.ts`
+because both the client and the Worker consume it and the client must never
+import from `src/server`.
+
+### Submission (Phase 1)
 
 ```text
 Browser
-  ↓  validate the local response
-  ↓  optionally compute the local personal result
+  ↓  renders the survey from the canonical schema (src/core/survey/questions.ts)
+  ↓  holds answers in a versioned localStorage draft until submission
+  ↓  client-side checks mirror the schema (required, max selections)
   ↓  POST the response
 Worker
-  ↓  byte-size gate on the raw body   (before parsing)
-  ↓  Zod schema validation            (after parsing)
-  ↓  Pulse exists / open / version checks
+  ↓  32 KB byte-size gate on the raw body   (before parsing)
+  ↓  Zod schema validation                  (same schema as the client)
+  ↓  Pulse exists -> availability -> survey-version match
+  ↓  custom answers validated against the Pulse's configured questions
 D1
-  ↓  store
-Return success
+  ↓  one row: pulse_id, submitted_on (UTC day), survey_version,
+  ↓           answers_json, custom_answers_json - nothing else
+Return 201
 ```
 
-No aggregate recalculation happens during submission. A submission writes one row and returns.
+No aggregate recalculation happens during submission. A submission writes one
+row and returns. The local draft is cleared only after the server confirms
+persistence; every failure path keeps it.
+
+### Local personal result (Phase 1)
+
+The optional personal result is computed in the browser by the same versioned
+core modules the Worker uses (`calculateScores`, `classifyRespondent`, plus
+the small `personal/focus.ts` ruleset). Nothing is POSTed for it and the
+result is never stored server-side - the employee's individual scores exist
+only on their device.
 
 ### Analysis
 
@@ -161,6 +188,10 @@ Established now, so later phases extend rather than retrofit:
 
 - **Zod validation on the write path**, with a byte-size gate that runs *before* parsing (`src/server/lib/validation.ts`).
 - **Parameterized D1 queries only.** String interpolation into SQL appears nowhere.
+- **Structural D1 typing** (`src/server/lib/d1.ts`): the server declares only the
+  prepare/bind/first/all/run surface it uses, which the real binding satisfies
+  as-is. Route handlers are therefore unit-testable in plain Node with an
+  in-memory fake, and the INSERT test asserts the exact five values bound.
 - **No secrets in code, in D1, or in logs.** `.dev.vars` is gitignored; `.dev.vars.example` documents the contract with no values. The health endpoint reports whether a secret is *configured* as a boolean, never any part of its value.
 - **Error logging records the error name and message, never the request body**, so a survey payload cannot reach the logs.
 - **Baseline response headers**: `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`.

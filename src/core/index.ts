@@ -13,6 +13,12 @@ export * from './survey/options.js';
 export * from './survey/questions.js';
 export * from './survey/answers.js';
 export * from './survey/validation.js';
+export * from './survey/customQuestions.js';
+
+export * from './pulse/availability.js';
+export * from './pulse/publicPulse.js';
+
+export * from './personal/focus.js';
 
 export * from './scoring/types.js';
 export * from './scoring/mappings.js';

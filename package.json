@@ -14,7 +14,7 @@
     "build": "npm run build:client && npm run build:worker",
     "build:client": "vite build",
     "build:worker": "wrangler deploy --dry-run --outdir=dist/worker",
-    "typecheck": "tsc -p tsconfig.app.json && tsc -p tsconfig.worker.json && tsc -p tsconfig.node.json",
+    "typecheck": "tsc -p tsconfig.app.json && tsc -p tsconfig.worker.json && tsc -p tsconfig.node.json && tsc -p tsconfig.e2e.json",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -23,7 +23,9 @@
     "fixture:generate": "tsx scripts/generate-fixture.ts",
     "analysis:report": "tsx scripts/run-analysis.ts",
     "db:migrate:local": "wrangler d1 migrations apply pulse_check --local",
-    "db:migrate:remote": "wrangler d1 migrations apply pulse_check --remote"
+    "db:migrate:remote": "wrangler d1 migrations apply pulse_check --remote",
+    "db:seed:local": "wrangler d1 execute pulse_check --local --file=./scripts/dev-seed.sql",
+    "dev:setup": "npm run db:migrate:local && npm run db:seed:local"
   },
   "dependencies": {
     "hono": "^4.13.3",

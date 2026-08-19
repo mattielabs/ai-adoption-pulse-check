@@ -4,14 +4,24 @@
  * Secrets live only in `.dev.vars` locally and in `wrangler secret put` in
  * production. They are never committed, never written to D1, and never logged.
  * Spec 38, 59.
+ *
+ * `DB` is typed structurally (see lib/d1.ts) so server code is unit-testable
+ * without the Workers global type surface; the real binding satisfies the
+ * interface as-is.
  */
+
+import type { D1DatabaseLike } from './lib/d1.js';
 
 export interface Env {
   /** D1 binding. All queries are parameterized. */
-  readonly DB: D1Database;
+  readonly DB: D1DatabaseLike;
 
-  /** Static asset binding for the built SPA. */
-  readonly ASSETS: Fetcher;
+  /**
+   * Static asset binding for the built SPA. The platform serves assets before
+   * the Worker for non-/api/* paths (run_worker_first), so application code
+   * never calls this directly; it exists here to mirror wrangler.jsonc.
+   */
+  readonly ASSETS?: unknown;
 
   /** Non-secret configuration. */
   readonly ENVIRONMENT: string;

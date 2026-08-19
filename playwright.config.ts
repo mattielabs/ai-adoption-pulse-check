@@ -23,7 +23,9 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: `npm run build:client && npx wrangler dev --port ${PORT} --local`,
+    // Build the real client, migrate and seed the local D1 (idempotent,
+    // dev-only data), then serve everything through the real Worker.
+    command: `npm run build:client && npm run db:migrate:local && npm run db:seed:local && npx wrangler dev --port ${PORT} --local`,
     url: `http://127.0.0.1:${PORT}/api/health`,
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
