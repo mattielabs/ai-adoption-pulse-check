@@ -272,7 +272,7 @@ the engine, not claims about any real organization**.
 ## Source of truth
 
 The authoritative product, methodology, privacy, scoring and architecture
-specification is `AI_Adoption_Pulse_Check_Source_of_Truth_v1.1` in the
+specification is `AI_Adoption_Pulse_Check_Source_of_Truth_v1.1.md` in the
 repository root. Where this code and that document disagree, the discrepancy is
 a bug to resolve rather than a licence to change methodology silently.
 

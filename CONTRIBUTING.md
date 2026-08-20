@@ -76,7 +76,7 @@ These are not implementation details. They define what a number **means**, and
 changing one silently makes every previous Pulse incomparable to every future
 one without anybody noticing.
 
-`AI_Adoption_Pulse_Check_Source_of_Truth_v1.1` in the repository root is the
+`AI_Adoption_Pulse_Check_Source_of_Truth_v1.1.md` in the repository root is the
 authoritative specification. Where the code and that document disagree, the
 discrepancy is a bug to resolve — not a licence to change methodology.
 

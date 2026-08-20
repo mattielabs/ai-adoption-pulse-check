@@ -1,6 +1,6 @@
 # Methodology notes
 
-This is a summary of the decisions that shape the code. It does not restate the source of truth — see `AI_Adoption_Pulse_Check_Source_of_Truth_v1.1` for the full specification, including every mapping table.
+This is a summary of the decisions that shape the code. It does not restate the source of truth — see `AI_Adoption_Pulse_Check_Source_of_Truth_v1.1.md` for the full specification, including every mapping table.
 
 ---
 
