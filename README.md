@@ -8,6 +8,10 @@ It answers one question: **how are employees actually using AI, where are the
 adoption and support gaps, what self-reported risk signals exist, and which
 workflows deserve deeper investigation?**
 
+**[Live synthetic demo](https://ai-adoption-pulse-check.mattielabs.workers.dev/demo)**
+&middot; [Methodology](https://ai-adoption-pulse-check.mattielabs.workers.dev/methodology)
+&middot; [Self-hosting](docs/self-hosting.md)
+
 ---
 
 ## What it does
@@ -77,24 +81,28 @@ The tool supports deeper discovery. It does not replace it.
 
 ## Demo
 
-The repository ships a public demo that runs the real engine over a committed
-synthetic fixture:
+A public demo runs the real engine over a committed synthetic fixture. No
+account, no sign-in, nothing to install:
 
-| Route | What it shows |
+| Live | What it shows |
 |---|---|
-| `/demo` | What the product measures and refuses to claim |
-| `/demo/results` | A fictional organization's full dashboard |
-| `/demo/survey` | The real survey, local-only — nothing is submitted |
-| `/methodology` | The short public methodology |
+| [/demo](https://ai-adoption-pulse-check.mattielabs.workers.dev/demo) | What the product measures and refuses to claim |
+| [/demo/results](https://ai-adoption-pulse-check.mattielabs.workers.dev/demo/results) | A fictional organization's full dashboard |
+| [/demo/survey](https://ai-adoption-pulse-check.mattielabs.workers.dev/demo/survey) | The real survey, local-only — nothing is submitted |
+| [/methodology](https://ai-adoption-pulse-check.mattielabs.workers.dev/methodology) | The short public methodology |
 
 The fixture is **approximately 75 fictional responses** generated from a fixed
-seed. **Northstar Services** is not a real company, and no figure anywhere in
-the demo describes a real organization. The demo endpoints take no identifier
-of any kind and hold no database reference, so they cannot return live data —
-see [docs/phase-4.md](docs/phase-4.md#public-demo).
+seed. **Northstar Services** is not a real company, no figure anywhere in the
+demo describes a real organization, and the demo is not a hosted service for
+anybody's data — it exists so the methodology can be inspected without a
+checkout.
 
-To see it locally: `npm run build:client && npx wrangler dev`, then open
-`http://127.0.0.1:8787/demo`. No account, no secrets, no database required.
+The demo endpoints take no identifier of any kind and hold no database
+reference, so they cannot return live data — see
+[docs/phase-4.md](docs/phase-4.md#public-demo).
+
+The same pages run locally with `npm run build:client && npx wrangler dev`,
+at `http://127.0.0.1:8787/demo`.
 
 No screenshots are committed, because none have been produced.
 

@@ -20,9 +20,10 @@
     {
       "binding": "DB",
       "database_name": "pulse_check",
-      // Replace with the id printed by `wrangler d1 create pulse_check`.
-      // This is an account-scoped resource identifier, not a secret.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      // Printed by `wrangler d1 create pulse_check`. This is an account-scoped
+      // resource identifier, not a secret. Self-hosters replace it with the id
+      // their own `wrangler d1 create pulse_check` prints.
+      "database_id": "72057f72-5038-4942-9a89-453317f181d5",
       "migrations_dir": "migrations"
     }
   ],
