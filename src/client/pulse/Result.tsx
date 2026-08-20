@@ -18,6 +18,12 @@ interface Props {
   readonly justSubmitted: boolean;
   /** Removes the browser-local copy of this result. */
   readonly onClearResult: () => void;
+  /**
+   * Demo mode. Nothing was submitted, so the shared-device section would be
+   * describing a stored response that does not exist; a retake replaces it.
+   */
+  readonly demo?: boolean;
+  readonly onRetake?: () => void;
 }
 
 interface ScoreRowSpec {
@@ -50,7 +56,7 @@ const SCORE_ROWS: readonly ScoreRowSpec[] = [
   },
 ];
 
-export function Result({ result, justSubmitted, onClearResult }: Props) {
+export function Result({ result, justSubmitted, onClearResult, demo = false, onRetake }: Props) {
   return (
     <div>
       <header className="mb-5">
@@ -123,29 +129,52 @@ export function Result({ result, justSubmitted, onClearResult }: Props) {
         </p>
       </section>
 
-      <section
-        aria-labelledby="storage-heading"
-        className="mt-4 rounded-lg border border-slate-200 bg-white p-4 sm:p-5"
-      >
-        <h3 id="storage-heading" className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-          This device
-        </h3>
-        <p className="mt-1 text-sm text-slate-700">
-          This result is stored only on this browser. Clear it if you use a shared device.
-        </p>
-        <button
-          type="button"
-          data-testid="clear-my-result"
-          onClick={onClearResult}
-          className="mt-3 min-h-11 rounded-md border border-slate-300 px-4 text-sm font-medium text-slate-700"
+      {demo ? (
+        <section
+          aria-labelledby="storage-heading"
+          className="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-4 sm:p-5"
         >
-          Clear my result from this browser
-        </button>
-        <p className="mt-2 text-xs text-slate-500">
-          Your submitted response stays with your organization &mdash; clearing this only removes the
-          local copy, and does not let you take the survey again.
-        </p>
-      </section>
+          <h3 id="storage-heading" className="text-sm font-semibold uppercase tracking-wide text-amber-900">
+            Demo
+          </h3>
+          <p className="mt-1 text-sm text-amber-900" data-testid="demo-result-notice">
+            Nothing was submitted. This result was calculated in your browser from the answers you
+            just gave, by the same scoring code a real deployment runs.
+          </p>
+          <button
+            type="button"
+            data-testid="retake-demo"
+            onClick={onRetake}
+            className="mt-3 min-h-11 rounded-md border border-amber-400 bg-white px-4 text-sm font-medium text-amber-900"
+          >
+            Take the sample survey again
+          </button>
+        </section>
+      ) : (
+        <section
+          aria-labelledby="storage-heading"
+          className="mt-4 rounded-lg border border-slate-200 bg-white p-4 sm:p-5"
+        >
+          <h3 id="storage-heading" className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+            This device
+          </h3>
+          <p className="mt-1 text-sm text-slate-700">
+            This result is stored only on this browser. Clear it if you use a shared device.
+          </p>
+          <button
+            type="button"
+            data-testid="clear-my-result"
+            onClick={onClearResult}
+            className="mt-3 min-h-11 rounded-md border border-slate-300 px-4 text-sm font-medium text-slate-700"
+          >
+            Clear my result from this browser
+          </button>
+          <p className="mt-2 text-xs text-slate-500">
+            Your submitted response stays with your organization &mdash; clearing this only removes the
+            local copy, and does not let you take the survey again.
+          </p>
+        </section>
+      )}
 
       <p className="mt-8 text-xs text-slate-400">
         AI Adoption Pulse Check &mdash; open-source project by Mattie Labs

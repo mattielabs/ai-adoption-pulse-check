@@ -3,7 +3,6 @@
  * the router outlet.
  */
 
-import { useEffect, useRef } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import type { AdminSessionState } from '../../core/admin/contracts.js';
 
@@ -17,19 +16,4 @@ export interface AdminOutletContext {
 
 export function useAdmin(): AdminOutletContext {
   return useOutletContext<AdminOutletContext>();
-}
-
-/**
- * Moves focus to the page heading when a screen mounts, so a keyboard or
- * screen-reader user lands on the new content instead of staying wherever the
- * previous page left them.
- */
-export function useHeadingFocus<T extends HTMLElement>() {
-  const ref = useRef<T>(null);
-
-  useEffect(() => {
-    ref.current?.focus();
-  }, []);
-
-  return ref;
 }

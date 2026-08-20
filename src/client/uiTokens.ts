@@ -5,7 +5,7 @@
  * which keeps fast refresh working during development.
  */
 
-import type { PulseOperationalState } from '../../core/pulse/status.js';
+import type { PulseOperationalState } from '../core/pulse/status.js';
 
 export const STATE_LABELS: Record<PulseOperationalState, string> = {
   not_published: 'Not published',

@@ -1,51 +1,46 @@
 # AI Adoption Pulse Check
 
-A privacy-first, open-source employee AI adoption discovery tool for organizations of roughly 10–500 people.
+A privacy-first, open-source employee AI adoption discovery tool for
+organizations of roughly 10–500 people. Self-hosted on Cloudflare. No LLM
+anywhere in it.
 
-It helps answer one question: **how are employees actually using AI, where are the adoption and support gaps, what self-reported risk signals exist, and which workflows deserve deeper investigation?**
-
-It is deliberately *not* a maturity certification, a compliance audit, a test of employee AI skill, or a black-box AI assessment.
+It answers one question: **how are employees actually using AI, where are the
+adoption and support gaps, what self-reported risk signals exist, and which
+workflows deserve deeper investigation?**
 
 ---
 
-## Status: Phase 3 — survey, admin control plane, and results dashboard
+## What it does
 
-The deterministic core engine (Phase 0), the employee survey (Phase 1), the
-administrative control plane (Phase 2), and the organization results dashboard
-(Phase 3) are built and validated. What remains is packaging: exports, the
-public synthetic demo, and open-source release.
+An administrator creates a Pulse and shares a link. Employees answer 28
+questions in 7–10 minutes without an account, and can optionally see their own
+result — calculated in their browser and never sent back. The administrator gets
+five separate dimension scores, a ranked set of evidence-backed
+recommendations, a behaviour-classification distribution, barriers, training
+demand, a workflow Opportunity Map, and privacy-safe segmentation.
 
-| Built | Not built yet |
-|---|---|
-| Versioned survey schema (Q1-Q28 + Q19b) | CSV response export UI |
-| Five-dimension scoring engine | Free-text export UI |
-| Respondent classification ladder | Aggregate JSON download |
-| Organization aggregation | Public synthetic demo site |
-| 10-rule recommendation engine | Longitudinal / benchmark comparison |
-| Opportunity Map analysis | PDF reports |
-| Privacy suppression + export shaping | |
-| Employee survey + local personal result | |
-| Admin authentication, organization setup, Pulse lifecycle | |
-| Results dashboard: dimensions, recommendations, classifications | |
-| Barriers, training demand, learning preferences | |
-| Opportunity Map + Guardrail banner | |
-| Privacy-safe single-dimension segmentation | |
-| Isolated Q27 written-response viewer | |
-| 662 unit tests + 61 E2E tests | |
+Every number comes from fixed rules over survey answers. The same input always
+produces the same output, and the rules are readable in
+[`src/core`](src/core) — about 3,000 lines with 713 tests on them.
 
-See [docs/phase-0.md](docs/phase-0.md), [docs/phase-1.md](docs/phase-1.md),
-[docs/phase-2.md](docs/phase-2.md) and [docs/phase-3.md](docs/phase-3.md) for
-the precise scope boundaries.
+## Why it exists
 
-The dashboard is a presentation layer over the validated engine. React computes
-no score, threshold, ranking or suppression decision — it formats what the
-server produced, and a test asserts the rendered numbers equal the engine's.
+Most AI-adoption assessments are either a vendor questionnaire that concludes
+you need the vendor's product, or a maturity score that averages away the one
+thing worth seeing. High Adoption alongside low Safety is a finding. A single
+number that reports both as "62" is not.
+
+It is also a portfolio project. The value is meant to be in the methodology, the
+tradeoffs and the deletions — not the feature count. Several capabilities were
+deliberately removed before implementation; [docs/changelog.md](docs/changelog.md)
+records which and why.
 
 ---
 
 ## What it measures
 
-Five **separate** dimensions, each 0–100. There is deliberately no single "AI maturity score" — one average would hide exactly the differences the product exists to surface, such as high Adoption alongside low Safety.
+Five **separate** dimensions, each 0–100. There is deliberately no combined
+maturity score.
 
 | Dimension | What it actually measures |
 |---|---|
@@ -55,17 +50,60 @@ Five **separate** dimensions, each 0–100. There is deliberately no single "AI 
 | **Safety** | **Self-reported** verification, review and data-handling awareness |
 | **Enablement** | Employee-reported organizational clarity, access and training |
 
-Interest (Q28) and the Opportunity Map are reported separately and are not dimensions.
+Interest (Q28) and the Opportunity Map are reported separately and are not
+dimensions.
 
-Safety is interpreted asymmetrically on purpose: **a low score is a meaningful risk signal; a high score is not proof that behaviour is actually safe.**
+Safety is read asymmetrically on purpose: **a low score is a meaningful risk
+signal; a high score is not proof that behaviour is actually safe.**
 
-Further reading: [docs/methodology-notes.md](docs/methodology-notes.md).
+Further reading: [docs/methodology.md](docs/methodology.md),
+[docs/survey-design.md](docs/survey-design.md),
+[docs/interpreting-results.md](docs/interpreting-results.md).
+
+## What it does not claim
+
+- **Not a skill test.** Nothing is observed or tested.
+- **Not a compliance audit.** It cannot establish that anything is safe.
+- **Not guaranteed anonymity.** No direct identifiers are collected and small
+  groups are suppressed — but somebody can still describe themselves in a
+  written answer.
+- **Not a single maturity score.**
+- **Not automation readiness.** An opportunity means a workflow is worth
+  investigating, not that it can be automated or that it would pay for itself.
+
+The tool supports deeper discovery. It does not replace it.
+
+---
+
+## Demo
+
+The repository ships a public demo that runs the real engine over a committed
+synthetic fixture:
+
+| Route | What it shows |
+|---|---|
+| `/demo` | What the product measures and refuses to claim |
+| `/demo/results` | A fictional organization's full dashboard |
+| `/demo/survey` | The real survey, local-only — nothing is submitted |
+| `/methodology` | The short public methodology |
+
+The fixture is **approximately 75 fictional responses** generated from a fixed
+seed. **Northstar Services** is not a real company, and no figure anywhere in
+the demo describes a real organization. The demo endpoints take no identifier
+of any kind and hold no database reference, so they cannot return live data —
+see [docs/phase-4.md](docs/phase-4.md#public-demo).
+
+To see it locally: `npm run build:client && npx wrangler dev`, then open
+`http://127.0.0.1:8787/demo`. No account, no secrets, no database required.
+
+No screenshots are committed, because none have been produced.
 
 ---
 
 ## Architecture
 
-One deployable Cloudflare application. No Next.js, no SSR, no separate API service, no second Worker, no LLM.
+One deployable Cloudflare application. No Next.js, no SSR, no separate API
+service, no second Worker, no LLM.
 
 ```text
 Browser
@@ -86,76 +124,93 @@ src/
   client/   the React SPA
 ```
 
-`src/core` is framework-independent so the same versioned code runs client-side for the local personal result, Worker-side for organization analysis, against demo fixtures, and in Vitest. An ESLint rule enforces that the core never imports React, Hono or `cloudflare:*`.
+`src/core` is framework-independent, so the same versioned code runs
+client-side for the personal result, Worker-side for organization analysis,
+against the demo fixture, and in Vitest. An ESLint rule enforces that the core
+never imports React, Hono or `cloudflare:*`.
+
+The dashboard is a presentation layer: React computes no score, threshold,
+ranking or suppression decision, and a test asserts the rendered numbers equal
+the engine's.
 
 Details: [docs/architecture.md](docs/architecture.md).
 
 ---
 
-## Local setup
+## Privacy model
 
-Requires Node 20+ (developed on Node 24) and a Cloudflare account only for deployment — everything below runs locally.
+The accurate claim, in full:
+
+> **The survey collects no direct identifiers and suppresses small-group
+> reporting.**
+
+It is **not** "perfectly anonymous", and the project never says so. Enforced in
+code, on the server:
+
+- nothing is calculated below **5 responses** — the gate runs before analysis,
+  so no small-group aggregate exists in memory to leak;
+- a segment reports only when the segment **and its complement** both reach 5;
+- one segmentation dimension at a time — stacked filters are unrepresentable in
+  the UI and rejected by the server;
+- suppression availability is a boolean, never a group size;
+- day-granularity submission dates, and no date at all in any export;
+- Q27 has its own endpoint, its own query, its own type and its own export
+  file, and is never segmentable;
+- Q1–Q3 and Q27 are excluded from the response export, with no opt-in;
+- exports refuse below the reporting threshold and are guarded against CSV
+  formula injection;
+- no respondent browser, no per-person score, no click-through to a person.
+
+Full detail: [docs/privacy.md](docs/privacy.md). What it cannot promise:
+[docs/threat-model.md](docs/threat-model.md).
+
+---
+
+## Getting started
+
+Requires Node 20+ (developed on Node 24). Everything below runs locally; a
+Cloudflare account is needed only to deploy.
 
 ```bash
 npm install
+npm run validate
 ```
 
-Some dependencies (`esbuild`, `workerd`) need install scripts. If npm reports them as pending:
+`npm run validate` runs typecheck → lint → unit tests → build, with no
+database, no secrets and no network.
 
-```bash
-npm approve-scripts esbuild && npm approve-scripts workerd && npm rebuild esbuild workerd
-```
-
-Create the local D1 database and apply migrations:
+To run it:
 
 ```bash
 npm run db:migrate:local
-```
-
-Generate an admin passcode hash. The script prompts for the passcode with
-terminal echo off, prints only the encoded hash, and never stores or displays
-the passcode itself:
-
-```bash
 npm run admin:hash-passcode
-```
-
-Copy the environment template and paste in the generated hash plus a session
-secret. `.dev.vars` is gitignored and must never be committed:
-
-```bash
-cp .dev.vars.example .dev.vars
-node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
-```
-
-Build the client and start the Worker (it serves `/api/*` and the built SPA):
-
-```bash
+npm run admin:session-secret
+cp .dev.vars.example .dev.vars   # paste both values in; never commit this file
 npm run build:client
 npx wrangler dev
 ```
 
-Then open `http://127.0.0.1:8787/admin`, sign in with your passcode, complete
-first-run organization setup, and create a Pulse. The Pulse detail page gives
-you the employee survey link.
+Open `http://127.0.0.1:8787/admin`, sign in, complete first-run organization
+setup, and create a Pulse. The Pulse detail page gives you the employee link.
 
-For hot reload, `npm run dev` runs the Vite dev server on port 5173 and proxies
-`/api` to `wrangler dev` on 8787. Both must be running.
+For hot reload, `npm run dev` starts Vite on 5173 and proxies `/api` to
+`wrangler dev` on 8787. Both must be running.
 
-### Synthetic development Pulses
-
-Optional. Creates a development organization plus five `dev-*` Pulses covering
-active, closed and future states, so the employee survey can be opened without
-going through the admin flow first:
+Optional synthetic development Pulses (this also configures the organization,
+so first-run setup will already be done next time you sign in):
 
 ```bash
 npm run db:seed:local
 ```
 
-Note that this configures the organization, so first-run setup will already be
-complete the next time you sign in. Skip it if you want to see that flow.
-Its fixed `dev-*` ids are development-only and are never how a real Pulse link
-is generated — see [scripts/dev-seed.sql](scripts/dev-seed.sql).
+## Self-hosting
+
+Clone → D1 → migrations → two secrets → deploy, in about 15 minutes:
+[docs/self-hosting.md](docs/self-hosting.md). Then
+[docs/running-a-pulse.md](docs/running-a-pulse.md) for the administrator's
+cycle.
+
+**V1 is Cloudflare-only.** That is a stated limitation, not an oversight.
 
 ---
 
@@ -166,62 +221,60 @@ is generated — see [scripts/dev-seed.sql](scripts/dev-seed.sql).
 | `npm run dev` | Vite dev server (proxies `/api` to `wrangler dev`) |
 | `npm run dev:worker` | `wrangler dev` — Worker + D1 + static assets |
 | `npm run build` | Build the client, then validate the Worker bundle |
-| `npm run typecheck` | Typecheck the client, Worker and core/test projects |
+| `npm run deploy` | Build the client, then `wrangler deploy` |
+| `npm run typecheck` | Typecheck the client, Worker, test and E2E projects |
 | `npm run lint` | ESLint |
-| `npm test` | Vitest — core methodology tests |
-| `npm run test:watch` | Vitest in watch mode |
-| `npm run test:e2e` | Playwright flows against a real Worker and its own throwaway D1 |
+| `npm test` | Vitest |
+| `npm run test:e2e` | Playwright, against a real Worker and its own throwaway D1 |
 | `npm run validate` | typecheck → lint → unit tests → build |
-| `npm run admin:hash-passcode` | Generate an `ADMIN_PASSCODE_HASH` (prompts, never echoes or stores the passcode) |
+| `npm run admin:hash-passcode` | Generate `ADMIN_PASSCODE_HASH` (prompts; never echoes or stores the passcode) |
+| `npm run admin:session-secret` | Generate a 32-byte `SESSION_SECRET` |
+| `npm run db:migrate:local` / `:remote` | Apply D1 migrations |
+| `npm run db:seed:local` | Seed the synthetic development Pulses |
 | `npm run fixture:generate` | Regenerate `demo/sample-responses.json` from its fixed seed |
-| `npm run dev:setup` | Apply local D1 migrations, then seed the dev Pulses |
-| `npm run db:seed:local` | Seed/reset the five synthetic development Pulses |
 | `npm run analysis:report` | Run the fixture through the whole pipeline and print the result |
 
 `npm run test:e2e` needs browsers once: `npx playwright install chromium`. It
-uses its own D1 database in `.wrangler/e2e-state`, recreated empty on every
-run, so it never touches your local development data.
+uses its own D1 database in `.wrangler/e2e-state`, recreated empty every run, so
+it never touches your development data.
 
 ---
 
-## Verifying the engine without any UI
+## Testing
+
+| Gate | Count |
+|---|---|
+| Vitest | **713** across 30 files |
+| Playwright | **80** |
+| Typecheck | 4 TypeScript projects |
+| Lint | 0 problems |
+
+The server tests run the real Hono app against real SQLite with the project's
+real migrations, seeded from the committed fixture. The E2E suite runs a real
+`wrangler dev` Worker serving the real built client, with its own database.
+
+Expected values are computed from the engine inside the tests rather than typed
+in, so the assertions check *UI equals engine* instead of restating numbers.
+
+You can verify the engine with no UI at all:
 
 ```bash
 npm run analysis:report
 ```
 
-This runs the committed 75-response synthetic fixture through
+That runs the committed 75-response synthetic fixture through
 `responses → scores → aggregation → classification → recommendations → opportunities → privacy`
-and prints every output. It is a developer tool, not a product surface, and the numbers it prints are **verification evidence about the engine, not claims about any real organization**.
-
----
-
-## Privacy
-
-The application does not ask for or intentionally store employee name, email, employee ID, account identity, exact job title, device fingerprint, or survey-respondent IP address.
-
-The accurate claim is:
-
-> **The survey collects no direct identifiers and suppresses small-group reporting.**
-
-It is **not** "perfectly anonymous". Free-text answers and contextual details can still make a respondent identifiable to someone who already knows the situation. That limitation is part of the product, not a disclaimer to hide.
-
-Enforced in code today:
-
-- minimum reporting group of 5, applied to **both** a segment and its complement;
-- one segmentation dimension at a time — stacked demographic filters are rejected, not truncated;
-- suppression runs before any aggregate is computed, so a suppressed segment has no aggregate to leak;
-- day-granularity submission dates only;
-- Q1–Q3 and Q27 excluded from the default row-level export;
-- free text exported separately with no contextual columns;
-- CSV formula-injection protection.
+and prints every output. The numbers it prints are **verification evidence about
+the engine, not claims about any real organization**.
 
 ---
 
 ## Source of truth
 
-The authoritative product, methodology, privacy, scoring and architecture specification is
-`AI_Adoption_Pulse_Check_Source_of_Truth_v1.1` in the repository root. Where this code and that document disagree, the discrepancy is a bug to resolve rather than a licence to change methodology silently.
+The authoritative product, methodology, privacy, scoring and architecture
+specification is `AI_Adoption_Pulse_Check_Source_of_Truth_v1.1` in the
+repository root. Where this code and that document disagree, the discrepancy is
+a bug to resolve rather than a licence to change methodology silently.
 
 Version constants are pinned in [`src/core/versions.ts`](src/core/versions.ts):
 
@@ -231,30 +284,46 @@ scoringVersion              1.1.0
 recommendationEngineVersion 1.1.0
 ```
 
-Every response records the survey version it was collected under, and every analysis and export identifies all three.
+Every response records the survey version it was collected under, and every
+analysis and export identifies all three.
 
 ---
 
 ## Current limitations
 
-- **No export UI yet.** The privacy-limited CSV, free-text and aggregate JSON
-  shaping utilities exist and are tested; the download surface is Phase 4.
-- **No trend or benchmark comparison.** V1 has no longitudinal engine, by design.
-- **One administrator credential**, no recovery flow, no roles, no SSO, no audit
-  log. Everyone with the passcode is the same administrator.
+The full list is [docs/limitations.md](docs/limitations.md). The ones most worth
+knowing before you use it:
+
+- **Everything is self-report.** Nothing is observed, tested or audited.
+- **Thresholds are specified but not pilot-validated.** The 40/50/60/70
+  recommendation thresholds, the 60% validity rule, the 20% pain rate and the
+  band edges all come from the specification and have not been checked against
+  real data. They are the most likely thing here to be wrong.
+- **Not anonymous.** See the privacy model above.
+- **Segmentation is often unavailable below about 25 employees**, because the
+  complement rule refuses it. That is correct behaviour and still a real limit.
+- **One administrator credential**, no recovery, no roles, no SSO, no audit log.
 - **Closed Pulses cannot be reopened.** Duplicate instead.
-- Login throttling fails open if Cloudflare's rate limiter is unreachable, to
-  avoid locking the only administrator out permanently.
-- Rotating the passcode does not invalidate sessions already issued (up to 8
-  hours); rotating `SESSION_SECRET` does.
-- Cloudflare-only. This is a stated V1 limitation, not an oversight.
-- Thresholds (40/50/60/70, the 60% validity rule, the 20% pain rule) are
-  specified but **not yet pilot-validated**.
+- **No trend engine and no benchmarking.** Comparing two Pulses is manual.
+- **Cloudflare-only.**
+
+## Deferred
+
+Longitudinal comparison, cross-organization benchmarking, PDF reports, LLM
+summarisation or free-text clustering, SSO and roles, HRIS/Slack/Teams
+integrations, and host-anywhere packaging. Each was considered and cut with a
+reason recorded in [docs/limitations.md](docs/limitations.md#product-scope).
 
 ---
+
+## Contributing
+
+[CONTRIBUTING.md](CONTRIBUTING.md). The most valuable contributions are pilot
+evidence, a hole in the privacy model, or wording that overstates what a survey
+can prove.
 
 ## License
 
 MIT — see [LICENSE](LICENSE).
 
-An open-source project by Mattie Labs.
+Created by Mattie Labs.

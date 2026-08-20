@@ -10,13 +10,13 @@
  */
 
 import { Link, useLocation, useOutletContext } from 'react-router-dom';
-import { DIMENSIONS } from '../../../core/survey/questions.js';
+import { DIMENSIONS } from '../../core/survey/questions.js';
 import {
   DIMENSION_LABELS,
   DIMENSION_MEANINGS,
   SAFETY_CAVEAT,
   SELF_REPORT_NOTE,
-} from '../../../core/results/methodology.js';
+} from '../../core/results/methodology.js';
 import type { ResultsOutletContext } from './ResultsLayout.js';
 import { Card, EmptyState, FrequencyTable, LabelledValue } from './components.js';
 import { RecommendationList } from './RecommendationCards.js';

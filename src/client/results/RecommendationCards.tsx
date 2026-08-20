@@ -9,7 +9,7 @@
  * client renders that decision. Spec 24, 27, 28.
  */
 
-import type { RecommendationCard as Card } from '../../../core/results/contracts.js';
+import type { RecommendationCard as Card } from '../../core/results/contracts.js';
 import { comparatorCopy, formatEvidence, formatScore } from './display.js';
 import { EmptyState } from './components.js';
 

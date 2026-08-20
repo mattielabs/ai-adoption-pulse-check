@@ -15,6 +15,7 @@ import { adminAuthRoutes } from './adminAuth.js';
 import { adminOrganizationRoutes } from './adminOrganization.js';
 import { adminPulseRoutes } from './adminPulses.js';
 import { adminResultsRoutes } from './adminResults.js';
+import { adminExportRoutes } from './adminExports.js';
 
 /**
  * The only admin endpoints reachable without a session.
@@ -42,7 +43,9 @@ adminRoutes.use('*', async (c, next) => {
 
 adminRoutes.route('/', adminAuthRoutes);
 adminRoutes.route('/organization', adminOrganizationRoutes);
-// Results first: both routers live under /pulses, and the more specific
-// `/:id/results` paths must not be shadowed by the lifecycle routes.
+// Results and exports first: all three routers live under /pulses, and the
+// more specific `/:id/results` and `/:id/export/*` paths must not be shadowed
+// by the lifecycle routes.
 adminRoutes.route('/pulses', adminResultsRoutes);
+adminRoutes.route('/pulses', adminExportRoutes);
 adminRoutes.route('/pulses', adminPulseRoutes);

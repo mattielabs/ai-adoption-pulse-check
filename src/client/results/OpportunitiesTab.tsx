@@ -21,8 +21,8 @@ import { useOutletContext } from 'react-router-dom';
 import {
   OPPORTUNITY_LABEL_COPY,
   type OpportunityLabel,
-} from '../../../core/opportunities/analyze.js';
-import type { OpportunityRowResult } from '../../../core/results/contracts.js';
+} from '../../core/opportunities/analyze.js';
+import type { OpportunityRowResult } from '../../core/results/contracts.js';
 import type { ResultsOutletContext } from './ResultsLayout.js';
 import { Card, EmptyState } from './components.js';
 import { formatCount, formatRate } from './display.js';

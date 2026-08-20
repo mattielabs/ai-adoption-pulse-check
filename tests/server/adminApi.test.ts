@@ -575,16 +575,23 @@ describe('pulse creation', () => {
   });
 
   it('gives every Pulse a cryptographically random public id', async () => {
-    const first = await createPulseVia();
-    const second = await createPulseVia({ name: 'Second' });
+    // Same name, same dates, same everything: if the id were derived from the
+    // configuration these would collide. Asserted over several pairs, because
+    // one pair not colliding is weak evidence.
+    const ids = new Set<string>();
+    for (let i = 0; i < 8; i += 1) {
+      const created = await createPulseVia();
+      expect(isGeneratedPublicId(created.publicId)).toBe(true);
+      ids.add(created.publicId);
+    }
+    expect(ids.size).toBe(8);
 
-    expect(isGeneratedPublicId(first.publicId)).toBe(true);
-    expect(isGeneratedPublicId(second.publicId)).toBe(true);
-    expect(first.publicId).not.toBe(second.publicId);
-    // Two Pulses created from the same name and dates get unrelated links, so
-    // the id cannot be a function of the configuration.
-    expect(first.publicId.toLowerCase()).not.toContain('pulse');
-    expect(first.publicId.toLowerCase()).not.toContain('q3');
+    // Deliberately NOT a substring check against the Pulse name. Twenty-two
+    // characters drawn from a 64-symbol alphabet contain any given two-letter
+    // sequence roughly once in two hundred runs, so "the id does not contain
+    // 'q3'" is a coin flip dressed up as an assertion - it failed once during a
+    // clean-install rehearsal. Uniqueness across identical inputs is the
+    // property that actually matters, and it is not probabilistic.
   });
 
   it('schedules a future Pulse as upcoming', async () => {

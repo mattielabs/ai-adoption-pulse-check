@@ -1,8 +1,8 @@
 {
   "name": "ai-adoption-pulse-check",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "description": "Privacy-first, open-source employee AI adoption discovery tool. Phase 0: deterministic core engine.",
+  "description": "Privacy-first, open-source employee AI adoption discovery tool. Deterministic scoring, no LLM, self-hosted on Cloudflare Workers and D1.",
   "license": "MIT",
   "type": "module",
   "engines": {
@@ -14,6 +14,7 @@
     "build": "npm run build:client && npm run build:worker",
     "build:client": "vite build",
     "build:worker": "wrangler deploy --dry-run --outdir=dist/worker",
+    "deploy": "npm run build:client && wrangler deploy",
     "typecheck": "tsc -p tsconfig.app.json && tsc -p tsconfig.worker.json && tsc -p tsconfig.node.json && tsc -p tsconfig.e2e.json",
     "lint": "eslint .",
     "test": "vitest run",
@@ -21,6 +22,7 @@
     "test:e2e": "playwright test",
     "validate": "npm run typecheck && npm run lint && npm run test && npm run build",
     "admin:hash-passcode": "tsx scripts/hash-passcode.ts",
+    "admin:session-secret": "tsx scripts/session-secret.ts",
     "fixture:generate": "tsx scripts/generate-fixture.ts",
     "analysis:report": "tsx scripts/run-analysis.ts",
     "db:migrate:local": "wrangler d1 migrations apply pulse_check --local",

@@ -6,7 +6,8 @@
  * download UI. Spec 35.
  *
  * Three separate representations:
- *   1. Limited response CSV - no Q1-Q3, no Q27, no identifiers, rows shuffled.
+ *   1. Limited response CSV - no Q1-Q3, no Q27, no identifiers, no date,
+ *      rows shuffled.
  *   2. Free-text CSV        - Q27 only, with no contextual columns at all.
  *   3. Aggregate JSON       - only after the same server-side privacy checks.
  */
@@ -33,8 +34,58 @@ export const RESPONSE_EXPORT_QUESTION_IDS: readonly QuestionId[] = SURVEY_QUESTI
   (id) => !EXCLUDED_EXPORT_QUESTION_IDS.includes(id),
 );
 
-/** Separator for multi-select values inside a single CSV cell. */
-const MULTI_VALUE_SEPARATOR = '|';
+/**
+ * Stable, readable column names.
+ *
+ * The question id stays in front so a column can always be traced back to the
+ * survey, and the suffix says what it measures so the file is usable without
+ * the spec open beside it. These strings are part of the export contract:
+ * changing one changes every downstream spreadsheet, so treat them like option
+ * ids rather than like display copy. Spec 35.1, 56.
+ *
+ * The four excluded questions are named here too, deliberately - so a reader
+ * of this file can see exactly which ones never become a column.
+ */
+export const RESPONSE_EXPORT_COLUMN_NAMES: Readonly<Record<QuestionId, string>> = {
+  q1: 'q1_department',
+  q2: 'q2_role_level',
+  q3: 'q3_work_type',
+  q4: 'q4_general_ai_frequency',
+  q5: 'q5_work_ai_frequency',
+  q6: 'q6_tools_used',
+  q7: 'q7_work_use_cases',
+  q8: 'q8_confidence_instructions',
+  q9: 'q9_confidence_context',
+  q10: 'q10_confidence_evaluation',
+  q11: 'q11_confidence_appropriate_use',
+  q12: 'q12_workflow_behaviour',
+  q13: 'q13_reuse_frequency',
+  q14: 'q14_process_redesign',
+  q15: 'q15_workflow_artifacts',
+  q16: 'q16_verification_frequency',
+  q17: 'q17_human_review_frequency',
+  q18: 'q18_data_handling_confidence',
+  q19: 'q19_approved_tool_clarity',
+  q19b: 'q19b_unmanaged_tool_use',
+  q20: 'q20_policy_clarity',
+  q21: 'q21_tool_access',
+  q22: 'q22_training_guidance',
+  q23: 'q23_barriers',
+  q24: 'q24_training_demand',
+  q25: 'q25_learning_preferences',
+  q26: 'q26_pain_areas',
+  q27: 'q27_free_text',
+  q28: 'q28_interest',
+};
+
+/**
+ * Separator for multi-select values inside a single CSV cell.
+ *
+ * A pipe rather than a comma or semicolon: no option id contains one, so
+ * splitting on it is unambiguous, and it survives a spreadsheet round trip
+ * without being mistaken for a field separator.
+ */
+export const MULTI_VALUE_SEPARATOR = '|';
 
 /**
  * Characters that make a spreadsheet treat a cell as a formula. Spec 59.
@@ -64,6 +115,19 @@ function serializeAnswer(value: unknown): string {
   return String(value);
 }
 
+/**
+ * One organization-specific question included in the response export.
+ *
+ * Callers supply select-type questions only: a custom FREE-TEXT answer is
+ * employee-written prose, and prose belongs under Q27's restrictions rather
+ * than on a row beside twenty-five other answers.
+ */
+export interface CustomExportColumn {
+  /** The position key custom answers are stored under: c1, c2 or c3. */
+  readonly key: string;
+  readonly header: string;
+}
+
 export interface ResponseExport {
   readonly filename: string;
   readonly headers: readonly string[];
@@ -78,26 +142,38 @@ export interface ExportOptions {
   readonly random?: RandomSource;
 }
 
+export interface ResponseExportOptions extends ExportOptions {
+  readonly customColumns?: readonly CustomExportColumn[];
+}
+
 /**
  * Limited response export.
  *
- * Excludes Q1-Q3, Q27, row ids, and any exact timestamp. `submitted_on` is
- * retained at day granularity only, which is the only precision the database
- * stores. Rows are shuffled so export order carries no submission-order signal.
+ * Excludes Q1-Q3, Q27, row ids, and every timestamp - including the day-level
+ * `submitted_on` the database does store. V1 is not a timeline analysis tool,
+ * so a date column would buy nothing while adding a correlation handle to
+ * every row. Rows are shuffled so export order carries no submission-order
+ * signal either. Spec 34.3, 35.1.
  */
 export function buildResponseExport(
   responses: readonly SurveyResponse[],
-  options: ExportOptions = {},
+  options: ResponseExportOptions = {},
 ): ResponseExport {
   const random = options.random ?? Math.random;
-  const headers = ['submitted_on', 'survey_version', ...RESPONSE_EXPORT_QUESTION_IDS];
+  const customColumns = options.customColumns ?? [];
+
+  const headers = [
+    'survey_version',
+    ...RESPONSE_EXPORT_QUESTION_IDS.map((id) => RESPONSE_EXPORT_COLUMN_NAMES[id]),
+    ...customColumns.map((column) => column.header),
+  ];
 
   const rows = shuffle(responses, random).map((response) => [
-    response.submittedOn,
     response.surveyVersion,
     ...RESPONSE_EXPORT_QUESTION_IDS.map((id) =>
       serializeAnswer(response.answers[id as keyof typeof response.answers]),
     ),
+    ...customColumns.map((column) => serializeAnswer(response.customAnswers?.[column.key])),
   ]);
 
   return {
@@ -118,31 +194,32 @@ export interface FreeTextExport {
   readonly warning: string;
 }
 
+export const FREE_TEXT_EXPORT_WARNING =
+  'Written responses may contain identifying information voluntarily provided by employees. These responses are intentionally separated from work-context filters.';
+
 /**
- * Free-text export.
+ * Free-text export, built from the text alone.
  *
- * Q27 text and nothing else. No department, no role, no work type, no other
- * survey answers, no submission date - anything that would let a reader
- * reconnect a comment to a person's context. The row token is generated per
- * export and is not stored, so it cannot be linked back to a response row.
+ * This is the shape the server actually has: its free-text query returns
+ * strings and nothing else, so nothing on this path ever holds a whole
+ * response. The row token is generated per export and never stored, so it
+ * cannot be linked back to a response row.
  */
-export function buildFreeTextExport(
-  responses: readonly SurveyResponse[],
+export function buildFreeTextExportFromTexts(
+  texts: readonly string[],
   options: ExportOptions = {},
 ): FreeTextExport {
   const random = options.random ?? Math.random;
   const headers = ['row_token', 'response_text'];
 
-  const withText = responses.filter((r) => {
-    const text = r.answers.q27;
-    return typeof text === 'string' && text.trim().length > 0;
-  });
-
-  const rows = shuffle(withText, random).map((response, index) => [
+  const rows = shuffle(
+    texts.map((text) => text.trim()).filter((text) => text.length > 0),
+    random,
+  ).map((text, index) => [
     // Sequential over the already-shuffled list: unique within the file,
     // meaningless outside it.
     `t${String(index + 1).padStart(4, '0')}`,
-    (response.answers.q27 as string).trim(),
+    text,
   ]);
 
   return {
@@ -150,9 +227,25 @@ export function buildFreeTextExport(
     headers,
     rows,
     csv: toCsv([headers, ...rows]),
-    warning:
-      'Written responses may contain identifying information voluntarily provided by employees. These responses are intentionally separated from work-context filters.',
+    warning: FREE_TEXT_EXPORT_WARNING,
   };
+}
+
+/**
+ * Free-text export.
+ *
+ * Q27 text and nothing else. No department, no role, no work type, no other
+ * survey answers, no submission date - anything that would let a reader
+ * reconnect a comment to a person's context.
+ */
+export function buildFreeTextExport(
+  responses: readonly SurveyResponse[],
+  options: ExportOptions = {},
+): FreeTextExport {
+  return buildFreeTextExportFromTexts(
+    responses.map((response) => (typeof response.answers.q27 === 'string' ? response.answers.q27 : '')),
+    options,
+  );
 }
 
 export interface AggregateExportEnvelope<T> {
@@ -181,4 +274,26 @@ export function buildAggregateExport<T>(
     segment,
     data,
   };
+}
+
+// --- download naming -------------------------------------------------------
+
+/**
+ * Reduces an organization-supplied name to something safe inside a
+ * `Content-Disposition` header.
+ *
+ * Pulse names are free text typed by an administrator, so they can contain
+ * quotes, semicolons, newlines, slashes and non-Latin characters. Rather than
+ * escaping each hazard, this reduces to a strict allowlist - lowercase ASCII
+ * letters, digits and single hyphens - which cannot terminate the header
+ * parameter, cannot inject a second header, and cannot traverse a path.
+ */
+export function safeFilenameSlug(value: string, fallback: string): string {
+  const slug = value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+/, '')
+    .slice(0, 48)
+    .replace(/-+$/, '');
+  return slug.length > 0 ? slug : fallback;
 }

@@ -9,11 +9,14 @@
 import { describe, expect, it } from 'vitest';
 import {
   EXCLUDED_EXPORT_QUESTION_IDS,
+  RESPONSE_EXPORT_COLUMN_NAMES,
   RESPONSE_EXPORT_QUESTION_IDS,
   buildAggregateExport,
   buildFreeTextExport,
+  buildFreeTextExportFromTexts,
   buildResponseExport,
   escapeCsvValue,
+  safeFilenameSlug,
   toCsv,
 } from '../../src/core/privacy/exports.js';
 import { seededRandom } from '../../src/core/util/random.js';
@@ -29,9 +32,13 @@ describe('default response export', () => {
   const exported = buildResponseExport(responses, { random: fixed() });
 
   it('excludes Q1, Q2, Q3 and Q27 from the columns', () => {
-    for (const id of ['q1', 'q2', 'q3', 'q27']) {
-      expect(exported.headers, `${id} must not be a column`).not.toContain(id);
+    for (const id of ['q1', 'q2', 'q3', 'q27'] as const) {
+      expect(exported.headers, `${id} must not be a column`).not.toContain(
+        RESPONSE_EXPORT_COLUMN_NAMES[id],
+      );
     }
+    expect(exported.headers.some((h) => h.startsWith('q1_'))).toBe(false);
+    expect(exported.headers.some((h) => h.startsWith('q27_'))).toBe(false);
     expect([...EXCLUDED_EXPORT_QUESTION_IDS].sort()).toEqual(['q1', 'q2', 'q27', 'q3']);
   });
 
@@ -42,11 +49,18 @@ describe('default response export', () => {
     expect(exported.csv).not.toContain('Secret note about my manager');
   });
 
-  it('includes the scored and diagnostic answers', () => {
-    for (const id of ['q5', 'q7', 'q12', 'q16', 'q19', 'q19b', 'q26', 'q28']) {
-      expect(exported.headers).toContain(id);
+  it('includes the scored and diagnostic answers, under readable column names', () => {
+    for (const id of ['q5', 'q7', 'q12', 'q16', 'q19', 'q19b', 'q26', 'q28'] as const) {
+      expect(exported.headers).toContain(RESPONSE_EXPORT_COLUMN_NAMES[id]);
     }
+    expect(exported.headers).toContain('q19_approved_tool_clarity');
+    expect(exported.headers).toContain('q19b_unmanaged_tool_use');
     expect(RESPONSE_EXPORT_QUESTION_IDS).toHaveLength(25);
+    // Every answer column carries its question id as a prefix, so a spreadsheet
+    // can always be traced back to the survey.
+    for (const header of exported.headers.slice(1)) {
+      expect(header, header).toMatch(/^q[0-9]+b?_[a-z_]+$/);
+    }
   });
 
   it('never includes a row id or any identifier column', () => {
@@ -56,12 +70,12 @@ describe('default response export', () => {
     expect(exported.csv).not.toContain('test-0');
   });
 
-  it('keeps dates at day granularity only', () => {
-    expect(exported.headers).toContain('submitted_on');
-    for (const row of exported.rows) {
-      expect(row[0]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    }
-    // No time component anywhere in the file.
+  it('carries no date column at all', () => {
+    expect(exported.headers).not.toContain('submitted_on');
+    expect(exported.headers.some((h) => /date|submitted|time/.test(h))).toBe(false);
+    // Neither a day-level date nor a time component appears anywhere. V1 is not
+    // a timeline tool, so a date would only add a correlation handle.
+    expect(exported.csv).not.toMatch(/\d{4}-\d{2}-\d{2}/);
     expect(exported.csv).not.toMatch(/\d{2}:\d{2}:\d{2}/);
   });
 
@@ -70,16 +84,46 @@ describe('default response export', () => {
   });
 
   it('shuffles rows so export order carries no submission-order signal', () => {
+    // Rows are distinguished by their Q5 answer: with no date column, that is
+    // what makes ordering observable at all.
+    const frequencies = [
+      'never', 'less_than_monthly', 'few_times_month',
+      'few_times_week', 'most_workdays', 'multiple_times_day',
+    ] as const;
     const ordered = Array.from({ length: 40 }, (_, i) =>
-      response({ q27: undefined }, { id: `ordered-${i}`, submittedOn: `2026-06-${String((i % 28) + 1).padStart(2, '0')}` }),
+      response({ q27: undefined, q5: frequencies[i % frequencies.length] }, { id: `ordered-${i}` }),
     );
     const a = buildResponseExport(ordered, { random: seededRandom(1) });
     const b = buildResponseExport(ordered, { random: seededRandom(2) });
-    const dateColumn = (e: typeof a) => e.rows.map((r) => r[0]).join(',');
+    const q5Index = a.headers.indexOf('q5_work_ai_frequency');
+    const column = (e: typeof a) => e.rows.map((r) => r[q5Index]).join(',');
 
-    expect(dateColumn(a)).not.toBe(ordered.map((r) => r.submittedOn).join(','));
-    expect(dateColumn(a)).not.toBe(dateColumn(b));
+    expect(column(a)).not.toBe(ordered.map((r) => r.answers.q5).join(','));
+    expect(column(a)).not.toBe(column(b));
     expect(a.rows).toHaveLength(ordered.length);
+  });
+
+  it('adds organization-specific select answers as extra columns', () => {
+    const withCustom = [
+      { ...response(), customAnswers: { c1: 'hq', c2: ['a', 'b'] } },
+      ...Array.from({ length: 4 }, () => response()),
+    ];
+    const custom = buildResponseExport(withCustom, {
+      random: fixed(),
+      customColumns: [
+        { key: 'c1', header: 'c1_office' },
+        { key: 'c2', header: 'c2_systems' },
+      ],
+    });
+
+    expect(custom.headers.slice(-2)).toEqual(['c1_office', 'c2_systems']);
+    expect(custom.csv).toContain('"hq"');
+    // Multi-selects use the documented pipe separator, not a nested comma.
+    expect(custom.csv).toContain('"a|b"');
+    // A response without custom answers gets empty cells, not a ragged row.
+    for (const row of custom.rows) {
+      expect(row).toHaveLength(custom.headers.length);
+    }
   });
 
   it('is labelled as limited rather than fully anonymous', () => {
@@ -188,5 +232,62 @@ describe('aggregate export envelope', () => {
     // There is deliberately no code path from raw responses to an aggregate
     // export that skips the segmentation check.
     expect(buildAggregateExport.length).toBeLessThanOrEqual(2);
+  });
+});
+
+describe('free-text export from raw text', () => {
+  it('produces the same shape as the response-based builder', () => {
+    const fromTexts = buildFreeTextExportFromTexts(
+      ['  Monthly report assembly is painful  ', '', '   ', 'Scheduling across three time zones'],
+      { random: fixed() },
+    );
+
+    expect(fromTexts.headers).toEqual(['row_token', 'response_text']);
+    expect(fromTexts.rows).toHaveLength(2);
+    expect(fromTexts.rows.map((r) => r[1])).toContain('Monthly report assembly is painful');
+  });
+
+  it('randomises order, so file position says nothing about submission order', () => {
+    const texts = Array.from({ length: 30 }, (_, i) => `entry ${i}`);
+    const a = buildFreeTextExportFromTexts(texts, { random: seededRandom(7) });
+    const b = buildFreeTextExportFromTexts(texts, { random: seededRandom(8) });
+    const column = (e: typeof a) => e.rows.map((r) => r[1]).join(',');
+
+    expect(column(a)).not.toBe(texts.join(','));
+    expect(column(a)).not.toBe(column(b));
+  });
+
+  it('escapes a formula in the produced file', () => {
+    const exported = buildFreeTextExportFromTexts(['=1+1'], { random: fixed() });
+    expect(exported.csv).toContain('"\'=1+1"');
+  });
+});
+
+describe('download filenames', () => {
+  it('reduces an administrator-supplied name to a safe slug', () => {
+    expect(safeFilenameSlug('Q3 Pulse', 'pulse')).toBe('q3-pulse');
+    expect(safeFilenameSlug('Northwind Trading Co.', 'pulse')).toBe('northwind-trading-co');
+  });
+
+  it('strips everything that could break a Content-Disposition header', () => {
+    const hostile = [
+      'a"; filename="evil.exe',
+      '../../etc/passwd',
+      'name\r\nX-Injected: 1',
+      'name;with;semicolons',
+      'na\u00efve r\u00e9sum\u00e9 2026',
+    ];
+    for (const value of hostile) {
+      expect(safeFilenameSlug(value, 'pulse'), value).toMatch(/^[a-z0-9][a-z0-9-]*$/);
+    }
+  });
+
+  it('falls back when nothing survives the allowlist', () => {
+    expect(safeFilenameSlug('....', 'pulse-7')).toBe('pulse-7');
+    expect(safeFilenameSlug('', 'pulse-7')).toBe('pulse-7');
+  });
+
+  it('caps the length so a long name cannot produce an unusable filename', () => {
+    expect(safeFilenameSlug('x'.repeat(200), 'pulse').length).toBeLessThanOrEqual(48);
   });
 });

@@ -8,7 +8,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createOrganization, type ApiError, type OrganizationPayload } from '../lib/adminApi.js';
-import { useAdmin, useHeadingFocus } from './adminContext.js';
+import { useAdmin } from './adminContext.js';
+import { useHeadingFocus } from '../lib/focus.js';
 import { OrganizationForm } from './OrganizationForm.js';
 
 export function SetupPage() {

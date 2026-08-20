@@ -162,9 +162,11 @@ Below n = 5 the engine returns `insufficient_sample` and produces nothing.
 
 Scores are held at internal precision and rounded only for display. Rule thresholds compare the raw value.
 
-This means an organization can display "Safety 50" while R01 fires on "Safety is below 50", because the raw value is 49.94. That looks like an inconsistency, so the evidence attached to every recommendation carries the raw measured value and the UI is expected to show it when a case sits near a boundary.
+This means an organization can display "Safety 50" while R01 fires on "Safety is below 50", because the raw value is 49.94. That looks like an inconsistency, so the evidence attached to every recommendation carries the raw measured value, and the dashboard shows scores to one decimal place so the number beside a recommendation is not itself misleading.
 
 The alternative — thresholding on the rounded score — would double-round and make the result depend on display formatting. Comparing the measurement is the more defensible of the two.
+
+**Score bands follow the same rule.** The V1.1 table lists bands as whole-number ranges (0–24 Low, 25–49 Emerging, 50–69 Developing, 70–84 Established, 85–100 Strong); scores are continuous, so those are read as the half-open intervals `<25`, `<50`, `<70`, `<85`, `85–100` and matched against the raw value. An earlier implementation rounded to a whole number first, which quietly moved every boundary down by half a point — 24.87 displayed as "24.9" and banded as Emerging, a band that starts at 25. Corrected before Phase 4; boundary tests now cover immediately below, exactly at, and immediately above each edge.
 
 ---
 
@@ -223,11 +225,13 @@ Small-segment data must never be sent to the browser and merely hidden visually.
 
 Three separate representations:
 
-1. **Limited response CSV** — scored and diagnostic answers, `survey_version`, and `submitted_on` at day granularity. Excludes Q1–Q3, Q27, row ids, exact timestamps, and any account/device/network identifier. Rows are shuffled so export order carries no submission-order signal. Labelled *limited response export*, never "fully anonymous data".
+1. **Limited response CSV** — scored and diagnostic answers under readable column names (`q5_work_ai_frequency`, `q19b_unmanaged_tool_use`, …), `survey_version`, and organization-specific **select** answers. Excludes Q1–Q3, Q27, custom free text, row ids, and every date — including the day-level `submitted_on` the database stores, because V1 is not a timeline tool and a date is one more correlation handle. Multi-selects join with `|`. Rows are shuffled with a cryptographic source so export order carries no submission-order signal. Labelled *limited response export*, never "fully anonymous data".
 2. **Free-text CSV** — Q27 text and a per-export row token. No department, role, work type, other answers, or date. The token is generated at export time and never stored, so it cannot be linked back.
-3. **Aggregate JSON** — only after the same server-side segment and complement checks pass. The builder takes an already-checked aggregate rather than raw responses, so there is no code path that could skip the check.
+3. **Aggregate JSON** — the unsegmented organization analysis, stamped with all three engine versions. The builder takes an already-checked aggregate rather than raw responses, so there is no code path from raw rows to an export that skips the privacy checks; a test asserts the exported payload equals the live results endpoint field for field.
 
 V1 deliberately offers **no** row-level Q1–Q3 export. A self-hoster with database access technically controls their infrastructure, but the product should not ship a convenient re-identification path.
+
+Every export refuses below the five-response reporting threshold, and the gate runs before any row content is loaded or shaped — a download must not become the one place four responses are readable.
 
 Cells beginning with `=`, `+`, `-`, `@`, tab or carriage return are prefixed with a single quote and wrapped in double quotes, so a spreadsheet treats them as literal text rather than a formula.
 

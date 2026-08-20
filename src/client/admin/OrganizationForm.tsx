@@ -17,8 +17,8 @@ import {
 import type { AdminOrganization } from '../../core/admin/contracts.js';
 import type { ApiError, OrganizationPayload } from '../lib/adminApi.js';
 import { accentContrastText, safeAccent } from '../lib/format.js';
-import { ErrorAlert, Field, TextAreaField, TextField } from './ui.js';
-import { BUTTON_STYLES } from './uiTokens.js';
+import { ErrorAlert, Field, TextAreaField, TextField } from '../ui.js';
+import { BUTTON_STYLES } from '../uiTokens.js';
 
 type Errors = Partial<Record<'name' | 'logoUrl' | 'accentColor' | 'surveyIntro', string>>;
 

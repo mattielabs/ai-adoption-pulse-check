@@ -11,8 +11,8 @@
  * produced and format them.
  */
 
-import { SCORE_BANDS, type ScoreBand } from '../../../core/aggregation/bands.js';
-import type { DistributionResult, DimensionResult } from '../../../core/results/contracts.js';
+import { SCORE_BANDS, type ScoreBand } from '../../core/aggregation/bands.js';
+import type { DistributionResult, DimensionResult } from '../../core/results/contracts.js';
 import { bandLabel, formatCount, formatRate, formatScore, labelledOptions, rankedOptions } from './display.js';
 
 export function Card({

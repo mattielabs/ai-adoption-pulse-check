@@ -265,8 +265,8 @@ tests check UI-equals-engine rather than restating numbers.
    segment re-runs the engine over that group, so dimensions, classifications,
    barriers, training and the Opportunity Map all reflect it. Free text never
    does.
-2. **No export UI.** The shaping utilities exist from Phase 0; the download
-   surface is Phase 4.
+2. ~~**No export UI.**~~ The shaping utilities existed from Phase 0 with no
+   download surface. Added in Phase 4 - see [phase-4.md](phase-4.md#exports).
 3. **No trend or benchmark comparison.** V1 has no longitudinal engine.
 4. ~~**Band edges use whole-number rounding.**~~ Phase 3 flagged that Phase 0
    assigned a band from the score rounded to a whole number, so 24.87 displayed
@@ -279,8 +279,11 @@ tests check UI-equals-engine rather than restating numbers.
 
 ---
 
-## Deliberate Phase 4 exclusions
+## Deliberate Phase 3 exclusions
 
-CSV response export, free-text export, aggregate JSON download, the polished
-public synthetic demo, PDF reports, longitudinal comparison, benchmarking,
-GitHub publication, and production deployment.
+CSV response export, free-text export, aggregate JSON download and the public
+synthetic demo were left to Phase 4, and are now built - see
+[phase-4.md](phase-4.md).
+
+PDF reports, longitudinal comparison and benchmarking remain out of V1
+entirely; the reasons are in [limitations.md](limitations.md#product-scope).

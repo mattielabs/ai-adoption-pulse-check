@@ -9,39 +9,62 @@
  * The three states below the happy path are all server decisions, rendered
  * faithfully: too few responses, a suppressed segment, or an analysis failure.
  * None of them is a client-side hiding of data that arrived anyway.
+ *
+ * The public demo renders this same shell in `demo` mode rather than a second
+ * dashboard, so the synthetic organization is shown by the code a real one is
+ * shown by. Demo mode differs only in where the payload comes from and in what
+ * it does NOT offer: no segmentation, no exports, no administrative controls.
+ * Phase 4 brief 29, 33.
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import type { ResultsOk, ResultsResponse } from '../../../core/results/contracts.js';
-import { MINIMUM_REPORTABLE_RESPONSES } from '../../../core/results/contracts.js';
+import type { FreeTextResponse, ResultsOk, ResultsResponse } from '../../core/results/contracts.js';
+import { MINIMUM_REPORTABLE_RESPONSES } from '../../core/results/contracts.js';
 import {
   EARLY_DIRECTIONAL_NOTE,
   NO_SINGLE_SCORE_NOTE,
   SEGMENTATION_PRIVACY_NOTE,
-} from '../../../core/results/methodology.js';
-import { isSegmentationDimension, type SegmentationDimension } from '../../../core/privacy/thresholds.js';
+} from '../../core/results/methodology.js';
+import { DEMO_BADGE, DEMO_DATA_NOTICE } from '../../core/demo/constants.js';
+import { isSegmentationDimension, type SegmentationDimension } from '../../core/privacy/thresholds.js';
 import { formatCount } from './display.js';
-import { fetchResults, type ApiError, type SegmentSelection } from '../../lib/adminApi.js';
-import { useHeadingFocus } from '../adminContext.js';
+import {
+  fetchFreeText,
+  fetchResults,
+  type ApiError,
+  type ApiResult,
+  type SegmentSelection,
+} from '../lib/adminApi.js';
+import { fetchDemoFreeText, fetchDemoResults } from '../lib/demoApi.js';
+import { useHeadingFocus } from '../lib/focus.js';
 import { ErrorAlert, StatusBadge } from '../ui.js';
 import { BUTTON_STYLES } from '../uiTokens.js';
 import { SegmentControl } from './SegmentControl.js';
 
+export type ResultsSource = 'admin' | 'demo';
+
 export interface ResultsOutletContext {
   readonly results: ResultsOk;
   readonly pulseId: string;
+  /**
+   * How this view loads Q27. Passed in rather than imported by the tab,
+   * because the demo and the admin dashboard read different endpoints and a
+   * public page must never be one edit away from calling an admin one.
+   */
+  readonly loadFreeText: () => Promise<ApiResult<FreeTextResponse>>;
 }
 
 const TABS = [
-  { to: '.', label: 'Overview', end: true },
-  { to: 'adoption', label: 'Adoption', end: false },
-  { to: 'confidence', label: 'Confidence', end: false },
-  { to: 'workflow', label: 'Workflow', end: false },
-  { to: 'safety', label: 'Safety', end: false },
-  { to: 'enablement', label: 'Enablement', end: false },
-  { to: 'opportunities', label: 'Opportunities', end: false },
-  { to: 'responses', label: 'Written responses', end: false },
+  { to: '.', label: 'Overview', end: true, adminOnly: false },
+  { to: 'adoption', label: 'Adoption', end: false, adminOnly: false },
+  { to: 'confidence', label: 'Confidence', end: false, adminOnly: false },
+  { to: 'workflow', label: 'Workflow', end: false, adminOnly: false },
+  { to: 'safety', label: 'Safety', end: false, adminOnly: false },
+  { to: 'enablement', label: 'Enablement', end: false, adminOnly: false },
+  { to: 'opportunities', label: 'Opportunities', end: false, adminOnly: false },
+  { to: 'responses', label: 'Written responses', end: false, adminOnly: false },
+  { to: 'exports', label: 'Exports', end: false, adminOnly: true },
 ] as const;
 
 function tabClass({ isActive }: { isActive: boolean }): string {
@@ -50,7 +73,8 @@ function tabClass({ isActive }: { isActive: boolean }): string {
     : 'whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-sm font-medium text-slate-600 hover:text-slate-900';
 }
 
-export function ResultsLayout() {
+export function ResultsLayout({ source = 'admin' }: { readonly source?: ResultsSource }) {
+  const demo = source === 'demo';
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const heading = useHeadingFocus<HTMLHeadingElement>();
@@ -60,8 +84,8 @@ export function ResultsLayout() {
   // The selected segment lives in the URL so it survives tab navigation and a
   // reload. The chosen dimension does not: picking "Department" is not yet a
   // request, only picking a department is.
-  const urlDimension = params.get('dimension');
-  const urlValue = params.get('value');
+  const urlDimension = demo ? null : params.get('dimension');
+  const urlValue = demo ? null : params.get('value');
   const segmentKey = urlDimension !== null && urlValue !== null ? `${urlDimension}:${urlValue}` : '';
 
   const [groupBy, setGroupBy] = useState<SegmentationDimension | ''>(
@@ -73,7 +97,7 @@ export function ResultsLayout() {
    * result lets `loading` be derived rather than stored, so changing segment
    * needs no synchronous setState inside the effect.
    */
-  const requestKey = `${id}|${segmentKey}`;
+  const requestKey = `${source}|${id}|${segmentKey}`;
   const [loaded, setLoaded] = useState<{
     readonly key: string;
     readonly payload: ResultsResponse | null;
@@ -88,10 +112,14 @@ export function ResultsLayout() {
   useEffect(() => {
     let cancelled = false;
 
-    void fetchResults(id, segmentKey === '' ? null : parseSegmentKey(segmentKey)).then((result) => {
+    const request = demo
+      ? fetchDemoResults()
+      : fetchResults(id, segmentKey === '' ? null : parseSegmentKey(segmentKey));
+
+    void request.then((result) => {
       if (cancelled) return;
       setLoaded({
-        key: `${id}|${segmentKey}`,
+        key: `${demo ? 'demo' : 'admin'}|${id}|${segmentKey}`,
         payload: result.ok ? result.value : null,
         error: result.ok ? null : result.error,
       });
@@ -100,7 +128,7 @@ export function ResultsLayout() {
     return () => {
       cancelled = true;
     };
-  }, [id, segmentKey]);
+  }, [demo, id, segmentKey]);
 
   function applySegment(next: SegmentSelection | null): void {
     const updated = new URLSearchParams(params);
@@ -114,6 +142,13 @@ export function ResultsLayout() {
   }
 
   const title = payload === null ? 'Results' : payload.pulse.name;
+  const tabs = TABS.filter((tab) => !tab.adminOnly || !demo);
+  // Memoized: the tab holds this in an effect dependency, so a new function
+  // identity on every render would re-fetch forever.
+  const loadFreeText = useMemo(
+    () => (demo ? fetchDemoFreeText : () => fetchFreeText(id)),
+    [demo, id],
+  );
 
   return (
     <div>
@@ -130,21 +165,41 @@ export function ResultsLayout() {
           </h1>
           {payload !== null && (
             <div className="mt-2 flex flex-wrap items-center gap-3">
-              <StatusBadge state={payload.pulse.state} />
+              {demo ? (
+                <span
+                  data-testid="demo-badge"
+                  className="rounded-full border border-amber-400 bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-900"
+                >
+                  {DEMO_BADGE}
+                </span>
+              ) : (
+                <StatusBadge state={payload.pulse.state} />
+              )}
               <span data-testid="results-response-count" className="text-sm text-slate-700">
                 {formatCount(payload.pulse.responseCount, 'response')}
               </span>
             </div>
           )}
         </div>
-        <button
-          type="button"
-          className={BUTTON_STYLES.secondary}
-          onClick={() => void navigate(`/admin/pulses/${id}`)}
-        >
-          Back to Pulse
-        </button>
+        {!demo && (
+          <button
+            type="button"
+            className={BUTTON_STYLES.secondary}
+            onClick={() => void navigate(`/admin/pulses/${id}`)}
+          >
+            Back to Pulse
+          </button>
+        )}
       </div>
+
+      {demo && (
+        <p
+          data-testid="demo-notice"
+          className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900"
+        >
+          {DEMO_DATA_NOTICE}
+        </p>
+      )}
 
       {loading && (
         <p role="status" data-testid="results-loading" className="text-sm text-slate-600">
@@ -176,6 +231,9 @@ export function ResultsLayout() {
           <p className="mt-1 text-sm text-slate-700">
             {MINIMUM_REPORTABLE_RESPONSES} completed responses are required.
           </p>
+          <p className="mt-3 text-sm text-slate-700" data-testid="exports-unavailable">
+            Exports become available after the minimum reporting threshold is reached.
+          </p>
           <p className="mt-3 text-xs text-slate-500">
             Nothing is calculated below this threshold, so there are no partial results to show.
             {' '}
@@ -186,22 +244,24 @@ export function ResultsLayout() {
 
       {payload !== null && payload.status !== 'insufficient_sample' && (
         <>
-          <SegmentControl
-            segmentation={payload.segmentation}
-            groupBy={groupBy}
-            onGroupByChange={(dimension) => {
-              // Switching dimension always clears the segment: a value from the
-              // previous dimension has no meaning under the new one.
-              setGroupBy(dimension);
-              applySegment(null);
-            }}
-            onSegmentChange={(value) => {
-              applySegment(
-                value === '' || groupBy === '' ? null : { dimension: groupBy, value },
-              );
-            }}
-            disabled={loading}
-          />
+          {!demo && (
+            <SegmentControl
+              segmentation={payload.segmentation}
+              groupBy={groupBy}
+              onGroupByChange={(dimension) => {
+                // Switching dimension always clears the segment: a value from the
+                // previous dimension has no meaning under the new one.
+                setGroupBy(dimension);
+                applySegment(null);
+              }}
+              onSegmentChange={(value) => {
+                applySegment(
+                  value === '' || groupBy === '' ? null : { dimension: groupBy, value },
+                );
+              }}
+              disabled={loading}
+            />
+          )}
 
           {payload.status === 'suppressed' && (
             <div
@@ -244,7 +304,7 @@ export function ResultsLayout() {
 
               <nav aria-label="Results sections" className="mb-5 border-b border-slate-200">
                 <ul className="flex gap-4 overflow-x-auto">
-                  {TABS.map((tab) => (
+                  {tabs.map((tab) => (
                     <li key={tab.label}>
                       {/*
                         The search string travels with the link so a selected
@@ -265,7 +325,11 @@ export function ResultsLayout() {
                 </ul>
               </nav>
 
-              <Outlet context={{ results: payload, pulseId: id } satisfies ResultsOutletContext} />
+              <Outlet
+                context={
+                  { results: payload, pulseId: id, loadFreeText } satisfies ResultsOutletContext
+                }
+              />
             </>
           )}
         </>

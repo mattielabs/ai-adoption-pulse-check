@@ -71,6 +71,26 @@ The same versioned scoring code must run in four places:
 
 If scoring lived in a React component or a Hono handler, the personal result and the organization analysis would drift, and the tests would have to instantiate a framework to check arithmetic.
 
+### Inside `src/client`
+
+```text
+src/client/
+  pulse/    the employee survey        (/p/:publicId, and /demo/survey in demo mode)
+  admin/    the administrative screens (/admin/*)
+  results/  the results dashboard      (rendered by BOTH /admin/pulses/:id/results and /demo/results)
+  demo/     the public demo shell, landing and methodology page
+  lib/      API clients, drafts, formatting, focus
+  ui.tsx    shared form and alert primitives
+```
+
+`results/` sits outside `admin/` deliberately. The public demo renders the same
+dashboard components in `demo` mode rather than a second implementation, so
+keeping them under `admin/` would have been a misleading directory name rather
+than a boundary. The components that differ by mode receive what they need
+through the router outlet context — `ResponsesTab`, for instance, is handed a
+free-text loader rather than importing one, so a public page is not one edit
+away from calling an admin endpoint.
+
 ### The dependency direction
 
 ```text
@@ -185,6 +205,40 @@ The mapping into the results DTO is written field by field rather than spread.
 row ids, and an explicit mapping is what guarantees a field added to the core
 aggregate later cannot reach a browser by accident. See
 [phase-3.md](phase-3.md).
+
+### Exports (Phase 4)
+
+```text
+GET /api/admin/pulses/:id/export/responses.csv
+GET /api/admin/pulses/:id/export/free-text.csv
+GET /api/admin/pulses/:id/export/results.json
+  ↓  requireAdmin, like every other /api/admin/* route
+  ↓  MINIMUM SAMPLE GATE          ← before any row content is shaped
+  ↓  the same D1 reads the dashboard uses
+  ↓  src/core/privacy/exports.ts  ← one implementation of each rule
+Return a download with a sanitized filename
+```
+
+Nothing is shaped in the route and nothing is shaped in the browser, so an
+export cannot drift away from the dashboard's privacy rules. Details in
+[phase-4.md](phase-4.md).
+
+### The public demo (Phase 4)
+
+```text
+GET /api/demo/results
+GET /api/demo/results/free-text
+```
+
+Public, and structurally incapable of reading D1: neither handler takes a path
+parameter, a query parameter or a body, neither touches `c.env.DB`, and
+`lib/demo.ts` holds no database reference. The only data source is the
+committed fixture compiled into the bundle. Tests run both endpoints against a
+binding that throws on any access and against no binding at all.
+
+The fixture goes through the same `runAnalysis` and the same DTO mapping as a
+real Pulse, so `/demo/results` renders through the same components as the admin
+dashboard rather than a second one.
 
 ### Free text is fetched separately, on purpose
 

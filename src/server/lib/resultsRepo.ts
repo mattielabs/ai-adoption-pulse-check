@@ -53,6 +53,46 @@ export async function loadAnalysisResponses(
   return results;
 }
 
+export interface ExportResponseRow {
+  readonly submitted_on: string;
+  readonly survey_version: string;
+  /** Q27 already removed by the database. */
+  readonly answers_json: string;
+  readonly custom_answers_json: string | null;
+}
+
+/**
+ * The response-export read.
+ *
+ * Same `json_remove` as the analysis read - free text never travels with the
+ * answers it was submitted beside - and deliberately no `id` column: the
+ * export emits no row identifier, so it has no reason to hold one. Custom
+ * answers come along because the export is the only place an administrator
+ * can see the organization-specific questions they configured.
+ *
+ * `submitted_on` is selected because the row type models it; the response CSV
+ * emits no date column at all.
+ */
+const SELECT_EXPORT_RESPONSES = `
+SELECT submitted_on,
+       survey_version,
+       json_remove(answers_json, '$.q27') AS answers_json,
+       custom_answers_json
+FROM responses
+WHERE pulse_id = ?
+ORDER BY id`;
+
+export async function loadExportResponses(
+  db: D1DatabaseLike,
+  pulseId: number,
+): Promise<readonly ExportResponseRow[]> {
+  const { results } = await db
+    .prepare(SELECT_EXPORT_RESPONSES)
+    .bind(pulseId)
+    .all<ExportResponseRow>();
+  return results;
+}
+
 /**
  * Q27 only.
  *

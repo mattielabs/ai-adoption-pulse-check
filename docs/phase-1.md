@@ -1,6 +1,6 @@
 # Phase 1 — Employee Survey Experience
 
-**Goal:** an employee can open a valid Pulse URL, complete the survey on desktop or mobile, submit it anonymously, and receive their optional personal result — end to end against the real Worker and real D1.
+**Goal:** an employee can open a valid Pulse URL, complete the survey on desktop or mobile, submit it without providing any direct identifier, and receive their optional personal result — end to end against the real Worker and real D1.
 
 Phase 0 built the deterministic engine; Phase 1 put the employee experience on top of it without touching methodology.
 

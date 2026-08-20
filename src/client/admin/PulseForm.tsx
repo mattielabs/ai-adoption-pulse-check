@@ -30,8 +30,8 @@ import {
   type PulseFormValues,
 } from './pulseFormValues.js';
 import { hasErrors, NO_ERRORS, validatePulseForm, type PulseFormErrors } from './pulseFormValidation.js';
-import { CheckboxField, ErrorAlert, Field, TextAreaField, TextField } from './ui.js';
-import { BUTTON_STYLES } from './uiTokens.js';
+import { CheckboxField, ErrorAlert, Field, TextAreaField, TextField } from '../ui.js';
+import { BUTTON_STYLES } from '../uiTokens.js';
 
 const CORE_QUESTION_NOTE =
   'The validated core Pulse Check questions are fixed in V1. Custom questions are added separately and do not affect scoring.';

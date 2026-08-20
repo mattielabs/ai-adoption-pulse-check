@@ -10,15 +10,15 @@
  */
 
 import { useOutletContext } from 'react-router-dom';
-import type { Dimension, QuestionId } from '../../../core/survey/questions.js';
-import type { DistributionResult, ResultsOk } from '../../../core/results/contracts.js';
+import type { Dimension, QuestionId } from '../../core/survey/questions.js';
+import type { DistributionResult, ResultsOk } from '../../core/results/contracts.js';
 import {
   DIMENSION_LABELS,
   DIMENSION_LIMITS,
   DIMENSION_MEANINGS,
   SAFETY_CAVEAT,
-} from '../../../core/results/methodology.js';
-import { UNMANAGED_TOOL_FRAMING } from '../../../core/recommendations/presentation.js';
+} from '../../core/results/methodology.js';
+import { UNMANAGED_TOOL_FRAMING } from '../../core/recommendations/presentation.js';
 import type { ResultsOutletContext } from './ResultsLayout.js';
 import { BandDistribution, Card, EmptyState, FrequencyTable, LabelledValue } from './components.js';
 import { DimensionSummary } from './components.js';

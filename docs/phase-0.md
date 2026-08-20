@@ -206,7 +206,7 @@ The React application contains only enough to build, route, and prove the Worker
 
 1. **Thresholds are unvalidated.** 40/50/60/70, the 60% validity rule, the 20% pain rule and the 40% AI-use rule are implemented exactly as specified but have not been tested against a real pilot. They are named constants in one place each, so revising them is a small change.
 
-2. **Rule thresholds compare raw scores while the UI shows rounded ones.** An organization can display "Safety 50" while R01 fires on 49.94. Evidence carries the raw value; the dashboard will need to show it near boundaries. See `docs/methodology-notes.md`.
+2. **Rule thresholds compare raw scores while the UI shows rounded ones.** An organization can display "Safety 50" while R01 fires on 49.94. Evidence carries the raw value; the dashboard will need to show it near boundaries. See `docs/methodology.md`.
 
 3. **`custom_questions` has no maximum-three database constraint.** SQLite cannot express "at most N rows per parent" without a trigger. The limit is enforced in Zod and by the `position BETWEEN 1 AND 3` unique index, which bounds it in practice.
 

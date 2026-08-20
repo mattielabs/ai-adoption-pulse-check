@@ -11,17 +11,17 @@
  * count. "Only 3 respondents" would defeat the suppression it is explaining.
  */
 
-import { QUESTIONS_BY_ID } from '../../../core/survey/questions.js';
+import { QUESTIONS_BY_ID } from '../../core/survey/questions.js';
 import {
   SEGMENTATION_QUESTION_BY_DIMENSION,
   isSegmentationDimension,
   type SegmentationDimension,
-} from '../../../core/privacy/thresholds.js';
+} from '../../core/privacy/thresholds.js';
 import {
   SEGMENTATION_DIMENSION_LABELS,
   SEGMENTATION_PRIVACY_NOTE,
-} from '../../../core/results/methodology.js';
-import type { SegmentationState } from '../../../core/results/contracts.js';
+} from '../../core/results/methodology.js';
+import type { SegmentationState } from '../../core/results/contracts.js';
 import { Field } from '../ui.js';
 
 const SELECT_CLASS =

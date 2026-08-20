@@ -12,9 +12,9 @@ import { Link } from 'react-router-dom';
 import type { AdminPulseSummary } from '../../core/admin/contracts.js';
 import { formatCalendarDay } from '../../core/pulse/day.js';
 import { fetchOrganization, fetchPulses } from '../lib/adminApi.js';
-import { useHeadingFocus } from './adminContext.js';
-import { ErrorAlert, StatusBadge } from './ui.js';
-import { BUTTON_STYLES } from './uiTokens.js';
+import { useHeadingFocus } from '../lib/focus.js';
+import { ErrorAlert, StatusBadge } from '../ui.js';
+import { BUTTON_STYLES } from '../uiTokens.js';
 
 const CURRENT_STATES = new Set(['open', 'upcoming', 'not_published']);
 

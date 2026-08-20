@@ -13,7 +13,7 @@ import { Link, Navigate, NavLink, Outlet, useLocation, useNavigate } from 'react
 import type { AdminSessionState } from '../../core/admin/contracts.js';
 import { fetchSession, logout } from '../lib/adminApi.js';
 import type { AdminOutletContext } from './adminContext.js';
-import { BUTTON_STYLES } from './uiTokens.js';
+import { BUTTON_STYLES } from '../uiTokens.js';
 
 const SIGNED_OUT: AdminSessionState = { authenticated: false, organizationConfigured: false };
 

@@ -14,16 +14,15 @@
 
 import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import type { FreeTextResponse } from '../../../core/results/contracts.js';
-import { FREE_TEXT_PRIVACY_WARNING } from '../../../core/results/methodology.js';
-import { fetchFreeText } from '../../lib/adminApi.js';
+import type { FreeTextResponse } from '../../core/results/contracts.js';
+import { FREE_TEXT_PRIVACY_WARNING } from '../../core/results/methodology.js';
 import type { ResultsOutletContext } from './ResultsLayout.js';
 import { Card, EmptyState } from './components.js';
 import { formatCount, questionPrompt } from './display.js';
 import { ErrorAlert } from '../ui.js';
 
 export function ResponsesTab() {
-  const { pulseId } = useOutletContext<ResultsOutletContext>();
+  const { loadFreeText } = useOutletContext<ResultsOutletContext>();
 
   const [payload, setPayload] = useState<FreeTextResponse | null>(null);
   const [failed, setFailed] = useState(false);
@@ -32,7 +31,7 @@ export function ResponsesTab() {
   useEffect(() => {
     let cancelled = false;
 
-    void fetchFreeText(pulseId).then((result) => {
+    void loadFreeText().then((result) => {
       if (cancelled) return;
       if (result.ok) setPayload(result.value);
       else setFailed(true);
@@ -42,7 +41,7 @@ export function ResponsesTab() {
     return () => {
       cancelled = true;
     };
-  }, [pulseId]);
+  }, [loadFreeText]);
 
   const entries = payload !== null && payload.status === 'ok' ? payload.responses : [];
 

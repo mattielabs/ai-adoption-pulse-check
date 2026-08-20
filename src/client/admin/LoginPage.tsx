@@ -13,9 +13,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../lib/adminApi.js';
-import { useAdmin, useHeadingFocus } from './adminContext.js';
-import { ErrorAlert, TextField } from './ui.js';
-import { BUTTON_STYLES } from './uiTokens.js';
+import { useAdmin } from './adminContext.js';
+import { useHeadingFocus } from '../lib/focus.js';
+import { ErrorAlert, TextField } from '../ui.js';
+import { BUTTON_STYLES } from '../uiTokens.js';
 
 const GENERIC_FAILURE = 'Unable to sign in with that passcode.';
 const THROTTLED = 'Too many sign-in attempts. Try again later.';

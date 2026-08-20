@@ -7,11 +7,11 @@
  * threshold.
  */
 
-import { QUESTIONS_BY_ID, type QuestionId } from '../../../core/survey/questions.js';
-import { SCORE_BAND_LABELS, type ScoreBand } from '../../../core/aggregation/bands.js';
-import type { Comparator } from '../../../core/recommendations/types.js';
-import type { DistributionResult, EvidenceLine, OptionCount } from '../../../core/results/contracts.js';
-import { roundTo } from '../../../core/util/number.js';
+import { QUESTIONS_BY_ID, type QuestionId } from '../../core/survey/questions.js';
+import { SCORE_BAND_LABELS, type ScoreBand } from '../../core/aggregation/bands.js';
+import type { Comparator } from '../../core/recommendations/types.js';
+import type { DistributionResult, EvidenceLine, OptionCount } from '../../core/results/contracts.js';
+import { roundTo } from '../../core/util/number.js';
 
 /**
  * Scores show one decimal place. A whole number would let a Safety of 49.94

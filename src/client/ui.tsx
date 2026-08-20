@@ -10,7 +10,7 @@
  */
 
 import { useEffect, useId, useRef, useState } from 'react';
-import type { PulseOperationalState } from '../../core/pulse/status.js';
+import type { PulseOperationalState } from '../core/pulse/status.js';
 import { BUTTON_STYLES, INPUT_CLASS, STATE_LABELS, STATE_STYLES } from './uiTokens.js';
 
 /** Status carries its own words; the colour is decoration. */

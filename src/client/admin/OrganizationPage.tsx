@@ -13,9 +13,9 @@ import {
   type ApiError,
   type OrganizationPayload,
 } from '../lib/adminApi.js';
-import { useHeadingFocus } from './adminContext.js';
+import { useHeadingFocus } from '../lib/focus.js';
 import { OrganizationForm } from './OrganizationForm.js';
-import { ErrorAlert, SuccessNotice } from './ui.js';
+import { ErrorAlert, SuccessNotice } from '../ui.js';
 
 export function OrganizationPage() {
   const heading = useHeadingFocus<HTMLHeadingElement>();

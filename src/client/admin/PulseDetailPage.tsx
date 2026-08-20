@@ -22,11 +22,11 @@ import {
   updatePulse,
   type ApiError,
 } from '../lib/adminApi.js';
-import { useHeadingFocus } from './adminContext.js';
+import { useHeadingFocus } from '../lib/focus.js';
 import { PulseForm } from './PulseForm.js';
 import { fromDetail, QUESTION_TYPE_LABELS, toPayload, type PulseFormValues } from './pulseFormValues.js';
-import { ConfirmDialog, CopyLinkButton, ErrorAlert, StatusBadge, SuccessNotice } from './ui.js';
-import { BUTTON_STYLES } from './uiTokens.js';
+import { ConfirmDialog, CopyLinkButton, ErrorAlert, StatusBadge, SuccessNotice } from '../ui.js';
+import { BUTTON_STYLES } from '../uiTokens.js';
 
 const DELETE_CONFIRMATION = 'DELETE';
 

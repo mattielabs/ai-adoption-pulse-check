@@ -2,11 +2,17 @@
  * Client routes.
  *
  * `/p/:publicId` is the employee Pulse experience; `/admin/*` is the
- * administrative control plane; `/status` is the development smoke screen.
+ * administrative control plane; `/demo/*` and `/methodology` are the public,
+ * synthetic-data demonstration; `/status` is the development smoke screen.
  *
  * The admin routes are guarded by `AdminApp` for navigation only. Authorization
  * is enforced by the Worker on every request - a route reached any other way
  * simply gets 401s instead of data.
+ *
+ * The demo route tree renders the SAME results components as the admin one, in
+ * demo mode, so there is one dashboard rather than a real one and a mock-up.
+ * What differs is where the payload comes from: `/api/demo/*`, which takes no
+ * identifier and cannot read D1.
  *
  * No scoring, classification, recommendation or privacy logic may ever live in
  * a component. Those belong to `src/core` so the same code runs in the browser,
@@ -24,11 +30,31 @@ import { OrganizationPage } from './admin/OrganizationPage.js';
 import { PulseListPage } from './admin/PulseListPage.js';
 import { PulseNewPage } from './admin/PulseNewPage.js';
 import { PulseDetailPage } from './admin/PulseDetailPage.js';
-import { ResultsLayout } from './admin/results/ResultsLayout.js';
-import { OverviewTab } from './admin/results/OverviewTab.js';
-import { DimensionTab } from './admin/results/DimensionTab.js';
-import { OpportunitiesTab } from './admin/results/OpportunitiesTab.js';
-import { ResponsesTab } from './admin/results/ResponsesTab.js';
+import { ResultsLayout } from './results/ResultsLayout.js';
+import { OverviewTab } from './results/OverviewTab.js';
+import { DimensionTab } from './results/DimensionTab.js';
+import { OpportunitiesTab } from './results/OpportunitiesTab.js';
+import { ResponsesTab } from './results/ResponsesTab.js';
+import { ExportsTab } from './results/ExportsTab.js';
+import { DemoLayout } from './demo/DemoLayout.js';
+import { DemoLanding } from './demo/DemoLanding.js';
+import { MethodologyPage } from './demo/MethodologyPage.js';
+
+/** The dashboard views, mounted identically under /admin and under /demo. */
+function resultsViews() {
+  return (
+    <>
+      <Route index element={<OverviewTab />} />
+      <Route path="adoption" element={<DimensionTab dimension="adoption" />} />
+      <Route path="confidence" element={<DimensionTab dimension="confidence" />} />
+      <Route path="workflow" element={<DimensionTab dimension="workflow" />} />
+      <Route path="safety" element={<DimensionTab dimension="safety" />} />
+      <Route path="enablement" element={<DimensionTab dimension="enablement" />} />
+      <Route path="opportunities" element={<OpportunitiesTab />} />
+      <Route path="responses" element={<ResponsesTab />} />
+    </>
+  );
+}
 
 export function App() {
   return (
@@ -50,15 +76,22 @@ export function App() {
           switching tabs does not re-run the analysis.
         */}
         <Route path="pulses/:id/results" element={<ResultsLayout />}>
-          <Route index element={<OverviewTab />} />
-          <Route path="adoption" element={<DimensionTab dimension="adoption" />} />
-          <Route path="confidence" element={<DimensionTab dimension="confidence" />} />
-          <Route path="workflow" element={<DimensionTab dimension="workflow" />} />
-          <Route path="safety" element={<DimensionTab dimension="safety" />} />
-          <Route path="enablement" element={<DimensionTab dimension="enablement" />} />
-          <Route path="opportunities" element={<OpportunitiesTab />} />
-          <Route path="responses" element={<ResponsesTab />} />
+          {resultsViews()}
+          {/* Admin only: the demo has nothing real to export. */}
+          <Route path="exports" element={<ExportsTab />} />
         </Route>
+      </Route>
+
+      <Route path="/demo" element={<DemoLayout />}>
+        <Route index element={<DemoLanding />} />
+        <Route path="survey" element={<PulsePage demo />} />
+        <Route path="results" element={<ResultsLayout source="demo" />}>
+          {resultsViews()}
+        </Route>
+      </Route>
+
+      <Route path="/methodology" element={<DemoLayout />}>
+        <Route index element={<MethodologyPage />} />
       </Route>
 
       <Route path="/status" element={<SystemStatus />} />

@@ -11,10 +11,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { createPulse, fetchPulse, type ApiError } from '../lib/adminApi.js';
-import { useHeadingFocus } from './adminContext.js';
+import { useHeadingFocus } from '../lib/focus.js';
 import { PulseForm } from './PulseForm.js';
 import { blankPulse, duplicateOf, toPayload, type PulseFormValues } from './pulseFormValues.js';
-import { ErrorAlert } from './ui.js';
+import { ErrorAlert } from '../ui.js';
 
 export function PulseNewPage() {
   const navigate = useNavigate();

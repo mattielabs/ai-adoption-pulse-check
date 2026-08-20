@@ -11,6 +11,7 @@ import type { AppBindings } from './env.js';
 import { systemRoutes } from './routes/system.js';
 import { pulseRoutes } from './routes/pulses.js';
 import { adminRoutes } from './routes/admin.js';
+import { demoRoutes } from './routes/demo.js';
 
 const app = new Hono<AppBindings>();
 
@@ -30,6 +31,8 @@ app.use('*', async (c, next) => {
 
 app.route('/api', systemRoutes);
 app.route('/api/pulses', pulseRoutes);
+// Public, and structurally incapable of reading D1. See routes/demo.ts.
+app.route('/api/demo', demoRoutes);
 app.route('/api/admin', adminRoutes);
 
 // Unknown API paths must not fall through to the SPA shell.
