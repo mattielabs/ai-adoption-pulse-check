@@ -302,10 +302,9 @@ describe('results payload', () => {
       enablement: 24.87,
     });
     expect(dimension(payload, 'safety').band).toBe('emerging');
-    // 24.87 bands as Emerging because Phase 0 assigns the band from the
-    // whole-number rounding of the score (bands.ts). Pinned here so that
-    // behaviour cannot drift unnoticed.
-    expect(dimension(payload, 'enablement').band).toBe('emerging');
+    // 24.87 is below 25, so it bands as Low. Bands come from the raw score,
+    // never from the one-decimal display value ("24.9") beside it.
+    expect(dimension(payload, 'enablement').band).toBe('low');
   });
 
   it('carries the unsure rate and its basis beside the score', async () => {

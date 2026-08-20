@@ -6,8 +6,6 @@
  * should not be presented as meaningful.
  */
 
-import { roundScore } from '../util/number.js';
-
 export const SCORE_BANDS = ['low', 'emerging', 'developing', 'established', 'strong'] as const;
 export type ScoreBand = (typeof SCORE_BANDS)[number];
 
@@ -21,25 +19,38 @@ export const SCORE_BAND_LABELS: Readonly<Record<ScoreBand, string>> = {
 
 interface BandRange {
   readonly band: ScoreBand;
+  /** Inclusive lower bound on the raw score. */
   readonly min: number;
+  /** Exclusive upper bound on the raw score, except for the top band. */
   readonly max: number;
 }
 
+/**
+ * Spec 19 presents the bands as the whole-number ranges 0-24, 25-49, 50-69,
+ * 70-84, 85-100. Scores are continuous, so those are read as the continuous
+ * half-open intervals below: a boundary value belongs to the band it opens.
+ */
 export const SCORE_BAND_RANGES: readonly BandRange[] = [
-  { band: 'low', min: 0, max: 24 },
-  { band: 'emerging', min: 25, max: 49 },
-  { band: 'developing', min: 50, max: 69 },
-  { band: 'established', min: 70, max: 84 },
+  { band: 'low', min: 0, max: 25 },
+  { band: 'emerging', min: 25, max: 50 },
+  { band: 'developing', min: 50, max: 70 },
+  { band: 'established', min: 70, max: 85 },
   { band: 'strong', min: 85, max: 100 },
 ];
 
 /**
- * Bands are assigned from the display-rounded score so that the band a user
- * sees always matches the number they see next to it.
+ * Bands are assigned from the raw score, never from a rounded one.
+ *
+ * Rounding first moved every boundary down by half a point - 24.87 landed in
+ * Emerging, whose documented range starts at 25 - which quietly disagreed with
+ * the thresholds the recommendation engine compares against.
  */
 export function bandForScore(score: number): ScoreBand {
-  const displayed = roundScore(score);
-  const match = SCORE_BAND_RANGES.find((r) => displayed >= r.min && displayed <= r.max);
+  if (!Number.isFinite(score) || score < 0 || score > 100) {
+    throw new Error(`Score outside 0-100 range: ${score}`);
+  }
+  // The top band is closed at 100; every other range is half-open.
+  const match = SCORE_BAND_RANGES.find((r) => score >= r.min && (score < r.max || r.max === 100));
   if (!match) {
     throw new Error(`Score outside 0-100 range: ${score}`);
   }

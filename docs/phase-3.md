@@ -268,12 +268,12 @@ tests check UI-equals-engine rather than restating numbers.
 2. **No export UI.** The shaping utilities exist from Phase 0; the download
    surface is Phase 4.
 3. **No trend or benchmark comparison.** V1 has no longitudinal engine.
-4. **Band edges use whole-number rounding.** Phase 0 assigns a band from the
-   score rounded to a whole number while the dashboard displays one decimal, so
-   a score of 24.87 shows as "24.9" in the Emerging band, whose range starts at
-   25. This is inherited Phase 0 behaviour, affects only scores within half a
-   point of a boundary, and was left unchanged because Phase 3 is not a
-   methodology phase. Flagged rather than fixed.
+4. ~~**Band edges use whole-number rounding.**~~ Phase 3 flagged that Phase 0
+   assigned a band from the score rounded to a whole number, so 24.87 displayed
+   as "24.9" and banded as Emerging even though that band starts at 25. Phase 3
+   reported it rather than changing methodology. **Corrected before Phase 4** in
+   `fix: align score bands with raw thresholds` - bands now come from the raw
+   score. The fixture's Enablement result (24.87) is Low, not Emerging.
 5. **The champion signal shows a display string** ("3+ potential champions"
    below five), never an exact small count.
 

@@ -247,10 +247,6 @@ Every response records the survey version it was collected under, and every anal
   avoid locking the only administrator out permanently.
 - Rotating the passcode does not invalidate sessions already issued (up to 8
   hours); rotating `SESSION_SECRET` does.
-- Score bands are assigned from the whole-number rounding of a score while the
-  dashboard displays one decimal, so a value within half a point of a band edge
-  can read slightly oddly. Documented in
-  [docs/phase-3.md](docs/phase-3.md); left unchanged because it is methodology.
 - Cloudflare-only. This is a stated V1 limitation, not an oversight.
 - Thresholds (40/50/60/70, the 60% validity rule, the 20% pain rule) are
   specified but **not yet pilot-validated**.

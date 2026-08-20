@@ -18,9 +18,36 @@ describe('bands', () => {
     }
   });
 
-  it('bands from the display-rounded score so band and number agree', () => {
-    expect(bandForScore(24.6)).toBe('emerging');
-    expect(bandForScore(24.4)).toBe('low');
+  // Bands come from the raw score. Rounding first would shift every boundary
+  // down by half a point and disagree with the thresholds the recommendation
+  // engine compares against.
+  it('assigns bands from the raw score at every boundary', () => {
+    const cases: [number, string][] = [
+      [0, 'low'],
+      [24.49, 'low'], [24.5, 'low'], [24.87, 'low'], [24.99, 'low'],
+      [25, 'emerging'], [25.01, 'emerging'],
+      [49.99, 'emerging'], [50, 'developing'], [50.01, 'developing'],
+      [69.99, 'developing'], [70, 'established'], [70.01, 'established'],
+      [84.99, 'established'], [85, 'strong'], [85.01, 'strong'],
+      [99.99, 'strong'], [100, 'strong'],
+    ];
+    for (const [score, band] of cases) {
+      expect(bandForScore(score), `score ${score}`).toBe(band);
+    }
+  });
+
+  it('never lets a rounded display value pull a score into the next band', () => {
+    // 24.87 displays as "24.9" and is Low; only 25 and above is Emerging.
+    expect(bandForScore(24.87)).toBe('low');
+    expect(bandForScore(49.96)).toBe('emerging');
+    expect(bandForScore(69.5)).toBe('developing');
+    expect(bandForScore(84.5)).toBe('established');
+  });
+
+  it('rejects scores outside the 0-100 range', () => {
+    expect(() => bandForScore(-0.01)).toThrow(/0-100/);
+    expect(() => bandForScore(100.01)).toThrow(/0-100/);
+    expect(() => bandForScore(Number.NaN)).toThrow(/0-100/);
   });
 
   it('produces a sample caveat only where the spec calls for one', () => {
